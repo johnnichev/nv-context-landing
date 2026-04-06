@@ -857,6 +857,8 @@
     color: var(--text-3);
     max-width: 600px;
     margin: 0 auto;
+    /* Prevent orphan words on second line. Modern browsers (Chrome 117+, FF 121+) */
+    text-wrap: balance;
   }
 
   /* ================================================================
@@ -1284,6 +1286,7 @@
   .tool-pill {
     display: inline-flex;
     align-items: center;
+    gap: 6px;
     padding: 5px 12px;
     border-radius: var(--radius-pill);
     background: var(--bg-elevated-2);
@@ -1303,9 +1306,64 @@
     color: var(--text-1);
     transform: translateY(-1px);
   }
+  .tool-pill .pill-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--text-3);
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  .tool-pill:hover .pill-icon {
+    color: var(--brand-hover);
+  }
+  .tool-pill .pill-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
   .tool-pill.is-more {
     color: var(--text-3);
     border-style: dashed;
+    cursor: pointer;
+  }
+  .tool-pill.is-more:hover {
+    color: var(--text-1);
+    border-style: solid;
+  }
+  /* Extra pills (revealed on click) */
+  .tool-pill.is-extra {
+    opacity: 0;
+    max-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+    border-width: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-out-quart),
+                max-width 0.4s var(--ease-out-quart),
+                padding 0.3s var(--ease-out-quart),
+                border-width 0.2s var(--ease-out-quart),
+                transform 0.35s var(--ease-out-quart);
+    transform: translateY(4px);
+  }
+  .universal-pills.is-expanded .tool-pill.is-extra {
+    opacity: 1;
+    max-width: 240px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-width: 1px;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-delay: var(--stagger-delay, 0ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tool-pill.is-extra,
+    .universal-pills.is-expanded .tool-pill.is-extra {
+      transition: opacity 0.001s, max-width 0.001s, padding 0.001s, border-width 0.001s;
+      transition-delay: 0ms !important;
+      transform: none;
+    }
   }
   .tree-anno.is-universal {
     color: var(--brand-hover);
@@ -1701,6 +1759,7 @@
     border-bottom: 1px solid var(--border-subtle);
   }
   .research-chip {
+    position: relative;
     display: flex;
     align-items: flex-start;
     gap: var(--space-3);
@@ -1711,6 +1770,7 @@
     font-family: var(--font-sans);
     color: var(--text-2);
     text-align: left;
+    text-decoration: none;
     transition: border-color var(--speed-fast) var(--ease-out-quad),
                 background var(--speed-fast) var(--ease-out-quad),
                 color var(--speed-fast) var(--ease-out-quad),
@@ -1722,17 +1782,60 @@
     color: var(--text-1);
     transform: translateY(-1px);
   }
+  .research-chip:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
   .research-chip-mark {
     flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    margin-top: 2px;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    color: var(--text-3);
+    transition: color var(--speed-regular) var(--ease-out-quart),
+                transform var(--speed-regular) var(--ease-out-quart);
+  }
+  .research-chip:hover .research-chip-mark {
     color: var(--brand-hover);
+    transform: scale(1.08) rotate(3deg);
   }
   .research-chip-mark svg {
     width: 100%;
     height: 100%;
     display: block;
+  }
+  .research-chip-ext {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 11px;
+    height: 11px;
+    color: var(--text-4);
+    opacity: 0;
+    transform: translate(-2px, 2px);
+    transition: opacity var(--speed-regular) var(--ease-out-quart),
+                transform var(--speed-regular) var(--ease-out-quart),
+                color var(--speed-regular) var(--ease-out-quart);
+    pointer-events: none;
+  }
+  .research-chip:hover .research-chip-ext,
+  .research-chip:focus-visible .research-chip-ext {
+    opacity: 1;
+    transform: translate(0, 0);
+    color: var(--brand-hover);
+  }
+  .research-chip-ext svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .research-chip:hover .research-chip-mark {
+      transform: none;
+    }
+    .research-chip-ext {
+      transition: opacity 0.001s, transform 0.001s, color 0.001s;
+    }
   }
   .research-chip-body {
     display: flex;
@@ -2168,7 +2271,7 @@
             </div>
           </div>
 
-          <a href="/case-studies#selectools" class="proof-card-link">Read the case study &rarr;</a>
+          <a href="/case-studies.html#selectools" class="proof-card-link">Read the case study &rarr;</a>
         </article>
 
         <!-- Card 2: saas-platform -->
@@ -2205,7 +2308,7 @@
             </div>
           </div>
 
-          <a href="/case-studies#saas-platform" class="proof-card-link">Read the case study &rarr;</a>
+          <a href="/case-studies.html#saas-platform" class="proof-card-link">Read the case study &rarr;</a>
         </article>
 
         <!-- Card 3: sheriff -->
@@ -2238,7 +2341,7 @@
             </div>
           </div>
 
-          <a href="/case-studies#sheriff" class="proof-card-link">Read the case study &rarr;</a>
+          <a href="/case-studies.html#sheriff" class="proof-card-link">Read the case study &rarr;</a>
         </article>
 
       </div>
@@ -2320,7 +2423,7 @@
           <span class="verdict">one philosophy.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Distilled from 200+ research sources and three production case studies.
+          Distilled from 200+ sources and three production repos.
         </p>
       </div>
 
@@ -2382,21 +2485,169 @@
           <span class="muted">One workflow. Zero magic.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          One command. Configs that work with Claude Code, Cursor, Copilot, Aider &mdash; every AI coding tool you use.
+          One command. Configs for every AI coding tool you already use.
         </p>
       </div>
 
-      <div class="universal-pills reveal" style="--reveal-delay: 0.14s;" aria-label="Compatible tools">
+      <div class="universal-pills reveal" id="universal-pills" style="--reveal-delay: 0.14s;" aria-label="Compatible tools">
         <span class="universal-label">Works with</span>
-        <span class="tool-pill">Claude Code</span>
-        <span class="tool-pill">Cursor</span>
-        <span class="tool-pill">Copilot</span>
-        <span class="tool-pill">Aider</span>
-        <span class="tool-pill">Codeium</span>
-        <span class="tool-pill">Continue</span>
-        <span class="tool-pill">Windsurf</span>
-        <span class="tool-pill">Zed</span>
-        <span class="tool-pill is-more">+17 more</span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z"/></svg>
+          </span>
+          Claude Code
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3 L21 12 L12 13.5 L9 21 Z"/></svg>
+          </span>
+          Cursor
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 C7 2 3 6 3 11 c0 4 2 7 5 8 v-2 c-2-1-3-3-3-6 c0-4 3-7 7-7 s7 3 7 7 c0 3-1 5-3 6 v2 c3-1 5-4 5-8 c0-5-4-9-9-9 z"/><circle cx="9" cy="11" r="1.2" fill="currentColor"/><circle cx="15" cy="11" r="1.2" fill="currentColor"/></svg>
+          </span>
+          Copilot
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L12 4 L20 20"/><path d="M8 14 L16 14"/></svg>
+          </span>
+          Aider
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 C5 4 5 8 5 12 C5 16 5 20 9 20"/><path d="M15 4 C19 4 19 8 19 12 C19 16 19 20 15 20"/></svg>
+          </span>
+          Codeium
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6 L14 12 L8 18"/><path d="M14 6 L20 12 L14 18"/></svg>
+          </span>
+          Continue
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16 C5 13 7 13 10 16 C13 19 15 19 18 16 C20 14 21 14 22 15"/><path d="M2 11 C5 8 7 8 10 11 C13 14 15 14 18 11 C20 9 21 9 22 10"/></svg>
+          </span>
+          Windsurf
+        </span>
+        <span class="tool-pill">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8 L16 8 L8 16 L16 16"/></svg>
+          </span>
+          Zed
+        </span>
+
+        <!-- Extra pills (hidden until +17 more is clicked) -->
+        <span class="tool-pill is-extra" style="--stagger-delay: 0ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 L12 12 L15 14"/></svg>
+          </span>
+          Replit Agent
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 60ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 L4 14 L11 14 L9 22 L20 9 L13 9 Z"/></svg>
+          </span>
+          Bolt.new
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 120ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7 L9 17 L12 10 L15 17 L19 7"/></svg>
+          </span>
+          v0
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 180ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7 L21 7"/><path d="M6 12 L18 12"/><path d="M9 17 L15 17"/></svg>
+          </span>
+          Sweep
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 240ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12 L11 15 L16 9"/></svg>
+          </span>
+          Cody
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 300ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L4 20 L12 14 L20 20 L20 4 Z"/></svg>
+          </span>
+          Tabnine
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 360ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="#000"/></svg>
+          </span>
+          Void
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 420ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 L20 6"/><path d="M4 12 L14 12"/><path d="M4 18 L20 18"/></svg>
+          </span>
+          Cline
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 480ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 L20 6"/><path d="M4 12 L20 12"/><path d="M4 18 L14 18"/></svg>
+          </span>
+          Roo Cline
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 540ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8"/></svg>
+          </span>
+          Kodu
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 600ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4 L6 20"/><path d="M6 4 L18 4 C20 4 20 12 18 12 L6 12"/><path d="M14 12 L18 20"/></svg>
+          </span>
+          Refact
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 660ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 L8 8 L12 16 L16 8 L20 16"/></svg>
+          </span>
+          Warp AI
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 720ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8 C5 5 8 4 12 4 C16 4 19 5 19 8"/><path d="M5 8 L5 16 C5 19 8 20 12 20 C16 20 19 19 19 16 L19 8"/><path d="M5 12 C8 14 16 14 19 12"/></svg>
+          </span>
+          Codefuse
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 780ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 L12 12 L16 12"/><path d="M16 16 L19 19"/></svg>
+          </span>
+          Amazon Q
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 840ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 14 L9 14 L9 20"/></svg>
+          </span>
+          JetBrains AI
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 900ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M5 21 C5 16 8 14 12 14 C16 14 19 16 19 21"/></svg>
+          </span>
+          Goose
+        </span>
+        <span class="tool-pill is-extra" style="--stagger-delay: 960ms;">
+          <span class="pill-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21 L12 3 L21 21 Z"/><path d="M7 14 L17 14"/></svg>
+          </span>
+          Pythagora
+        </span>
+
+        <button type="button" class="tool-pill is-more" id="pills-toggle" aria-expanded="false" aria-controls="universal-pills">
+          <span class="more-icon" aria-hidden="true">+</span>
+          <span class="more-label">17 more</span>
+        </button>
       </div>
 
       <div class="tree-terminal-wrap reveal" style="--reveal-delay: 0.18s;">
@@ -2444,7 +2695,7 @@
           <span class="verdict">One score.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Every repo gets graded on six dimensions of AI-readiness. Here&rsquo;s a sample diagnostic:
+          Every repo gets graded on six dimensions. Here&rsquo;s a sample diagnostic.
         </p>
       </div>
 
@@ -2525,8 +2776,7 @@
           <span class="verdict">The actual research.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Every recommendation in the skill is grounded in primary sources &mdash;
-          academic studies, lab papers, and frontline practitioners.
+          Primary sources only &mdash; academic studies, lab papers, and frontline practitioners.
         </p>
       </div>
 
@@ -2552,58 +2802,76 @@
         <!-- Group 1: AI Labs & Companies -->
         <div class="source-category">
           <div class="source-category-label">AI Labs &amp; Companies</div>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer" aria-label="Anthropic — Claude model and Agent SDK (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">Anthropic</span>
               <span class="research-chip-desc">Claude model &amp; Agent SDK</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://deepmind.google/research/publications/" target="_blank" rel="noopener noreferrer" aria-label="Google DeepMind — Agent design patterns (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">Google DeepMind</span>
               <span class="research-chip-desc">Agent design patterns</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://openai.com/research" target="_blank" rel="noopener noreferrer" aria-label="OpenAI — Function calling and tool use (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 7 L19 15 L12 19 L5 15 L5 7 Z"/><circle cx="12" cy="11" r="3"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">OpenAI</span>
               <span class="research-chip-desc">Function calling &amp; tool use</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://manus.im/" target="_blank" rel="noopener noreferrer" aria-label="Manus — Autonomous agent architecture (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7 16 L7 9 L12 14 L17 9 L17 16"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">Manus</span>
               <span class="research-chip-desc">Autonomous agent architecture</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://blog.jetbrains.com/ai/" target="_blank" rel="noopener noreferrer" aria-label="JetBrains — IDE-integrated AI research (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3 L21 3 L21 21 L3 21 Z M5 5 L5 19 L11 19 L19 5 Z"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">JetBrains</span>
               <span class="research-chip-desc">IDE-integrated AI research</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://github.blog/category/engineering/" target="_blank" rel="noopener noreferrer" aria-label="GitHub — Copilot deployment data (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C6.48 2 2 6.58 2 12.26 c0 4.54 2.87 8.39 6.84 9.75 c0.5 0.09 0.68-0.22 0.68-0.49 c0-0.24-0.01-0.88-0.01-1.73 c-2.78 0.62-3.37-1.36-3.37-1.36 c-0.45-1.18-1.11-1.49-1.11-1.49 c-0.91-0.63 0.07-0.62 0.07-0.62 c1 0.07 1.53 1.05 1.53 1.05 c0.89 1.56 2.34 1.11 2.91 0.85 c0.09-0.66 0.35-1.11 0.63-1.36 c-2.22-0.26-4.55-1.13-4.55-5.04 c0-1.11 0.39-2.02 1.03-2.74 c-0.1-0.26-0.45-1.3 0.1-2.71 c0 0 0.84-0.27 2.75 1.05 c0.8-0.23 1.65-0.34 2.5-0.34 c0.85 0 1.7 0.11 2.5 0.34 c1.91-1.32 2.75-1.05 2.75-1.05 c0.55 1.41 0.2 2.45 0.1 2.71 c0.64 0.72 1.03 1.63 1.03 2.74 c0 3.92-2.34 4.78-4.57 5.03 c0.36 0.32 0.68 0.94 0.68 1.9 c0 1.37-0.01 2.48-0.01 2.81 c0 0.27 0.18 0.59 0.69 0.49 C19.14 20.65 22 16.79 22 12.26 C22 6.58 17.52 2 12 2 z"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">GitHub</span>
               <span class="research-chip-desc">Copilot deployment data</span>
+            </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
         </div>
@@ -2611,31 +2879,40 @@
         <!-- Group 2: Academic -->
         <div class="source-category">
           <div class="source-category-label">Academic</div>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://ethz.ch/en/research.html" target="_blank" rel="noopener noreferrer" aria-label="ETH Zurich — Agent evaluation study (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="2" width="10" height="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 L5 20 L19 20 L19 10"/><path d="M9 20 L9 13 L15 13 L15 20"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">ETH Z&uuml;rich</span>
               <span class="research-chip-desc">Agent evaluation study</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://metr.org/" target="_blank" rel="noopener noreferrer" aria-label="METR — Controlled developer study (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="2" width="10" height="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="6"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">METR</span>
               <span class="research-chip-desc">Controlled developer study</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://www.flowhunt.io/" target="_blank" rel="noopener noreferrer" aria-label="FlowHunt — Context-window benchmarks (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="2" width="10" height="10"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16 C5 13 7 13 10 16 C13 19 15 19 18 16 C20 14 21 14 22 15"/><path d="M2 11 C5 8 7 8 10 11 C13 14 15 14 18 11 C20 9 21 9 22 10"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">FlowHunt</span>
               <span class="research-chip-desc">Context-window benchmarks</span>
+            </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
         </div>
@@ -2643,29 +2920,35 @@
         <!-- Group 3: Practitioners -->
         <div class="source-category">
           <div class="source-category-label">Practitioners</div>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://twitter.com/bcherny" target="_blank" rel="noopener noreferrer" aria-label="Boris Cherny — Claude Code co-creator (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><polygon points="7,1 13,7 7,13 1,7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">Boris Cherny</span>
               <span class="research-chip-desc">Claude Code co-creator</span>
             </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
+            </span>
           </a>
-          <a class="research-chip" href="#research">
+          <a class="research-chip" href="https://twitter.com/dexhorthy" target="_blank" rel="noopener noreferrer" aria-label="Dex Horthy — Context engineering research (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
-              <svg viewBox="0 0 14 14" fill="currentColor"><polygon points="7,1 13,7 7,13 1,7"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21 C5 16 8 13 12 13 C16 13 19 16 19 21"/><path d="M9 6 L8 4"/><path d="M15 6 L16 4"/></svg>
             </span>
             <span class="research-chip-body">
               <span class="research-chip-name">Dex Horthy</span>
               <span class="research-chip-desc">Context engineering research</span>
+            </span>
+            <span class="research-chip-ext" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
         </div>
       </div>
 
       <div class="research-cta-wrap reveal" style="--reveal-delay: 0.32s;">
-        <a href="/research" class="btn-ghost">
+        <a href="/research.html" class="btn-ghost">
           Browse the research &rarr;
         </a>
       </div>
@@ -2990,6 +3273,37 @@
           btn.style.transform = '';
           rect = null;
         });
+      });
+    }
+
+    /* ----------------------------------------------------------------
+       Universal pills "+17 more" expand/collapse with stagger.
+       ---------------------------------------------------------------- */
+    var pillsToggle = document.getElementById('pills-toggle');
+    var pillsContainer = document.getElementById('universal-pills');
+    if (pillsToggle && pillsContainer) {
+      var prefersReducedMotionPills = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var moreIcon  = pillsToggle.querySelector('.more-icon');
+      var moreLabel = pillsToggle.querySelector('.more-label');
+      var extras    = pillsContainer.querySelectorAll('.tool-pill.is-extra');
+
+      // If reduced motion, zero out all per-pill stagger delays.
+      if (prefersReducedMotionPills) {
+        extras.forEach(function (el) { el.style.setProperty('--stagger-delay', '0ms'); });
+      }
+
+      pillsToggle.addEventListener('click', function () {
+        var isExpanded = pillsContainer.classList.toggle('is-expanded');
+        pillsToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        if (isExpanded) {
+          if (moreIcon)  moreIcon.textContent  = '\u2212'; // minus
+          if (moreLabel) moreLabel.textContent = 'show less';
+          // On collapse later, the existing transition handles it; on expand, also reverse stagger via CSS var. Keep simple: per-pill --stagger-delay set in markup applies on expand.
+        } else {
+          if (moreIcon)  moreIcon.textContent  = '+';
+          if (moreLabel) moreLabel.textContent = '17 more';
+        }
       });
     }
 
