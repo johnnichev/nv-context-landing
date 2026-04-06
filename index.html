@@ -1174,6 +1174,646 @@
     .proof-card { padding: 20px; }
     .problem-number { font-size: 40px; }
   }
+
+  /* ================================================================
+     SECTION 5 — WHAT GETS GENERATED  (file tree in terminal)
+     ================================================================ */
+  .generated-section {
+    background: var(--bg-elevated);
+  }
+  .generated-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 80%);
+  }
+
+  .tree-terminal-wrap {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+  }
+  /* Reuse .terminal chrome — no glow, this is documentation, not action */
+  .tree-terminal {
+    cursor: default;
+  }
+  .tree-terminal:hover {
+    transform: none;
+  }
+  .tree-body {
+    padding: 22px 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text-1);
+    overflow-x: auto;
+    text-align: left;
+  }
+  .tree-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    padding: 2px 8px;
+    margin: 0 -8px;
+    border-radius: var(--radius-sm);
+    transition: background var(--speed-fast) var(--ease-out-quad);
+    white-space: pre;
+    position: relative;
+  }
+  .tree-line:hover {
+    background: var(--bg-elevated-2);
+  }
+  .tree-glyph {
+    color: var(--text-4);
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .tree-name {
+    color: var(--text-1);
+  }
+  .tree-name.is-dir {
+    color: var(--text-2);
+  }
+  .tree-name.is-root {
+    color: var(--text-1);
+    font-weight: 600;
+  }
+  .tree-arrow {
+    color: var(--brand-hover);
+    margin: 0 8px 0 14px;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .tree-anno {
+    color: var(--text-3);
+    font-style: italic;
+    font-size: 13px;
+  }
+  .tree-coda {
+    margin-top: var(--space-6);
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-3);
+    font-style: italic;
+  }
+
+  /* ================================================================
+     SECTION 6 — THE HIERARCHY OF LEVERAGE
+     ================================================================ */
+  .leverage-section {
+    background: var(--bg-base);
+  }
+  .leverage-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 50%,
+        rgba(113, 112, 255, 0.05) 0%,
+        transparent 65%);
+  }
+
+  .leverage-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+  }
+  .leverage-card {
+    position: relative;
+    padding: 32px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+  }
+  .leverage-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .leverage-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .leverage-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 92px;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .leverage-label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: var(--weight-medium);
+  }
+  .leverage-bar-track {
+    position: relative;
+    height: 10px;
+    background: var(--bg-elevated-2);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+  }
+  .leverage-bar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: linear-gradient(90deg, var(--brand-deep), var(--brand) 60%, var(--brand-hover));
+    border-radius: var(--radius-pill);
+    transition: width 800ms var(--ease-out-quart);
+    box-shadow: 0 0 16px -2px var(--brand-glow-soft);
+  }
+  .leverage-bar.is-filled {
+    width: var(--bar-pct);
+  }
+  .leverage-row.is-gap .leverage-bar {
+    background: linear-gradient(90deg, var(--brand-deep), var(--brand-hover));
+    opacity: 0.85;
+  }
+  .leverage-score {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    text-align: right;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .leverage-score .gap-tag {
+    color: var(--brand-hover);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+  }
+  .leverage-divider {
+    margin: var(--space-5) 0 var(--space-4);
+    height: 1px;
+    background: var(--border-subtle);
+  }
+  .leverage-row.is-overall {
+    grid-template-columns: 200px 1fr 92px;
+  }
+  .leverage-row.is-overall .leverage-label {
+    color: var(--text-1);
+    font-weight: var(--weight-semibold);
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .leverage-row.is-overall .leverage-score {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-1);
+    text-shadow: 0 0 32px var(--brand-glow-soft);
+  }
+  .leverage-row.is-overall .leverage-score .scale {
+    color: var(--text-4);
+    font-size: 14px;
+  }
+
+  /* Card 2 — top recommendation callout */
+  .leverage-callout {
+    position: relative;
+    padding: 24px 28px;
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated-2);
+    border: 1px solid var(--border-default);
+    border-left: 3px solid var(--brand);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .leverage-callout-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-hover);
+    flex-shrink: 0;
+  }
+  .leverage-callout-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .leverage-callout-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .leverage-callout-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-hover);
+    font-weight: var(--weight-medium);
+  }
+  .leverage-callout-headline {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+    line-height: 1.45;
+  }
+  .leverage-callout-headline .arrow {
+    color: var(--brand-hover);
+    margin: 0 6px;
+  }
+  .leverage-callout-headline .gain {
+    color: var(--brand-hover);
+    font-weight: 600;
+  }
+  .leverage-callout-sub {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+  }
+
+  /* ================================================================
+     SECTION 7 — THE RESEARCH
+     ================================================================ */
+  .research-section {
+    background: var(--bg-elevated);
+  }
+  .research-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+  }
+
+  .research-stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto var(--space-7);
+    text-align: left;
+  }
+  .research-stat-line {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .research-stat-num {
+    font-family: var(--font-mono);
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, var(--brand-hover) 0%, var(--brand-deep) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 64px var(--brand-glow-soft);
+  }
+  .research-stat-label {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--text-3);
+    letter-spacing: 0;
+  }
+  .research-lede-wrap {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto var(--space-7);
+    text-align: left;
+  }
+  .research-lede-wrap .ds-lede {
+    margin: 0;
+  }
+
+  .research-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    margin-bottom: var(--space-5);
+  }
+  .research-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto var(--space-7);
+  }
+  .research-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated-2);
+    border: 1px solid var(--border-default);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-2);
+    font-weight: var(--weight-medium);
+    transition: border-color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad),
+                transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .research-chip:hover {
+    border-color: var(--border-glow);
+    background: rgba(113, 112, 255, 0.06);
+    color: var(--text-1);
+    transform: translateY(-1px);
+  }
+  .research-cta-wrap {
+    text-align: center;
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid var(--border-default);
+    color: var(--text-2);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-medium);
+    font-size: var(--body-size);
+    transition: border-color var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad),
+                transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .btn-ghost:hover {
+    border-color: var(--border-glow);
+    color: var(--text-1);
+    background: rgba(113, 112, 255, 0.04);
+    transform: translateY(-1px);
+  }
+
+  /* ================================================================
+     SECTION 8 — INSTALL + FINAL CTA
+     ================================================================ */
+  .cta-section {
+    position: relative;
+    background: var(--bg-base);
+    padding: calc(var(--section-y) * 1.25) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    inset: -10% -10% auto -10%;
+    height: 120%;
+    pointer-events: none;
+    z-index: -2;
+    background: radial-gradient(ellipse 55% 50% at 50% 40%,
+      rgba(113, 112, 255, 0.20) 0%,
+      rgba(94, 106, 210, 0.10) 28%,
+      rgba(48, 128, 255, 0.04) 50%,
+      rgba(0, 0, 0, 0) 72%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  }
+  .cta-section::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 75%);
+            mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 75%);
+  }
+  .cta-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .cta-h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 7vw, 80px);
+    line-height: 1.04;
+    letter-spacing: -0.018em;
+    font-weight: 400;
+    margin: 0 0 var(--space-7);
+    max-width: 18ch;
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 1.0) 0%,
+      rgba(255, 255, 255, 0.55) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .cta-h2 .serif-italic {
+    font-style: italic;
+    background: linear-gradient(180deg,
+      #b4bcd0 0%,
+      var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-terminal-primary {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--space-6);
+  }
+  .cta-button-row {
+    margin-bottom: var(--space-7);
+  }
+  .cta-rule {
+    width: 100%;
+    max-width: 480px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--border-default) 30%,
+      var(--border-default) 70%,
+      transparent 100%);
+    margin: 0 0 var(--space-6);
+  }
+  .cta-caption {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-3);
+    margin-bottom: var(--space-5);
+    font-style: italic;
+  }
+  .cta-terminal-secondary {
+    width: 100%;
+    max-width: 600px;
+  }
+  .cta-terminal-secondary .code-body {
+    padding: 22px 24px;
+    line-height: 1.85;
+  }
+  .cta-line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  /* ================================================================
+     FOOTER
+     ================================================================ */
+  .footer {
+    padding: var(--space-7) var(--page-padding-inline) var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-base);
+  }
+  .footer-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .footer-brand-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text-2);
+  }
+  .footer-brand-by {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-4);
+  }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  .footer-links a:hover {
+    color: var(--text-1);
+  }
+  .footer-signature {
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer-signature a {
+    color: var(--text-3);
+    border-bottom: 1px dashed var(--border-default);
+    padding-bottom: 1px;
+    transition: color var(--speed-fast) var(--ease-out-quad),
+                border-color var(--speed-fast) var(--ease-out-quad);
+  }
+  .footer-signature a:hover {
+    color: var(--brand-hover);
+    border-color: var(--brand-hover);
+  }
+
+  /* ================================================================
+     RESPONSIVE — sections 5 / 6 / 7 / 8 + footer
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .cta-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
+  }
+  @media (max-width: 720px) {
+    .tree-body { padding: 18px 16px; font-size: 12px; }
+    .tree-anno { font-size: 11px; }
+    .tree-arrow { margin: 0 4px 0 8px; }
+
+    .leverage-card { padding: 22px; }
+    .leverage-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+    .leverage-row .leverage-score { justify-content: flex-start; }
+    .leverage-row.is-overall {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .leverage-row.is-overall .leverage-score { justify-content: flex-end; }
+    .leverage-callout {
+      grid-template-columns: 1fr;
+      padding: 20px 22px;
+    }
+    .leverage-callout-headline { font-size: 15px; }
+
+    .research-stat-line { gap: var(--space-3); }
+    .research-stat-num { font-size: clamp(40px, 11vw, 56px); }
+    .research-stat-label { font-size: 14px; }
+
+    .cta-section { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .cta-h2 { font-size: clamp(36px, 10vw, 52px); }
+    .cta-terminal-primary, .cta-terminal-secondary { max-width: 100%; }
+    .cta-terminal-secondary .code-body { padding: 16px 14px; font-size: 11px; }
+    .cta-button-row .btn-primary { width: 100%; }
+
+    .footer-row { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+    .footer-links { gap: var(--space-4); }
+  }
+  @media (max-width: 380px) {
+    .tree-body { font-size: 11px; }
+    .leverage-card { padding: 18px; }
+    .research-stat-num { font-size: 44px; }
+  }
   </style>
 </head>
 <body>
@@ -1512,16 +2152,319 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       SECTION 5 — WHAT GETS GENERATED
+       ============================================================ -->
+  <section id="generated" class="ds-section generated-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">What Gets Generated</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Nine files. One workflow.<br />
+          <span class="muted">Zero magic.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Open your terminal. Run one command. Get this:
+        </p>
+      </div>
+
+      <div class="tree-terminal-wrap reveal" style="--reveal-delay: 0.18s;">
+        <div class="terminal tree-terminal" aria-label="Generated file tree">
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+          </div>
+          <div class="tree-body" role="tree">
+            <div class="tree-line"><span class="tree-name is-root">your-repo/</span></div>
+            <div class="tree-line" title="Universal config read by 25+ AI coding tools (Cursor, Copilot, Aider, etc.)"><span class="tree-glyph">├── </span><span class="tree-name">AGENTS.md</span><span class="tree-arrow">←</span><span class="tree-anno">Universal config (25+ AI tools)</span></div>
+            <div class="tree-line" title="Claude-specific config with @imports for scoped subfolders"><span class="tree-glyph">├── </span><span class="tree-name">CLAUDE.md</span><span class="tree-arrow">←</span><span class="tree-anno">@imports root</span></div>
+            <div class="tree-line"><span class="tree-glyph">├── </span><span class="tree-name is-dir">tests/</span></div>
+            <div class="tree-line" title="Testing-specific instructions, only loaded in test contexts"><span class="tree-glyph">│   └── </span><span class="tree-name">CLAUDE.md</span><span class="tree-arrow">←</span><span class="tree-anno">Test scope</span></div>
+            <div class="tree-line"><span class="tree-glyph">├── </span><span class="tree-name is-dir">src/</span></div>
+            <div class="tree-line" title="Source-specific instructions, only loaded when editing source"><span class="tree-glyph">│   └── </span><span class="tree-name">CLAUDE.md</span><span class="tree-arrow">←</span><span class="tree-anno">Source scope</span></div>
+            <div class="tree-line" title="Template for handing off work between sessions or developers"><span class="tree-glyph">├── </span><span class="tree-name">HANDOFF.md</span><span class="tree-arrow">←</span><span class="tree-anno">Session handoff</span></div>
+            <div class="tree-line" title="Token budget protection — files Claude should never load"><span class="tree-glyph">├── </span><span class="tree-name">.claudeignore</span><span class="tree-arrow">←</span><span class="tree-anno">Token budget</span></div>
+            <div class="tree-line"><span class="tree-glyph">├── </span><span class="tree-name is-dir">.claude/</span></div>
+            <div class="tree-line" title="Auto-format hook, branch protection, PostCompact handler"><span class="tree-glyph">│   └── </span><span class="tree-name">settings.local.json</span><span class="tree-arrow">←</span><span class="tree-anno">Hooks</span></div>
+            <div class="tree-line"><span class="tree-glyph">└── </span><span class="tree-name is-dir">.github/workflows/</span></div>
+            <div class="tree-line" title="GitHub Action that updates configs from PR review feedback"><span class="tree-glyph">    └── </span><span class="tree-name">learn-from-reviews.yml</span><span class="tree-arrow">←</span><span class="tree-anno">Compounding</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="tree-coda reveal" style="--reveal-delay: 0.26s;">
+        Each file has a job. No duplication.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6 — HIERARCHY OF LEVERAGE
+       ============================================================ -->
+  <section id="leverage" class="ds-section leverage-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">Hierarchy of Leverage</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Six layers.<br />
+          <span class="verdict">One score.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Every repo gets graded on six dimensions of AI-readiness. Here&rsquo;s a sample diagnostic:
+        </p>
+      </div>
+
+      <div class="leverage-stack" id="leverage-stack">
+
+        <!-- Card 1: diagnostic table -->
+        <div class="leverage-card reveal" style="--reveal-delay: 0.18s;">
+          <div class="leverage-rows">
+            <div class="leverage-row">
+              <span class="leverage-label">Verification</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 80%;"></div></div>
+              <span class="leverage-score">8<span style="color:var(--text-4);">/10</span></span>
+            </div>
+            <div class="leverage-row">
+              <span class="leverage-label">CLAUDE.md quality</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 80%;"></div></div>
+              <span class="leverage-score">8<span style="color:var(--text-4);">/10</span></span>
+            </div>
+            <div class="leverage-row is-gap">
+              <span class="leverage-label">Hooks</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 20%;"></div></div>
+              <span class="leverage-score">2<span style="color:var(--text-4);">/10</span><span class="gap-tag">&larr; gap</span></span>
+            </div>
+            <div class="leverage-row">
+              <span class="leverage-label">Skills</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 80%;"></div></div>
+              <span class="leverage-score">8<span style="color:var(--text-4);">/10</span></span>
+            </div>
+            <div class="leverage-row is-gap">
+              <span class="leverage-label">Subagent patterns</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 0%;"></div></div>
+              <span class="leverage-score">0<span style="color:var(--text-4);">/10</span><span class="gap-tag">&larr; gap</span></span>
+            </div>
+            <div class="leverage-row">
+              <span class="leverage-label">Session management</span>
+              <div class="leverage-bar-track"><div class="leverage-bar" style="--bar-pct: 80%;"></div></div>
+              <span class="leverage-score">8<span style="color:var(--text-4);">/10</span></span>
+            </div>
+          </div>
+
+          <div class="leverage-divider" aria-hidden="true"></div>
+
+          <div class="leverage-row is-overall">
+            <span class="leverage-label">Overall</span>
+            <span></span>
+            <span class="leverage-score">34<span class="scale">&thinsp;/60</span></span>
+          </div>
+        </div>
+
+        <!-- Card 2: top recommendation callout -->
+        <div class="leverage-callout reveal" style="--reveal-delay: 0.28s;">
+          <div class="leverage-callout-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="leverage-callout-body">
+            <span class="leverage-callout-eyebrow">Top recommendation</span>
+            <span class="leverage-callout-headline">Set up hooks <span class="arrow">&rarr;</span> <span class="gain">+14 points</span> <span class="arrow">&rarr;</span> 48/60</span>
+            <span class="leverage-callout-sub">Highest-leverage move on this repo.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7 — THE RESEARCH
+       ============================================================ -->
+  <section id="research" class="ds-section research-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head" style="align-items: stretch; text-align: left;">
+        <span class="ds-eyebrow reveal" style="align-self: flex-start;">The Research</span>
+
+        <div class="research-stats reveal" style="--reveal-delay: 0.06s;">
+          <div class="research-stat-line">
+            <span class="research-stat-num">12</span>
+            <span class="research-stat-label">documents</span>
+          </div>
+          <div class="research-stat-line">
+            <span class="research-stat-num">471 KB</span>
+            <span class="research-stat-label">of source material</span>
+          </div>
+          <div class="research-stat-line">
+            <span class="research-stat-num">200+</span>
+            <span class="research-stat-label">academic + industry references</span>
+          </div>
+        </div>
+
+        <div class="research-lede-wrap reveal" style="--reveal-delay: 0.12s;">
+          <p class="ds-lede">
+            This isn&rsquo;t pop AI. It&rsquo;s the actual research<br />
+            behind every recommendation in the skill.
+          </p>
+        </div>
+      </div>
+
+      <p class="research-caption reveal" style="--reveal-delay: 0.16s;">Sources include</p>
+
+      <div class="research-chips reveal" style="--reveal-delay: 0.20s;">
+        <span class="research-chip">Anthropic</span>
+        <span class="research-chip">ETH Z&uuml;rich</span>
+        <span class="research-chip">Google DeepMind</span>
+        <span class="research-chip">Manus</span>
+        <span class="research-chip">GitHub</span>
+        <span class="research-chip">Boris Cherny</span>
+        <span class="research-chip">Dex Horthy</span>
+        <span class="research-chip">JetBrains</span>
+        <span class="research-chip">METR</span>
+        <span class="research-chip">OpenAI</span>
+        <span class="research-chip">FlowHunt</span>
+      </div>
+
+      <div class="research-cta-wrap reveal" style="--reveal-delay: 0.28s;">
+        <a href="https://github.com/johnnichev/nv-context/tree/main/research" class="btn-ghost" target="_blank" rel="noopener">
+          Browse the research &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 8 — INSTALL + FINAL CTA
+       ============================================================ -->
+  <section id="install" class="cta-section">
+    <div class="cta-inner">
+
+      <h2 class="cta-h2 reveal">
+        Stop fighting your AI agent.<br />
+        <span class="serif-italic">Start engineering its context.</span>
+      </h2>
+
+      <div class="cta-terminal-primary reveal" style="--reveal-delay: 0.08s;">
+        <div
+          class="terminal is-glowing"
+          id="install-terminal-2"
+          role="button"
+          tabindex="0"
+          aria-label="Click to copy install command"
+        >
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+            <button type="button" class="copy" id="copy-btn-2" aria-label="Copy install command">
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <div class="code-body">
+            <span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-context -g -y</span><span class="caret" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-button-row reveal" style="--reveal-delay: 0.16s;">
+        <button type="button" class="btn btn-primary" id="install-btn-2">
+          Install in 30 seconds
+        </button>
+      </div>
+
+      <div class="cta-rule reveal" style="--reveal-delay: 0.22s;" aria-hidden="true"></div>
+
+      <p class="cta-caption reveal" style="--reveal-delay: 0.26s;">
+        Or install all four nv: skills:
+      </p>
+
+      <div class="cta-terminal-secondary reveal" style="--reveal-delay: 0.32s;">
+        <div
+          class="terminal"
+          id="install-terminal-all"
+          role="button"
+          tabindex="0"
+          aria-label="Click to copy all four install commands"
+        >
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+            <button type="button" class="copy" id="copy-btn-all" aria-label="Copy all install commands">
+              <span class="copy-label">Copy all</span>
+            </button>
+          </div>
+          <div class="code-body">
+            <span class="cta-line"><span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-context -g -y</span></span>
+            <span class="cta-line"><span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-dev -g -y</span></span>
+            <span class="cta-line"><span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-ops -g -y</span></span>
+            <span class="cta-line"><span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-design -g -y</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <div class="footer-brand">
+          <span class="footer-brand-name">nv:context</span>
+          <span class="footer-brand-by">by johnnichev</span>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://twitter.com/johnnichev" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://skills.sh" target="_blank" rel="noopener">Skills.sh</a>
+          <a href="https://github.com/johnnichev/nv-context/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+        </nav>
+      </div>
+      <div class="footer-signature">
+        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a> &mdash; the methodology that built this page
+      </div>
+    </div>
+  </footer>
+
   <!-- Future sections will be appended here -->
 
   <script>
   (function () {
     var INSTALL_CMD = 'npx skills add johnnichev/nv-context -g -y';
+    var ALL_SKILLS_CMD = [
+      'npx skills add johnnichev/nv-context -g -y',
+      'npx skills add johnnichev/nv-dev -g -y',
+      'npx skills add johnnichev/nv-ops -g -y',
+      'npx skills add johnnichev/nv-design -g -y'
+    ].join('\n');
+
     var terminal = document.getElementById('install-terminal');
     var copyBtn  = document.getElementById('copy-btn');
     var installBtn = document.getElementById('install-btn');
     var copyLabel = copyBtn ? copyBtn.querySelector('.copy-label') : null;
     var resetTimer = null;
+
+    // Section 8 elements
+    var terminal2 = document.getElementById('install-terminal-2');
+    var copyBtn2  = document.getElementById('copy-btn-2');
+    var installBtn2 = document.getElementById('install-btn-2');
+    var copyLabel2 = copyBtn2 ? copyBtn2.querySelector('.copy-label') : null;
+    var resetTimer2 = null;
+
+    var terminalAll = document.getElementById('install-terminal-all');
+    var copyBtnAll  = document.getElementById('copy-btn-all');
+    var copyLabelAll = copyBtnAll ? copyBtnAll.querySelector('.copy-label') : null;
+    var resetTimerAll = null;
 
     function showToast(text) {
       // Remove any existing toast first
@@ -1549,6 +2492,28 @@
       }, 2000);
     }
 
+    function flashCopiedState2() {
+      if (!copyBtn2 || !copyLabel2) return;
+      copyBtn2.classList.add('is-copied');
+      copyLabel2.textContent = 'Copied \u2713';
+      if (resetTimer2) clearTimeout(resetTimer2);
+      resetTimer2 = setTimeout(function () {
+        copyBtn2.classList.remove('is-copied');
+        copyLabel2.textContent = 'Copy';
+      }, 2000);
+    }
+
+    function flashCopiedStateAll() {
+      if (!copyBtnAll || !copyLabelAll) return;
+      copyBtnAll.classList.add('is-copied');
+      copyLabelAll.textContent = 'Copied \u2713';
+      if (resetTimerAll) clearTimeout(resetTimerAll);
+      resetTimerAll = setTimeout(function () {
+        copyBtnAll.classList.remove('is-copied');
+        copyLabelAll.textContent = 'Copy all';
+      }, 2000);
+    }
+
     function fallbackCopy(text) {
       var ta = document.createElement('textarea');
       ta.value = text;
@@ -1561,33 +2526,61 @@
       document.body.removeChild(ta);
     }
 
-    function copyInstall() {
+    function copyText(text, onSuccess) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(INSTALL_CMD).then(
-          function () { flashCopiedState(); showToast('Copied \u2713  ' + INSTALL_CMD); },
-          function () { fallbackCopy(INSTALL_CMD); flashCopiedState(); showToast('Copied \u2713'); }
+        navigator.clipboard.writeText(text).then(
+          function () { onSuccess(); },
+          function () { fallbackCopy(text); onSuccess(); }
         );
       } else {
-        fallbackCopy(INSTALL_CMD);
-        flashCopiedState();
-        showToast('Copied \u2713');
+        fallbackCopy(text);
+        onSuccess();
       }
     }
 
-    if (terminal) {
-      terminal.addEventListener('click', function (e) {
-        copyInstall();
+    function copyInstall() {
+      copyText(INSTALL_CMD, function () {
+        flashCopiedState();
+        showToast('Copied \u2713  ' + INSTALL_CMD);
       });
-      terminal.addEventListener('keydown', function (e) {
+    }
+
+    function copyInstall2() {
+      copyText(INSTALL_CMD, function () {
+        flashCopiedState2();
+        showToast('Copied \u2713  ' + INSTALL_CMD);
+      });
+    }
+
+    function copyAllSkills() {
+      copyText(ALL_SKILLS_CMD, function () {
+        flashCopiedStateAll();
+        showToast('Copied 4 commands \u2713');
+      });
+    }
+
+    function wireTerminal(el, handler) {
+      if (!el) return;
+      el.addEventListener('click', function () { handler(); });
+      el.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          copyInstall();
+          handler();
         }
       });
     }
+
+    wireTerminal(terminal, copyInstall);
     if (installBtn) {
       installBtn.addEventListener('click', function () { copyInstall(); });
     }
+
+    wireTerminal(terminal2, copyInstall2);
+    if (installBtn2) {
+      installBtn2.addEventListener('click', function () { copyInstall2(); });
+    }
+
+    wireTerminal(terminalAll, copyAllSkills);
 
     /* ----------------------------------------------------------------
        Scroll-triggered reveal for sections after the hero.
@@ -1613,6 +2606,35 @@
       } else {
         // No IO support — show everything immediately.
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    }
+
+    /* ----------------------------------------------------------------
+       Leverage bars: animate fill on entrance with 100ms stagger.
+       ---------------------------------------------------------------- */
+    var leverageStack = document.getElementById('leverage-stack');
+    if (leverageStack) {
+      var bars = leverageStack.querySelectorAll('.leverage-bar');
+      if ('IntersectionObserver' in window) {
+        var leverageIo = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              bars.forEach(function (bar, i) {
+                setTimeout(function () {
+                  bar.classList.add('is-filled');
+                }, i * 100);
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -10% 0px',
+          threshold: 0.25
+        });
+        leverageIo.observe(leverageStack);
+      } else {
+        bars.forEach(function (bar) { bar.classList.add('is-filled'); });
       }
     }
   })();
