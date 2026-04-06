@@ -685,6 +685,495 @@
     .hero h1 { font-size: 40px; }
     .terminal .code-body { font-size: 11px; padding: 16px 14px; }
   }
+
+  /* ================================================================
+     SCROLL REVEAL — shared by all sections after the hero
+     ================================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+    transition: opacity 0.9s var(--ease-out-quart),
+                transform 0.9s var(--ease-out-quart),
+                filter 0.9s var(--ease-out-quart);
+    will-change: opacity, transform, filter;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  /* Stagger via inline --reveal-delay (set per element) */
+  .reveal { transition-delay: var(--reveal-delay, 0s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
+
+  /* ================================================================
+     SHARED SECTION CHROME (proof / problem / laws)
+     ================================================================ */
+  .ds-section {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .ds-section-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+  .ds-section-inner.is-narrow { max-width: var(--container-narrow); }
+
+  .ds-section-head {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ds-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brand-hover);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    margin-bottom: var(--space-5);
+  }
+  .ds-h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5.6vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin: 0 0 var(--space-5);
+    max-width: 18ch;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-h2 .muted {
+    -webkit-text-fill-color: var(--text-3);
+            color: var(--text-3);
+    background: none;
+  }
+  .ds-h2 .verdict {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ================================================================
+     SECTION 2 — PRODUCTION PROOF
+     ================================================================ */
+  .proof-section {
+    background: var(--bg-base);
+  }
+  .proof-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+
+  .proof-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .proof-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .proof-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+
+  .proof-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+  .proof-card-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .proof-card-tag-featured {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-hover);
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.20);
+    white-space: nowrap;
+  }
+  .proof-card-sub {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .proof-card-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4) 0 var(--space-5);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-5);
+  }
+  .proof-arrow-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .proof-arrow-row .label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .proof-arrow-row .value {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+  }
+  .proof-arrow-row .value .arrow {
+    color: var(--brand-hover);
+    margin: 0 4px;
+  }
+  .proof-arrow-row .value .muted {
+    color: var(--text-4);
+  }
+
+  .proof-card-score {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+  .proof-card-score .score-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .proof-card-score .score-value {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 32px var(--brand-glow-soft);
+  }
+  .proof-card-score .score-value .arrow {
+    color: var(--brand-hover);
+    margin: 0 6px;
+  }
+  .proof-card-score .score-value .scale {
+    color: var(--text-4);
+    font-size: 18px;
+  }
+
+  .proof-card-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+    margin-bottom: var(--space-6);
+  }
+  .proof-metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .proof-metric .k {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    flex: 1;
+    min-width: 0;
+  }
+  .proof-metric .v {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-1);
+    text-align: right;
+    letter-spacing: -0.01em;
+  }
+  .proof-metric .v .accent { color: var(--brand-hover); font-weight: 600; }
+
+  .proof-card-link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: var(--weight-medium);
+    color: var(--brand-hover);
+    transition: gap var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad);
+  }
+  .proof-card-link:hover {
+    gap: 10px;
+    color: var(--text-1);
+  }
+
+  /* ================================================================
+     SECTION 3 — THE PROBLEM
+     ================================================================ */
+  .problem-section {
+    background: var(--bg-elevated);
+  }
+  .problem-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 50%,
+        rgba(113, 112, 255, 0.06) 0%,
+        transparent 60%);
+  }
+
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .problem-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: var(--space-6);
+    align-items: center;
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .problem-row:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .problem-number {
+    font-family: var(--font-mono);
+    font-size: clamp(40px, 5.6vw, 64px);
+    line-height: 1;
+    font-weight: 600;
+    color: var(--brand-hover);
+    letter-spacing: -0.03em;
+    text-shadow: 0 0 32px var(--brand-glow);
+    text-align: right;
+  }
+  .problem-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .problem-text .title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text-1);
+    font-weight: var(--weight-medium);
+  }
+  .problem-text .source {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--text-3);
+  }
+  .problem-coda {
+    margin-top: var(--space-7);
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-3);
+    font-style: italic;
+  }
+  .problem-coda .accent {
+    color: var(--brand-hover);
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  /* ================================================================
+     SECTION 4 — THE 8 LAWS
+     ================================================================ */
+  .laws-section {
+    background: var(--bg-base);
+  }
+  .laws-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+  .law-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    min-height: 180px;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .law-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .law-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+  .law-number {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brand-hover);
+    letter-spacing: 0.08em;
+  }
+  .law-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+  }
+  .law-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-3);
+    margin-top: auto;
+  }
+
+  /* ================================================================
+     RESPONSIVE — sections 2 / 3 / 4
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .ds-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .laws-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .proof-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+  }
+  @media (max-width: 720px) {
+    .ds-section { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .ds-h2 { font-size: clamp(32px, 9vw, 44px); }
+    .ds-section-head { margin-bottom: var(--space-7); }
+    .problem-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+      padding: var(--space-5) 0;
+    }
+    .problem-number {
+      text-align: left;
+      font-size: 48px;
+    }
+    .laws-grid { grid-template-columns: 1fr; }
+    .law-card { min-height: auto; }
+    .proof-card { padding: 24px; }
+    .proof-card-score .score-value { font-size: 28px; }
+  }
+  @media (max-width: 380px) {
+    .ds-h2 { font-size: 30px; }
+    .proof-card { padding: 20px; }
+    .problem-number { font-size: 40px; }
+  }
   </style>
 </head>
 <body>
@@ -772,7 +1261,258 @@
     </div>
   </section>
 
-  <!-- Future sections (proof, problem, laws, etc.) will be appended here -->
+  <!-- ============================================================
+       SECTION 2 — PRODUCTION PROOF
+       ============================================================ -->
+  <section id="proof" class="ds-section proof-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">Production Proof</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Real repos. Real numbers.<br />
+          <span class="muted">No demos.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Three production codebases. Same skill applied. Here's what changed.
+        </p>
+      </div>
+
+      <div class="proof-grid">
+
+        <!-- Card 1: selectools -->
+        <article class="proof-card reveal" style="--reveal-delay: 0.18s;">
+          <div class="proof-card-head">
+            <span class="proof-card-name">selectools</span>
+            <span class="proof-card-tag-featured">Most detailed</span>
+          </div>
+          <div class="proof-card-sub">Python SDK &middot; 4,612 tests</div>
+
+          <div class="proof-card-arrows">
+            <div class="proof-arrow-row">
+              <span class="label">Maturity</span>
+              <span class="value">L3<span class="arrow">&rarr;</span>L5-L6</span>
+            </div>
+          </div>
+
+          <div class="proof-card-score">
+            <span class="score-label">Leverage</span>
+            <span class="score-value">49<span class="arrow">&rarr;</span>58<span class="scale">&thinsp;/60</span></span>
+          </div>
+
+          <div class="proof-card-metrics">
+            <div class="proof-metric">
+              <span class="k">CLAUDE.md</span>
+              <span class="v">440 &rarr; 67 <span class="accent">(&minus;85%)</span></span>
+            </div>
+            <div class="proof-metric">
+              <span class="k">Token budget</span>
+              <span class="v"><span class="accent">&minus;53%</span></span>
+            </div>
+          </div>
+
+          <a href="#" class="proof-card-link">Read the case study &rarr;</a>
+        </article>
+
+        <!-- Card 2: saas-platform -->
+        <article class="proof-card reveal" style="--reveal-delay: 0.28s;">
+          <div class="proof-card-head">
+            <span class="proof-card-name">saas-platform</span>
+          </div>
+          <div class="proof-card-sub">Multi-product AI SaaS</div>
+
+          <div class="proof-card-arrows">
+            <div class="proof-arrow-row">
+              <span class="label">Maturity</span>
+              <span class="value">L4<span class="arrow">&rarr;</span>L6</span>
+            </div>
+          </div>
+
+          <div class="proof-card-score">
+            <span class="score-label">Leverage</span>
+            <span class="score-value">17<span class="arrow">&rarr;</span>49<span class="scale">&thinsp;/60</span></span>
+          </div>
+
+          <div class="proof-card-metrics">
+            <div class="proof-metric">
+              <span class="k">SESSION.md</span>
+              <span class="v">805 &rarr; 59 <span class="accent">(&minus;93%)</span></span>
+            </div>
+            <div class="proof-metric">
+              <span class="k">Tokens saved / session</span>
+              <span class="v"><span class="accent">15,800</span></span>
+            </div>
+            <div class="proof-metric">
+              <span class="k">Bugs found</span>
+              <span class="v"><span class="accent">81</span></span>
+            </div>
+          </div>
+
+          <a href="#" class="proof-card-link">Read the case study &rarr;</a>
+        </article>
+
+        <!-- Card 3: sheriff -->
+        <article class="proof-card reveal" style="--reveal-delay: 0.38s;">
+          <div class="proof-card-head">
+            <span class="proof-card-name">sheriff</span>
+          </div>
+          <div class="proof-card-sub">Python + TypeScript</div>
+
+          <div class="proof-card-arrows">
+            <div class="proof-arrow-row">
+              <span class="label">Maturity</span>
+              <span class="value">L4<span class="arrow">&rarr;</span>L5</span>
+            </div>
+          </div>
+
+          <div class="proof-card-score">
+            <span class="score-label">Leverage</span>
+            <span class="score-value">36<span class="arrow">&rarr;</span>42<span class="scale">&thinsp;/60</span></span>
+          </div>
+
+          <div class="proof-card-metrics">
+            <div class="proof-metric">
+              <span class="k">Strategy</span>
+              <span class="v">Incremental polish</span>
+            </div>
+            <div class="proof-metric">
+              <span class="k">Already-strong setup</span>
+              <span class="v"><span class="accent">Coverage gate</span></span>
+            </div>
+          </div>
+
+          <a href="#" class="proof-card-link">Read the case study &rarr;</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — THE PROBLEM
+       ============================================================ -->
+  <section id="problem" class="ds-section problem-section">
+    <div class="ds-section-inner is-narrow">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">The Problem</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Bad context doesn't just not help.<br />
+          <span class="verdict">It actively hurts.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Most agent failures aren't model failures.<br />
+          Five things the research keeps confirming:
+        </p>
+      </div>
+
+      <div class="problem-list">
+        <div class="problem-row reveal" style="--reveal-delay: 0.18s;">
+          <div class="problem-number">3%</div>
+          <div class="problem-text">
+            <span class="title">Auto-generated configs reduce agent success</span>
+            <span class="source">ETH Zurich</span>
+          </div>
+        </div>
+        <div class="problem-row reveal" style="--reveal-delay: 0.26s;">
+          <div class="problem-number">19%</div>
+          <div class="problem-text">
+            <span class="title">Slower performance for experienced devs with bad AI context</span>
+            <span class="source">METR controlled study</span>
+          </div>
+        </div>
+        <div class="problem-row reveal" style="--reveal-delay: 0.34s;">
+          <div class="problem-number">40%+</div>
+          <div class="problem-text">
+            <span class="title">Of AI project failures stem from poor context</span>
+            <span class="source">IntuitionLabs</span>
+          </div>
+        </div>
+        <div class="problem-row reveal" style="--reveal-delay: 0.42s;">
+          <div class="problem-number">40%</div>
+          <div class="problem-text">
+            <span class="title">Of context window outperforms 90% (focus beats volume)</span>
+            <span class="source">Dex Horthy</span>
+          </div>
+        </div>
+        <div class="problem-row reveal" style="--reveal-delay: 0.50s;">
+          <div class="problem-number">300</div>
+          <div class="problem-text">
+            <span class="title">Focused tokens beats 113K unfocused tokens</span>
+            <span class="source">FlowHunt</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="problem-coda reveal" style="--reveal-delay: 0.60s;">
+        We applied all of this to <span class="accent">nv:context</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — THE 8 LAWS
+       ============================================================ -->
+  <section id="laws" class="ds-section laws-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">The 8 Laws</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Eight rules,<br />
+          <span class="verdict">one philosophy.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Distilled from 200+ research sources and three production case studies.
+        </p>
+      </div>
+
+      <div class="laws-grid">
+        <article class="law-card reveal" style="--reveal-delay: 0.18s;">
+          <span class="law-number">01</span>
+          <h3 class="law-title">Less is more</h3>
+          <p class="law-desc">Every line competes with the actual task for attention.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.24s;">
+          <span class="law-number">02</span>
+          <h3 class="law-title">Landmines, not maps</h3>
+          <p class="law-desc">Document what agents can't discover by reading code.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.30s;">
+          <span class="law-number">03</span>
+          <h3 class="law-title">Commands beat prose</h3>
+          <p class="law-desc">Snippets with full flags beat paragraphs of explanation.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.36s;">
+          <span class="law-number">04</span>
+          <h3 class="law-title">Context is finite</h3>
+          <p class="law-desc">150-200 instructions max. Beyond that, attention degrades.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.42s;">
+          <span class="law-number">05</span>
+          <h3 class="law-title">Progressive disclosure</h3>
+          <p class="law-desc">Load context layer by need. Not everything, not at once.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.48s;">
+          <span class="law-number">06</span>
+          <h3 class="law-title">Hooks for determinism</h3>
+          <p class="law-desc">Critical rules need 100% compliance. Use hooks, not hope.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.54s;">
+          <span class="law-number">07</span>
+          <h3 class="law-title">Negative instructions backfire</h3>
+          <p class="law-desc">Say "MUST do X", not "don't do Y". Negation is fragile.</p>
+        </article>
+        <article class="law-card reveal" style="--reveal-delay: 0.60s;">
+          <span class="law-number">08</span>
+          <h3 class="law-title">Compact proactively</h3>
+          <p class="law-desc">60% safe. 70% precision drops. 85% hallucinations begin.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future sections will be appended here -->
 
   <script>
   (function () {
@@ -847,6 +1587,33 @@
     }
     if (installBtn) {
       installBtn.addEventListener('click', function () { copyInstall(); });
+    }
+
+    /* ----------------------------------------------------------------
+       Scroll-triggered reveal for sections after the hero.
+       Adds .is-visible to .reveal elements as they enter the viewport.
+       Uses --reveal-delay (CSS custom property on the element) for stagger.
+       ---------------------------------------------------------------- */
+    var revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -8% 0px',
+          threshold: 0.12
+        });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        // No IO support — show everything immediately.
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
     }
   })();
   </script>
