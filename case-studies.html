@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Case Studies — nv:context</title>
-  <meta name="description" content="Three production codebases. Same context engineering skill applied. Real numbers, real changes, real insights from selectools, saas-platform, and sheriff." />
+  <title>Case Studies | nv:context</title>
+  <meta name="description" content="Three production codebases. Same context engineering skill applied. Real numbers, real changes, real insights from selectools, nichevlabs, and sheriff." />
 
   <!-- Open Graph / Social -->
-  <meta property="og:title" content="Case Studies — nv:context">
-  <meta property="og:description" content="Three production repos. Three real transformations. The full reports on what nv:context did to selectools, saas-platform, and sheriff.">
+  <meta property="og:title" content="Case Studies | nv:context">
+  <meta property="og:description" content="Three production repos. Three real transformations. The full reports on what nv:context did to selectools, nichevlabs, and sheriff.">
   <meta property="og:image" content="https://skills.nichevlabs.com/og-image.png">
   <meta property="og:url" content="https://skills.nichevlabs.com/case-studies">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Case Studies — nv:context">
+  <meta name="twitter:title" content="Case Studies | nv:context">
   <meta name="twitter:description" content="Three production repos. Three real transformations. Full technical reports.">
   <meta name="twitter:image" content="https://skills.nichevlabs.com/og-image.png">
 
@@ -314,9 +314,115 @@
   .page-intro-inner {
     max-width: var(--container-wide);
     margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .page-intro-left {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    min-width: 0;
+  }
+  .page-intro-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    align-self: stretch;
+  }
+  /* Preview card (TOC + visual anchor) */
+  .preview-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .preview-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .preview-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 18px 44px -18px var(--brand-glow);
+  }
+  .preview-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .preview-card-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .preview-card-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-hover);
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.20);
+  }
+  .preview-card-score {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    margin-top: 4px;
+  }
+  .preview-card-score .arrow { color: var(--brand-hover); margin: 0 6px; }
+  .preview-card-score .scale { color: var(--text-4); font-size: 14px; }
+  .preview-card-link {
+    margin-top: 6px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-3);
+    transition: color var(--speed-slow) var(--ease-out-quart);
+  }
+  .preview-card-link .arrow {
+    display: inline-block;
+    transition: transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .preview-card:hover .preview-card-link { color: var(--text-1); }
+  .preview-card:hover .preview-card-link .arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) {
+    .preview-card, .preview-card:hover,
+    .preview-card-link .arrow, .preview-card:hover .preview-card-link .arrow {
+      transition: none;
+      transform: none;
+    }
   }
   .intro-eyebrow {
     display: inline-block;
@@ -334,13 +440,14 @@
   }
   .intro-h1 {
     font-family: var(--font-serif);
-    font-size: clamp(44px, 7.6vw, 88px);
+    font-size: clamp(40px, 5.6vw, 72px);
     line-height: 1.04;
     letter-spacing: var(--display-tracking);
     font-weight: 400;
     color: var(--text-1);
     margin: 0 0 var(--space-5);
-    max-width: 16ch;
+    max-width: 18ch;
+    text-wrap: balance;
     background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
     -webkit-background-clip: text;
             background-clip: text;
@@ -839,7 +946,7 @@
   }
 
   /* ================================================================
-     FOOTER CTA — install command
+     FOOTER CTA / install command
      ================================================================ */
   .footer-cta {
     position: relative;
@@ -900,7 +1007,7 @@
   .footer-cta .back-link:hover { color: var(--text-1); }
 
   /* ================================================================
-     TERMINAL (shared block — install command)
+     TERMINAL (shared block / install command)
      ================================================================ */
   .terminal {
     border-radius: var(--radius-md);
@@ -1125,6 +1232,13 @@
     .case { padding: var(--section-y-tablet) var(--page-padding-inline); }
     .footer-cta { padding: var(--section-y-tablet) var(--page-padding-inline); }
     .page-intro { padding: var(--space-9) var(--page-padding-inline) var(--space-8); }
+    .page-intro-inner { grid-template-columns: 1fr; gap: var(--space-7); }
+    .page-intro-right {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    .preview-card { flex: 1 1 240px; }
     .case-headline-stats { grid-template-columns: repeat(2, 1fr); }
     .case-subsection { grid-template-columns: 1fr; gap: var(--space-4); }
     .case-subsection-label { position: static; }
@@ -1137,6 +1251,7 @@
     .case { padding: var(--section-y-mobile) var(--page-padding-inline); }
     .footer-cta { padding: var(--section-y-mobile) var(--page-padding-inline); }
     .page-intro { padding: var(--space-8) var(--page-padding-inline) var(--space-7); }
+    .page-intro-right { display: none; }
     .case-headline-stats { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
     .headline-stat { padding: 22px; }
     .toc { min-width: 0; width: 100%; }
@@ -1184,35 +1299,62 @@
        ============================================================ -->
   <section class="page-intro">
     <div class="page-intro-inner">
-      <span class="intro-eyebrow">Case Studies</span>
-      <h1 class="intro-h1">
-        Three production repos.<br />
-        Three real <span class="serif-italic">transformations.</span>
-      </h1>
-      <p class="intro-lede">
-        I applied <em>nv:context</em> to three very different production codebases &mdash;
-        a Python SDK with 4,612 tests, a multi-product AI SaaS, and a bilingual
-        WhatsApp agent. Here's what changed in each, and what I learned.
-      </p>
+      <div class="page-intro-left">
+        <span class="intro-eyebrow">Case Studies</span>
+        <h1 class="intro-h1">
+          Three production repos,<br />
+          three real <span class="serif-italic">transformations.</span>
+        </h1>
+        <p class="intro-lede">
+          I applied <em>nv:context</em> to three very different production codebases:
+          a Python SDK with 4,612 tests, a multi-product AI SaaS, and a bilingual
+          WhatsApp agent. Here's what changed in each, and what I learned.
+        </p>
 
-      <div class="toc" aria-label="Jump to a case study">
-        <span class="toc-label">Jump to</span>
-        <a href="#selectools">
-          <span>selectools</span>
-          <span class="toc-tag">Most detailed</span>
-        </a>
-        <a href="#saas-platform">
-          <span>saas-platform</span>
-        </a>
-        <a href="#sheriff">
-          <span>sheriff</span>
-        </a>
+        <div class="toc" aria-label="Jump to a case study">
+          <span class="toc-label">Jump to</span>
+          <a href="#selectools">
+            <span>selectools</span>
+            <span class="toc-tag">Most detailed</span>
+          </a>
+          <a href="#nichevlabs">
+            <span>nichevlabs</span>
+          </a>
+          <a href="#sheriff">
+            <span>sheriff</span>
+          </a>
+        </div>
       </div>
+
+      <aside class="page-intro-right" aria-label="Case study previews">
+        <a class="preview-card" href="#selectools" aria-label="Jump to the selectools case study">
+          <div class="preview-card-head">
+            <span class="preview-card-name">selectools</span>
+            <span class="preview-card-tag">Most detailed</span>
+          </div>
+          <div class="preview-card-score">49<span class="arrow">&rarr;</span>58<span class="scale">&thinsp;/60</span></div>
+          <span class="preview-card-link">Read <span class="arrow" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a class="preview-card" href="#nichevlabs" aria-label="Jump to the nichevlabs case study">
+          <div class="preview-card-head">
+            <span class="preview-card-name">nichevlabs</span>
+          </div>
+          <div class="preview-card-score">17<span class="arrow">&rarr;</span>49<span class="scale">&thinsp;/60</span></div>
+          <span class="preview-card-link">Read <span class="arrow" aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a class="preview-card" href="#sheriff" aria-label="Jump to the sheriff case study">
+          <div class="preview-card-head">
+            <span class="preview-card-name">sheriff</span>
+          </div>
+          <div class="preview-card-score">36<span class="arrow">&rarr;</span>42<span class="scale">&thinsp;/60</span></div>
+          <span class="preview-card-link">Read <span class="arrow" aria-hidden="true">&rarr;</span></span>
+        </a>
+      </aside>
     </div>
   </section>
 
   <!-- ============================================================
-       CASE STUDY 1 — selectools
+       CASE STUDY 1 / selectools
        ============================================================ -->
   <section id="selectools" class="case">
     <div class="case-inner">
@@ -1329,8 +1471,8 @@
                   <p>
                     Three-tier boundaries (Always / Ask First / Never), 15 condensed
                     landmines, the subagent fan-out and worktree patterns. AGENTS.md is the
-                    universal baseline read by 25+ tools &mdash; Cursor, Copilot, Windsurf,
-                    Aider, Gemini CLI &mdash; not just Claude.
+                    universal baseline read by 25+ tools (Cursor, Copilot, Windsurf,
+                    Aider, Gemini CLI), not just Claude.
                   </p>
                 </div>
               </div>
@@ -1366,7 +1508,7 @@
                     The test command in <code>.github/workflows/ci.yml</code> changed from
                     <code>pytest -n auto</code> to
                     <code>pytest -n auto --cov=selectools --cov-fail-under=90</code>. The
-                    project sits at 95% &mdash; the gate is a floor, not a target.
+                    project sits at 95%. The gate is a floor, not a target.
                   </p>
                 </div>
               </div>
@@ -1433,13 +1575,13 @@ docs/CLAUDE.md           (43)
               </div>
               <div class="results-row">
                 <span class="metric">Verification</span>
-                <span class="before">&mdash;</span>
+                <span class="before">n/a</span>
                 <span class="after">10 / 10</span>
                 <span class="delta">CI + 90% gate</span>
               </div>
               <div class="results-row">
                 <span class="metric">CLAUDE.md / AGENTS.md</span>
-                <span class="before">&mdash;</span>
+                <span class="before">n/a</span>
                 <span class="after">10 / 10</span>
                 <span class="delta">Progressive disclosure</span>
               </div>
@@ -1451,19 +1593,19 @@ docs/CLAUDE.md           (43)
               </div>
               <div class="results-row">
                 <span class="metric">Skills</span>
-                <span class="before">&mdash;</span>
+                <span class="before">n/a</span>
                 <span class="after">10 / 10</span>
                 <span class="delta">10 skills</span>
               </div>
               <div class="results-row">
                 <span class="metric">Subagent patterns</span>
-                <span class="before">&mdash;</span>
+                <span class="before">n/a</span>
                 <span class="after">9 / 10</span>
                 <span class="delta">Documented</span>
               </div>
               <div class="results-row">
                 <span class="metric">Session management</span>
-                <span class="before">&mdash;</span>
+                <span class="before">n/a</span>
                 <span class="after">9 / 10</span>
                 <span class="delta">HANDOFF + .claudeignore</span>
               </div>
@@ -1491,14 +1633,14 @@ docs/CLAUDE.md           (43)
             <div class="insight">
               <blockquote>
                 "At 440 lines, every additional rule was making the file worse. At 67 lines,
-                every line is a landmine or a command &mdash; content the agent cannot
+                every line is a landmine or a command. Content the agent cannot
                 discover by reading code."
               </blockquote>
               <div class="attribution">selectools &middot; final report</div>
             </div>
             <p style="margin-top: var(--space-5);">
               The agent gets 207 lines of highly relevant context per task instead of 440
-              lines of everything. The total context budget dropped 53% &mdash; and the
+              lines of everything. The total context budget dropped 53%, and the
               agent makes fewer mistakes, not more. That's the entire thesis of context
               engineering in one repository.
             </p>
@@ -1508,27 +1650,27 @@ docs/CLAUDE.md           (43)
       </div>
 
       <div class="case-foot">
-        <a href="#saas-platform">Next case study: saas-platform &rarr;</a>
+        <a href="#nichevlabs">Next case study: nichevlabs &rarr;</a>
         <a href="/">&larr; Back to nv:context</a>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       CASE STUDY 2 — saas-platform
+       CASE STUDY 2 / nichevlabs
        ============================================================ -->
-  <section id="saas-platform" class="case">
+  <section id="nichevlabs" class="case">
     <div class="case-inner">
 
       <header class="case-head">
         <div class="case-meta reveal">
           <span><span class="num">02</span> &middot; Case Study</span>
         </div>
-        <h2 class="case-name reveal" style="--reveal-delay: 0.04s;">saas-platform</h2>
+        <h2 class="case-name reveal" style="--reveal-delay: 0.04s;">nichevlabs</h2>
         <div class="case-tag reveal" style="--reveal-delay: 0.08s;">
-          Multi-product AI SaaS
+          Multi-product SaaS
           <span class="dot">&middot;</span>
-          NichevLabs
+          orchestrated by selectools
           <span class="dot">&middot;</span>
           L4 &rarr; L6
         </div>
@@ -1567,13 +1709,13 @@ docs/CLAUDE.md           (43)
             <p>
               The repo had a 52-line CLAUDE.md and a clean directory layout, so the maturity
               level looked OK on paper. The reality: an 805-line SESSION.md was being loaded
-              on every session start &mdash; ~17K tokens of historical build log, Steps
+              on every session start. About 17K tokens of historical build log, Steps
               1&ndash;4 checklists, and a directory tree that agents could discover for free.
             </p>
             <p>
               No AGENTS.md. No subdirectory CLAUDE.md files. No <code>.claudeignore</code>.
               No HANDOFF.md. No hooks at all. Tests existed (554 passing) but had no coverage
-              floor &mdash; a future change could silently drop coverage and nothing would
+              floor, so a future change could silently drop coverage and nothing would
               catch it.
             </p>
             <div class="small-stats">
@@ -1593,8 +1735,8 @@ docs/CLAUDE.md           (43)
             <h3>Split SESSION.md, write AGENTS.md, scope by subdirectory, hook the rest.</h3>
             <p>
               The biggest single win was splitting SESSION.md. Then a fresh AGENTS.md with
-              three-tier boundaries, six scoped subdirectory configs, and four hooks
-              &mdash; and a bug-hunt subagent that found 81 real bugs while it was at it.
+              three-tier boundaries, six scoped subdirectory configs, and four hooks.
+              Plus a bug-hunt subagent that found 81 real bugs while it was at it.
             </p>
 
             <div class="change-list">
@@ -1604,8 +1746,8 @@ docs/CLAUDE.md           (43)
                   <strong>SESSION.md split: 805 &rarr; 59 lines (highest impact)</strong>
                   <p>
                     Current state stayed in the 59-line file. The full history moved to
-                    <code>docs/SESSION_ARCHIVE.md</code>. ~80% of the original was historical
-                    build log and a directory tree &mdash; content agents never reference.
+                    <code>docs/SESSION_ARCHIVE.md</code>. About 80% of the original was historical
+                    build log and a directory tree. Content agents never reference.
                     <strong style="color: var(--text-1);">Saved ~15,800 tokens per session start.</strong>
                   </p>
                 </div>
@@ -1651,7 +1793,7 @@ docs/CLAUDE.md           (43)
                   <strong>CI coverage gate added (60% floor)</strong>
                   <p>
                     Added <code>pytest-cov</code> with <code>--cov-fail-under=60</code> to the
-                    deploy.yml API job. 60% is a starting floor &mdash; the plan is to ratchet
+                    deploy.yml API job. 60% is a starting floor. The plan is to ratchet
                     it up as the suite matures. The point is: a future change can no longer
                     silently drop coverage.
                   </p>
@@ -1689,7 +1831,7 @@ docs/CLAUDE.md           (43)
                     Re-scanned every config file for "don't" / "avoid" / "do not". Rewrote
                     each one as a positive RFC 2119 instruction (<code>MUST</code>,
                     <code>NEVER</code>). Negative instructions increase the probability of the
-                    agent doing the wrong thing &mdash; they draw attention to it.
+                    agent doing the wrong thing. They draw attention to it.
                   </p>
                 </div>
               </div>
@@ -1704,7 +1846,7 @@ docs/CLAUDE.md           (43)
             <h3>17 / 60 to 49 / 60. Five layers improved, one stayed at &ldquo;working as designed.&rdquo;</h3>
             <p>
               The leverage score nearly tripled. Token budget sits at ~7K (about 5.5% of the
-              128K context window) &mdash; well under the 40% threshold where research shows
+              128K context window). Well under the 40% threshold where research shows
               precision starts to drop.
             </p>
 
@@ -1776,10 +1918,10 @@ docs/CLAUDE.md           (43)
             <div class="insight">
               <blockquote>
                 "Eighty percent of SESSION.md was historical build log and a directory tree.
-                Agents never reference it &mdash; they reference the code. Splitting it saved
+                Agents never reference it. They reference the code. Splitting it saved
                 fifteen thousand eight hundred tokens on every session start."
               </blockquote>
-              <div class="attribution">saas-platform &middot; final report</div>
+              <div class="attribution">nichevlabs &middot; final report</div>
             </div>
             <p style="margin-top: var(--space-5);">
               The corollary: a bug hunt found 81 real bugs while writing AGENTS.md, and 4 of
@@ -1801,7 +1943,7 @@ docs/CLAUDE.md           (43)
   </section>
 
   <!-- ============================================================
-       CASE STUDY 3 — sheriff
+       CASE STUDY 3 / sheriff
        ============================================================ -->
   <section id="sheriff" class="case">
     <div class="case-inner">
@@ -1834,7 +1976,7 @@ docs/CLAUDE.md           (43)
         <div class="headline-stat reveal" style="--reveal-delay: 0.22s;">
           <div class="number">~10<span class="small">%</span></div>
           <span class="label">context window used</span>
-          <span class="sublabel">healthy &mdash; under the 40% threshold</span>
+          <span class="sublabel">healthy, under the 40% threshold</span>
         </div>
       </div>
 
@@ -1853,7 +1995,7 @@ docs/CLAUDE.md           (43)
             </p>
             <p>
               The starting leverage was 36 / 60. Verification was the weakest layer at
-              5 / 10 &mdash; tests existed but no coverage gate, no type checking in CI, and
+              5 / 10. Tests existed but no coverage gate, no type checking in CI, and
               the web tests weren't even being run. There was a 222-line stale
               <code>session.md</code> from a previous brand name that was duplicating
               HANDOFF.md's role with outdated information.
@@ -1876,7 +2018,7 @@ docs/CLAUDE.md           (43)
             <p>
               Twelve targeted edits across hooks, CI, and config hygiene. No rewrites.
               The principle: when a setup is already strong, the highest-leverage gaps are
-              usually missing guardrails and stale artifacts &mdash; not new files.
+              usually missing guardrails and stale artifacts, not new files.
             </p>
 
             <div class="change-list">
@@ -1886,7 +2028,7 @@ docs/CLAUDE.md           (43)
                   <strong>PreToolUse hook: block <code>git push</code> to main</strong>
                   <p>
                     The single highest-impact missing guardrail. Prevents accidental pushes
-                    to production via the agent. 100% enforcement &mdash; the hook either
+                    to production via the agent. 100% enforcement: the hook either
                     runs or it doesn't, no probabilistic instruction-following involved.
                   </p>
                 </div>
@@ -1898,7 +2040,7 @@ docs/CLAUDE.md           (43)
                   <p>
                     PostCompact now re-injects CLAUDE.md plus the full three-tier boundaries
                     plus all current landmines after context compression. The original hook
-                    only re-injected the landmines &mdash; agents would lose the boundaries
+                    only re-injected the landmines, so agents would lose the boundaries
                     after every compaction.
                   </p>
                 </div>
@@ -1911,7 +2053,7 @@ docs/CLAUDE.md           (43)
                     Added <code>--cov=src/cashcop --cov-fail-under=40</code> to pytest in
                     <code>deploy.yml</code>, added a mypy step for <code>whatsapp.py</code>,
                     and added <code>pnpm test</code> to the web job. Web tests existed but
-                    weren't actually being run in CI &mdash; that's the kind of thing you
+                    weren't actually being run in CI. That's the kind of thing you
                     only catch when you do the audit.
                   </p>
                 </div>
@@ -1925,7 +2067,7 @@ docs/CLAUDE.md           (43)
                     <code>api/pyproject.toml</code> from <code>mycashcop-api</code> to
                     <code>sheriff-api</code>, and fixed the <code>whatsapp-reviewer</code>
                     agent's description and body to match. User-facing names should be
-                    consistent &mdash; agents will copy what they see.
+                    consistent, because agents will copy what they see.
                   </p>
                 </div>
               </div>
@@ -1974,7 +2116,7 @@ docs/CLAUDE.md           (43)
                     Same compounding engineering pattern: when a reviewer comments
                     <code>@claude-learn [rule]</code>, the Action opens a PR that adds the
                     sanitized rule to AGENTS.md. Input is run through env-var indirection
-                    to block script injection &mdash; <code>${{ }}</code> never appears
+                    to block script injection, so <code>${{ }}</code> never appears
                     inside a <code>run:</code> block.
                   </p>
                 </div>
@@ -1992,7 +2134,7 @@ docs/CLAUDE.md           (43)
               The token cost went up slightly (~300 tokens, +7%) because the enhanced
               PostCompact hook re-injects more content. That's a worthwhile trade for
               boundaries that survive compaction. Total context cost stayed at ~10% of the
-              200K window &mdash; healthy by every metric in the research.
+              200K window. Healthy by every metric in the research.
             </p>
 
             <div class="results-table">
@@ -2064,7 +2206,7 @@ docs/CLAUDE.md           (43)
               <blockquote>
                 "Can the agent discover this by reading the code? If yes, delete it. The
                 highest-leverage gaps in a strong setup are usually missing safety hooks
-                and stale artifacts &mdash; not new files."
+                and stale artifacts, not new files."
               </blockquote>
               <div class="attribution">sheriff &middot; final report</div>
             </div>
@@ -2073,7 +2215,7 @@ docs/CLAUDE.md           (43)
               negative across six files, in a HANDOFF.md template comment that wasn't even
               agent guidance. The original author had already followed RFC 2119 throughout.
               <strong style="color: var(--text-1);">A good config setup is mostly a
-              discipline of subtraction</strong> &mdash; and Sheriff's author had been
+              discipline of subtraction</strong>, and Sheriff's author had been
               practicing it from day one.
             </p>
           </div>
@@ -2151,7 +2293,7 @@ docs/CLAUDE.md           (43)
         </nav>
       </div>
       <div class="footer-signature">
-        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a> &mdash; the methodology that built this page
+        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a>, the methodology that built this page
       </div>
     </div>
   </footer>
@@ -2232,7 +2374,7 @@ docs/CLAUDE.md           (43)
     }
 
     /* ----------------------------------------------------------------
-       Scroll-triggered reveal — same pattern as index.html.
+       Scroll-triggered reveal / same pattern as index.html.
        ---------------------------------------------------------------- */
     var revealEls = document.querySelectorAll('.reveal');
     if (revealEls.length) {

@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>nv:context — Context engineering for engineers who ship</title>
+  <title>nv:context | Context engineering for engineers who ship</title>
   <meta name="description" content="A context engineering setup for AI coding agents. Production-tested. Reduced selectools' CLAUDE.md from 440 to 67 lines (-85%)." />
 
   <!-- Open Graph / Social -->
-  <meta property="og:title" content="nv:context — Context engineering for engineers who ship">
+  <meta property="og:title" content="nv:context | Context engineering for engineers who ship">
   <meta property="og:description" content="I applied this to selectools (4,612 tests) and reduced the CLAUDE.md from 440 lines to 67 (-85%). Production-tested context engineering setup.">
   <meta property="og:image" content="https://skills.nichevlabs.com/og-image.png">
   <meta property="og:url" content="https://skills.nichevlabs.com">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="nv:context — Context engineering for engineers who ship">
+  <meta name="twitter:title" content="nv:context | Context engineering for engineers who ship">
   <meta name="twitter:description" content="Production-tested context engineering for AI coding agents.">
   <meta name="twitter:image" content="https://skills.nichevlabs.com/og-image.png">
 
@@ -192,8 +192,8 @@
     50%      { box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow-soft), 0 0 80px -15px var(--brand-glow); }
   }
   @keyframes toast-in {
-    0%   { opacity: 0; transform: translateY(4px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0%   { opacity: 0; transform: translate(-50%, 12px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
   }
   @keyframes check-draw {
     0%   { stroke-dashoffset: 18; opacity: 0; }
@@ -216,7 +216,7 @@
   }
 
   /* ================================================================
-     SECTION 1 — HERO
+     SECTION 1 / HERO
      Resend's spotlight + dot-grid + Linear's drifting violet glow
      ================================================================ */
   .hero {
@@ -231,7 +231,7 @@
     justify-content: center;
   }
 
-  /* Layer 1: Smooth violet atmosphere — large soft radials, very gentle drift */
+  /* Layer 1: Smooth violet atmosphere. Large soft radials, very gentle drift */
   .hero::before {
     content: "";
     position: absolute;
@@ -333,7 +333,7 @@
     transform: translate(-50%, -50%);
   }
 
-  /* ---------- H1 — Instrument Serif, gradient text ---------- */
+  /* ---------- H1 / Instrument Serif, gradient text ---------- */
   .hero h1 {
     font-family: var(--font-serif);
     font-size: clamp(40px, 8.5vw, 96px);
@@ -699,7 +699,7 @@
     position: fixed;
     bottom: 32px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 0);
     padding: 12px 18px;
     background: rgba(8, 9, 10, 0.92);
     border: 1px solid var(--border-glow);
@@ -745,7 +745,7 @@
   }
 
   /* ================================================================
-     SCROLL REVEAL — shared by all sections after the hero
+     SCROLL REVEAL / shared by all sections after the hero
      ================================================================ */
   .reveal {
     opacity: 0;
@@ -862,7 +862,7 @@
   }
 
   /* ================================================================
-     SECTION 2 — PRODUCTION PROOF
+     SECTION 2 / PRODUCTION PROOF
      ================================================================ */
   .proof-section {
     background: var(--bg-base);
@@ -885,11 +885,28 @@
     align-items: stretch;
   }
 
+  /* Whole-card link wrapper */
+  .proof-card-link-wrapper {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .proof-card-link-wrapper:focus { outline: none; }
+  .proof-card-link-wrapper:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 4px;
+  }
+
   .proof-card {
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 28px;
+    height: 100%;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-default);
     background: var(--bg-elevated);
@@ -911,11 +928,52 @@
             mask-composite: exclude;
     pointer-events: none;
   }
+  /* Top-right external indicator: fades in on wrapper hover */
+  .proof-card::after {
+    content: "\2197"; /* ↗ */
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1;
+    color: var(--brand-hover);
+    opacity: 0;
+    transform: translate(-3px, 3px);
+    transition: opacity var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+    pointer-events: none;
+  }
+  /* Hover (amplified) */
+  .proof-card-link-wrapper:hover .proof-card,
   .proof-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-6px);
     border-color: var(--border-glow);
     background: var(--bg-elevated-2);
-    box-shadow: 0 16px 40px -16px var(--brand-glow);
+    box-shadow: 0 28px 64px -20px var(--brand-glow), 0 0 0 1px var(--brand-glow-soft);
+  }
+  .proof-card-link-wrapper:hover .proof-card::after {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  /* Press feedback */
+  .proof-card-link-wrapper:active .proof-card {
+    transform: translateY(-2px) scale(0.99);
+    transition: transform 0.1s var(--ease-out-quad),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proof-card-link-wrapper:hover .proof-card,
+    .proof-card:hover,
+    .proof-card-link-wrapper:active .proof-card {
+      transform: none;
+    }
+    .proof-card::after {
+      transition: opacity 0.001s;
+      transform: none;
+    }
   }
 
   .proof-card-head {
@@ -1059,16 +1117,29 @@
     font-size: 13px;
     font-weight: var(--weight-medium);
     color: var(--brand-hover);
-    transition: gap var(--speed-fast) var(--ease-out-quad),
-                color var(--speed-fast) var(--ease-out-quad);
+    transition: gap var(--speed-slow) var(--ease-out-quart),
+                color var(--speed-slow) var(--ease-out-quart);
   }
-  .proof-card-link:hover {
-    gap: 10px;
+  .proof-card-link .arrow {
+    display: inline-block;
+    transition: transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .proof-card-link-wrapper:hover .proof-card-link {
     color: var(--text-1);
+  }
+  .proof-card-link-wrapper:hover .proof-card-link .arrow {
+    transform: translateX(5px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proof-card-link .arrow,
+    .proof-card-link-wrapper:hover .proof-card-link .arrow {
+      transition: none;
+      transform: none;
+    }
   }
 
   /* ================================================================
-     SECTION 3 — THE PROBLEM
+     SECTION 3 / THE PROBLEM
      ================================================================ */
   .problem-section {
     background: var(--bg-elevated);
@@ -1144,7 +1215,7 @@
   }
 
   /* ================================================================
-     SECTION 4 — THE 8 LAWS
+     SECTION 4 / THE 8 LAWS
      ================================================================ */
   .laws-section {
     background: var(--bg-base);
@@ -1212,7 +1283,7 @@
   }
 
   /* ================================================================
-     RESPONSIVE — sections 2 / 3 / 4
+     RESPONSIVE / sections 2 / 3 / 4
      ================================================================ */
   @media (max-width: 1024px) {
     .ds-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
@@ -1246,7 +1317,7 @@
   }
 
   /* ================================================================
-     SECTION 5 — WHAT GETS GENERATED  (file tree in terminal)
+     SECTION 5 / WHAT GETS GENERATED  (file tree in terminal)
      ================================================================ */
   .generated-section {
     background: var(--bg-elevated);
@@ -1274,6 +1345,7 @@
     width: 100%;
     max-width: 760px;
     margin: 0 auto var(--space-7);
+    padding: 0;
   }
   .universal-label {
     font-family: var(--font-mono);
@@ -1331,37 +1403,25 @@
     border-style: solid;
   }
   /* Extra pills (revealed on click) */
+  /* Default state: removed from layout entirely so the toggle button stays adjacent */
   .tool-pill.is-extra {
-    opacity: 0;
-    max-width: 0;
-    padding-left: 0;
-    padding-right: 0;
-    margin: 0;
-    border-width: 0;
-    overflow: hidden;
-    pointer-events: none;
-    transition: opacity 0.35s var(--ease-out-quart),
-                max-width 0.4s var(--ease-out-quart),
-                padding 0.3s var(--ease-out-quart),
-                border-width 0.2s var(--ease-out-quart),
-                transform 0.35s var(--ease-out-quart);
-    transform: translateY(4px);
+    display: none;
   }
+  /* Expanded state: re-introduced as flex items, with stagger fade-in animation */
   .universal-pills.is-expanded .tool-pill.is-extra {
-    opacity: 1;
-    max-width: 240px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border-width: 1px;
-    pointer-events: auto;
-    transform: translateY(0);
-    transition-delay: var(--stagger-delay, 0ms);
+    display: inline-flex;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: pill-extra-in 0.35s var(--ease-out-quart) forwards;
+    animation-delay: var(--stagger-delay, 0ms);
+  }
+  @keyframes pill-extra-in {
+    to { opacity: 1; transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .tool-pill.is-extra,
     .universal-pills.is-expanded .tool-pill.is-extra {
-      transition: opacity 0.001s, max-width 0.001s, padding 0.001s, border-width 0.001s;
-      transition-delay: 0ms !important;
+      animation: none;
+      opacity: 1;
       transform: none;
     }
   }
@@ -1379,7 +1439,7 @@
     max-width: var(--container-narrow);
     margin: 0 auto;
   }
-  /* Reuse .terminal chrome — no glow, this is documentation, not action */
+  /* Reuse .terminal chrome. No glow, this is documentation, not action */
   .tree-terminal {
     cursor: default;
   }
@@ -1445,7 +1505,7 @@
   }
 
   /* ================================================================
-     SECTION 6 — THE HIERARCHY OF LEVERAGE
+     SECTION 6 / THE HIERARCHY OF LEVERAGE
      ================================================================ */
   .leverage-section {
     background: var(--bg-base);
@@ -1575,7 +1635,7 @@
     font-size: 14px;
   }
 
-  /* Card 2 — top recommendation callout */
+  /* Card 2 / top recommendation callout */
   .leverage-callout {
     position: relative;
     padding: 24px 28px;
@@ -1639,7 +1699,7 @@
   }
 
   /* ================================================================
-     SECTION 7 — THE RESEARCH
+     SECTION 7 / THE RESEARCH
      ================================================================ */
   .research-section {
     background: var(--bg-elevated);
@@ -1884,7 +1944,7 @@
   }
 
   /* ================================================================
-     SECTION 8 — INSTALL + FINAL CTA
+     SECTION 8 / INSTALL + FINAL CTA
      ================================================================ */
   .cta-section {
     position: relative;
@@ -2068,7 +2128,7 @@
   }
 
   /* ================================================================
-     RESPONSIVE — sections 5 / 6 / 7 / 8 + footer
+     RESPONSIVE / sections 5 / 6 / 7 / 8 + footer
      ================================================================ */
   @media (max-width: 1024px) {
     .cta-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
@@ -2129,7 +2189,7 @@
 <body>
 
   <!-- ============================================================
-       SECTION 1 — HERO
+       SECTION 1 / HERO
        ============================================================ -->
   <section id="hero" class="hero">
     <div class="hero-inner">
@@ -2140,7 +2200,7 @@
         <span>Launching this week</span>
       </div>
 
-      <!-- H1 — Instrument Serif, gradient, italic accent on "ship" -->
+      <!-- H1 / Instrument Serif, gradient, italic accent on "ship" -->
       <h1>
         Context engineering for<br />
         engineers who <span class="serif-italic">ship</span>.
@@ -2213,7 +2273,7 @@
         <div class="stat-card">
           <div class="number">15.8<span class="accent">K</span></div>
           <div class="label">tokens saved per session</div>
-          <div class="sublabel">saas-platform</div>
+          <div class="sublabel">nichevlabs</div>
         </div>
       </div>
 
@@ -2221,7 +2281,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 2 — PRODUCTION PROOF
+       SECTION 2 / PRODUCTION PROOF
        ============================================================ -->
   <section id="proof" class="ds-section proof-section">
     <div class="ds-section-inner">
@@ -2241,115 +2301,121 @@
       <div class="proof-grid">
 
         <!-- Card 1: selectools -->
-        <article class="proof-card reveal" style="--reveal-delay: 0.18s;">
-          <div class="proof-card-head">
-            <span class="proof-card-name">selectools</span>
-            <span class="proof-card-tag-featured">Most detailed</span>
-          </div>
-          <div class="proof-card-sub">Python SDK &middot; 4,612 tests</div>
-
-          <div class="proof-card-arrows">
-            <div class="proof-arrow-row">
-              <span class="label">Maturity</span>
-              <span class="value">L3<span class="arrow">&rarr;</span>L5-L6</span>
+        <a class="proof-card-link-wrapper reveal" href="/case-studies.html#selectools" style="--reveal-delay: 0.18s;" aria-label="Read the full report on the selectools case study">
+          <article class="proof-card">
+            <div class="proof-card-head">
+              <span class="proof-card-name">selectools</span>
+              <span class="proof-card-tag-featured">Most detailed</span>
             </div>
-          </div>
+            <div class="proof-card-sub">Python SDK &middot; 4,612 tests</div>
 
-          <div class="proof-card-score">
-            <span class="score-label">Leverage</span>
-            <span class="score-value">49<span class="arrow">&rarr;</span>58<span class="scale">&thinsp;/60</span></span>
-          </div>
-
-          <div class="proof-card-metrics">
-            <div class="proof-metric">
-              <span class="k">CLAUDE.md</span>
-              <span class="v">440 &rarr; 67 <span class="accent">(&minus;85%)</span></span>
+            <div class="proof-card-arrows">
+              <div class="proof-arrow-row">
+                <span class="label">Maturity</span>
+                <span class="value">L3<span class="arrow">&rarr;</span>L5-L6</span>
+              </div>
             </div>
-            <div class="proof-metric">
-              <span class="k">Token budget</span>
-              <span class="v"><span class="accent">&minus;53%</span></span>
+
+            <div class="proof-card-score">
+              <span class="score-label">Leverage</span>
+              <span class="score-value">49<span class="arrow">&rarr;</span>58<span class="scale">&thinsp;/60</span></span>
             </div>
-          </div>
 
-          <a href="/case-studies.html#selectools" class="proof-card-link">Read the case study &rarr;</a>
-        </article>
-
-        <!-- Card 2: saas-platform -->
-        <article class="proof-card reveal" style="--reveal-delay: 0.28s;">
-          <div class="proof-card-head">
-            <span class="proof-card-name">saas-platform</span>
-          </div>
-          <div class="proof-card-sub">Multi-product AI SaaS</div>
-
-          <div class="proof-card-arrows">
-            <div class="proof-arrow-row">
-              <span class="label">Maturity</span>
-              <span class="value">L4<span class="arrow">&rarr;</span>L6</span>
+            <div class="proof-card-metrics">
+              <div class="proof-metric">
+                <span class="k">CLAUDE.md</span>
+                <span class="v">440 &rarr; 67 <span class="accent">(&minus;85%)</span></span>
+              </div>
+              <div class="proof-metric">
+                <span class="k">Token budget</span>
+                <span class="v"><span class="accent">&minus;53%</span></span>
+              </div>
             </div>
-          </div>
 
-          <div class="proof-card-score">
-            <span class="score-label">Leverage</span>
-            <span class="score-value">17<span class="arrow">&rarr;</span>49<span class="scale">&thinsp;/60</span></span>
-          </div>
+            <span class="proof-card-link">Read the full report <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </article>
+        </a>
 
-          <div class="proof-card-metrics">
-            <div class="proof-metric">
-              <span class="k">SESSION.md</span>
-              <span class="v">805 &rarr; 59 <span class="accent">(&minus;93%)</span></span>
+        <!-- Card 2: nichevlabs -->
+        <a class="proof-card-link-wrapper reveal" href="/case-studies.html#nichevlabs" style="--reveal-delay: 0.28s;" aria-label="Read the full report on the nichevlabs case study">
+          <article class="proof-card">
+            <div class="proof-card-head">
+              <span class="proof-card-name">nichevlabs</span>
             </div>
-            <div class="proof-metric">
-              <span class="k">Tokens saved / session</span>
-              <span class="v"><span class="accent">15,800</span></span>
-            </div>
-            <div class="proof-metric">
-              <span class="k">Bugs found</span>
-              <span class="v"><span class="accent">81</span></span>
-            </div>
-          </div>
+            <div class="proof-card-sub">Multi-product SaaS &middot; orchestrated by selectools</div>
 
-          <a href="/case-studies.html#saas-platform" class="proof-card-link">Read the case study &rarr;</a>
-        </article>
+            <div class="proof-card-arrows">
+              <div class="proof-arrow-row">
+                <span class="label">Maturity</span>
+                <span class="value">L4<span class="arrow">&rarr;</span>L6</span>
+              </div>
+            </div>
+
+            <div class="proof-card-score">
+              <span class="score-label">Leverage</span>
+              <span class="score-value">17<span class="arrow">&rarr;</span>49<span class="scale">&thinsp;/60</span></span>
+            </div>
+
+            <div class="proof-card-metrics">
+              <div class="proof-metric">
+                <span class="k">SESSION.md</span>
+                <span class="v">805 &rarr; 59 <span class="accent">(&minus;93%)</span></span>
+              </div>
+              <div class="proof-metric">
+                <span class="k">Tokens saved / session</span>
+                <span class="v"><span class="accent">15,800</span></span>
+              </div>
+              <div class="proof-metric">
+                <span class="k">Bugs found</span>
+                <span class="v"><span class="accent">81</span></span>
+              </div>
+            </div>
+
+            <span class="proof-card-link">Read the full report <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </article>
+        </a>
 
         <!-- Card 3: sheriff -->
-        <article class="proof-card reveal" style="--reveal-delay: 0.38s;">
-          <div class="proof-card-head">
-            <span class="proof-card-name">sheriff</span>
-          </div>
-          <div class="proof-card-sub">Python + TypeScript</div>
-
-          <div class="proof-card-arrows">
-            <div class="proof-arrow-row">
-              <span class="label">Maturity</span>
-              <span class="value">L4<span class="arrow">&rarr;</span>L5</span>
+        <a class="proof-card-link-wrapper reveal" href="/case-studies.html#sheriff" style="--reveal-delay: 0.38s;" aria-label="Read the full report on the sheriff case study">
+          <article class="proof-card">
+            <div class="proof-card-head">
+              <span class="proof-card-name">sheriff</span>
             </div>
-          </div>
+            <div class="proof-card-sub">Python + TypeScript</div>
 
-          <div class="proof-card-score">
-            <span class="score-label">Leverage</span>
-            <span class="score-value">36<span class="arrow">&rarr;</span>42<span class="scale">&thinsp;/60</span></span>
-          </div>
-
-          <div class="proof-card-metrics">
-            <div class="proof-metric">
-              <span class="k">Strategy</span>
-              <span class="v">Incremental polish</span>
+            <div class="proof-card-arrows">
+              <div class="proof-arrow-row">
+                <span class="label">Maturity</span>
+                <span class="value">L4<span class="arrow">&rarr;</span>L5</span>
+              </div>
             </div>
-            <div class="proof-metric">
-              <span class="k">Already-strong setup</span>
-              <span class="v"><span class="accent">Coverage gate</span></span>
-            </div>
-          </div>
 
-          <a href="/case-studies.html#sheriff" class="proof-card-link">Read the case study &rarr;</a>
-        </article>
+            <div class="proof-card-score">
+              <span class="score-label">Leverage</span>
+              <span class="score-value">36<span class="arrow">&rarr;</span>42<span class="scale">&thinsp;/60</span></span>
+            </div>
+
+            <div class="proof-card-metrics">
+              <div class="proof-metric">
+                <span class="k">Strategy</span>
+                <span class="v">Incremental polish</span>
+              </div>
+              <div class="proof-metric">
+                <span class="k">Already-strong setup</span>
+                <span class="v"><span class="accent">Coverage gate</span></span>
+              </div>
+            </div>
+
+            <span class="proof-card-link">Read the full report <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </article>
+        </a>
 
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       SECTION 3 — THE PROBLEM
+       SECTION 3 / THE PROBLEM
        ============================================================ -->
   <section id="problem" class="ds-section problem-section">
     <div class="ds-section-inner is-narrow">
@@ -2411,7 +2477,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 4 — THE 8 LAWS
+       SECTION 4 / THE 8 LAWS
        ============================================================ -->
   <section id="laws" class="ds-section laws-section">
     <div class="ds-section-inner">
@@ -2473,7 +2539,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 5 — WHAT GETS GENERATED
+       SECTION 5 / WHAT GETS GENERATED
        ============================================================ -->
   <section id="generated" class="ds-section generated-section">
     <div class="ds-section-inner">
@@ -2667,7 +2733,7 @@
             <div class="tree-line"><span class="tree-glyph">├── </span><span class="tree-name is-dir">src/</span></div>
             <div class="tree-line" title="Source-specific instructions, only loaded when editing source"><span class="tree-glyph">│   └── </span><span class="tree-name">CLAUDE.md</span><span class="tree-arrow">←</span><span class="tree-anno">Source scope</span></div>
             <div class="tree-line" title="Template for handing off work between sessions or developers"><span class="tree-glyph">├── </span><span class="tree-name">HANDOFF.md</span><span class="tree-arrow">←</span><span class="tree-anno">Session handoff</span></div>
-            <div class="tree-line" title="Token budget protection — files Claude should never load"><span class="tree-glyph">├── </span><span class="tree-name">.claudeignore</span><span class="tree-arrow">←</span><span class="tree-anno">Token budget</span></div>
+            <div class="tree-line" title="Token budget protection: files Claude should never load"><span class="tree-glyph">├── </span><span class="tree-name">.claudeignore</span><span class="tree-arrow">←</span><span class="tree-anno">Token budget</span></div>
             <div class="tree-line"><span class="tree-glyph">├── </span><span class="tree-name is-dir">.claude/</span></div>
             <div class="tree-line" title="Auto-format hook, branch protection, PostCompact handler"><span class="tree-glyph">│   └── </span><span class="tree-name">settings.local.json</span><span class="tree-arrow">←</span><span class="tree-anno">Hooks</span></div>
             <div class="tree-line"><span class="tree-glyph">└── </span><span class="tree-name is-dir">.github/workflows/</span></div>
@@ -2683,7 +2749,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 6 — HIERARCHY OF LEVERAGE
+       SECTION 6 / HIERARCHY OF LEVERAGE
        ============================================================ -->
   <section id="leverage" class="ds-section leverage-section">
     <div class="ds-section-inner">
@@ -2764,7 +2830,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 7 — THE RESEARCH
+       SECTION 7 / THE RESEARCH
        ============================================================ -->
   <section id="research" class="ds-section research-section">
     <div class="ds-section-inner">
@@ -2776,7 +2842,7 @@
           <span class="verdict">The actual research.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Primary sources only &mdash; academic studies, lab papers, and frontline practitioners.
+          Primary sources only: academic studies, lab papers, and frontline practitioners.
         </p>
       </div>
 
@@ -2802,7 +2868,7 @@
         <!-- Group 1: AI Labs & Companies -->
         <div class="source-category">
           <div class="source-category-label">AI Labs &amp; Companies</div>
-          <a class="research-chip" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer" aria-label="Anthropic — Claude model and Agent SDK (opens in new tab)">
+          <a class="research-chip" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer" aria-label="Anthropic: Claude model and Agent SDK (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z"/></svg>
             </span>
@@ -2814,7 +2880,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://deepmind.google/research/publications/" target="_blank" rel="noopener noreferrer" aria-label="Google DeepMind — Agent design patterns (opens in new tab)">
+          <a class="research-chip" href="https://deepmind.google/research/publications/" target="_blank" rel="noopener noreferrer" aria-label="Google DeepMind: Agent design patterns (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg>
             </span>
@@ -2826,7 +2892,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://openai.com/research" target="_blank" rel="noopener noreferrer" aria-label="OpenAI — Function calling and tool use (opens in new tab)">
+          <a class="research-chip" href="https://openai.com/research" target="_blank" rel="noopener noreferrer" aria-label="OpenAI: Function calling and tool use (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 7 L19 15 L12 19 L5 15 L5 7 Z"/><circle cx="12" cy="11" r="3"/></svg>
             </span>
@@ -2838,7 +2904,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://manus.im/" target="_blank" rel="noopener noreferrer" aria-label="Manus — Autonomous agent architecture (opens in new tab)">
+          <a class="research-chip" href="https://manus.im/" target="_blank" rel="noopener noreferrer" aria-label="Manus: Autonomous agent architecture (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7 16 L7 9 L12 14 L17 9 L17 16"/></svg>
             </span>
@@ -2850,7 +2916,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://blog.jetbrains.com/ai/" target="_blank" rel="noopener noreferrer" aria-label="JetBrains — IDE-integrated AI research (opens in new tab)">
+          <a class="research-chip" href="https://blog.jetbrains.com/ai/" target="_blank" rel="noopener noreferrer" aria-label="JetBrains: IDE-integrated AI research (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3 L21 3 L21 21 L3 21 Z M5 5 L5 19 L11 19 L19 5 Z"/></svg>
             </span>
@@ -2862,7 +2928,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://github.blog/category/engineering/" target="_blank" rel="noopener noreferrer" aria-label="GitHub — Copilot deployment data (opens in new tab)">
+          <a class="research-chip" href="https://github.blog/category/engineering/" target="_blank" rel="noopener noreferrer" aria-label="GitHub: Copilot deployment data (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C6.48 2 2 6.58 2 12.26 c0 4.54 2.87 8.39 6.84 9.75 c0.5 0.09 0.68-0.22 0.68-0.49 c0-0.24-0.01-0.88-0.01-1.73 c-2.78 0.62-3.37-1.36-3.37-1.36 c-0.45-1.18-1.11-1.49-1.11-1.49 c-0.91-0.63 0.07-0.62 0.07-0.62 c1 0.07 1.53 1.05 1.53 1.05 c0.89 1.56 2.34 1.11 2.91 0.85 c0.09-0.66 0.35-1.11 0.63-1.36 c-2.22-0.26-4.55-1.13-4.55-5.04 c0-1.11 0.39-2.02 1.03-2.74 c-0.1-0.26-0.45-1.3 0.1-2.71 c0 0 0.84-0.27 2.75 1.05 c0.8-0.23 1.65-0.34 2.5-0.34 c0.85 0 1.7 0.11 2.5 0.34 c1.91-1.32 2.75-1.05 2.75-1.05 c0.55 1.41 0.2 2.45 0.1 2.71 c0.64 0.72 1.03 1.63 1.03 2.74 c0 3.92-2.34 4.78-4.57 5.03 c0.36 0.32 0.68 0.94 0.68 1.9 c0 1.37-0.01 2.48-0.01 2.81 c0 0.27 0.18 0.59 0.69 0.49 C19.14 20.65 22 16.79 22 12.26 C22 6.58 17.52 2 12 2 z"/></svg>
             </span>
@@ -2879,7 +2945,7 @@
         <!-- Group 2: Academic -->
         <div class="source-category">
           <div class="source-category-label">Academic</div>
-          <a class="research-chip" href="https://ethz.ch/en/research.html" target="_blank" rel="noopener noreferrer" aria-label="ETH Zurich — Agent evaluation study (opens in new tab)">
+          <a class="research-chip" href="https://ethz.ch/en/research.html" target="_blank" rel="noopener noreferrer" aria-label="ETH Zurich: Agent evaluation study (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 L5 20 L19 20 L19 10"/><path d="M9 20 L9 13 L15 13 L15 20"/></svg>
             </span>
@@ -2891,7 +2957,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://metr.org/" target="_blank" rel="noopener noreferrer" aria-label="METR — Controlled developer study (opens in new tab)">
+          <a class="research-chip" href="https://metr.org/" target="_blank" rel="noopener noreferrer" aria-label="METR: Controlled developer study (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="6"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
             </span>
@@ -2903,7 +2969,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://www.flowhunt.io/" target="_blank" rel="noopener noreferrer" aria-label="FlowHunt — Context-window benchmarks (opens in new tab)">
+          <a class="research-chip" href="https://www.flowhunt.io/" target="_blank" rel="noopener noreferrer" aria-label="FlowHunt: Context-window benchmarks (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16 C5 13 7 13 10 16 C13 19 15 19 18 16 C20 14 21 14 22 15"/><path d="M2 11 C5 8 7 8 10 11 C13 14 15 14 18 11 C20 9 21 9 22 10"/></svg>
             </span>
@@ -2920,7 +2986,7 @@
         <!-- Group 3: Practitioners -->
         <div class="source-category">
           <div class="source-category-label">Practitioners</div>
-          <a class="research-chip" href="https://twitter.com/bcherny" target="_blank" rel="noopener noreferrer" aria-label="Boris Cherny — Claude Code co-creator (opens in new tab)">
+          <a class="research-chip" href="https://twitter.com/bcherny" target="_blank" rel="noopener noreferrer" aria-label="Boris Cherny: Claude Code co-creator (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
             </span>
@@ -2932,7 +2998,7 @@
               <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 L9 3"/><path d="M4 3 L9 3 L9 8"/></svg>
             </span>
           </a>
-          <a class="research-chip" href="https://twitter.com/dexhorthy" target="_blank" rel="noopener noreferrer" aria-label="Dex Horthy — Context engineering research (opens in new tab)">
+          <a class="research-chip" href="https://twitter.com/dexhorthy" target="_blank" rel="noopener noreferrer" aria-label="Dex Horthy: Context engineering research (opens in new tab)">
             <span class="research-chip-mark" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21 C5 16 8 13 12 13 C16 13 19 16 19 21"/><path d="M9 6 L8 4"/><path d="M15 6 L16 4"/></svg>
             </span>
@@ -2956,7 +3022,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION 8 — INSTALL + FINAL CTA
+       SECTION 8 / INSTALL + FINAL CTA
        ============================================================ -->
   <section id="install" class="cta-section">
     <div class="cta-inner">
@@ -3066,7 +3132,7 @@
         </nav>
       </div>
       <div class="footer-signature">
-        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a> &mdash; the methodology that built this page
+        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a>, the methodology that built this page
       </div>
     </div>
   </footer>
@@ -3239,7 +3305,7 @@
         });
         revealEls.forEach(function (el) { io.observe(el); });
       } else {
-        // No IO support — show everything immediately.
+        // No IO support. Show everything immediately.
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
       }
     }
