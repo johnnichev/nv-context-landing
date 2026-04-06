@@ -1,0 +1,2175 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Synthesis &middot; nv:context</title>
+  <meta name="description" content="6 parallel research agents. 200+ sources. One distilled view of context engineering: ten laws, four operations, and the seven-component stack." />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="The Synthesis · nv:context">
+  <meta property="og:description" content="The distilled research behind nv:context. Ten laws of context engineering, four universal operations, and the seven-component stack.">
+  <meta property="og:image" content="https://skills.nichevlabs.com/og-image.png">
+  <meta property="og:url" content="https://skills.nichevlabs.com/synthesis">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Synthesis · nv:context">
+  <meta name="twitter:description" content="Ten laws. Four operations. One methodology. The distilled research behind nv:context.">
+  <meta name="twitter:image" content="https://skills.nichevlabs.com/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts: Inter (sans), Instrument Serif (display), JetBrains Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ================================================================
+     nv:context HYBRID DESIGN TOKENS  (from hybrid-ds.html)
+     Same tokens as case-studies.html for visual consistency.
+     ================================================================ */
+  :root, .dark {
+    --font-sans:  "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --font-mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+    --bg-base:       #000000;
+    --bg-elevated:   #0c0d0f;
+    --bg-elevated-2: #141517;
+    --bg-code:       #08090a;
+    --bg-terminal:   #050506;
+    --bg-glass:      rgba(255, 255, 255, 0.03);
+
+    --border-subtle:  rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.10);
+    --border-strong:  rgba(255, 255, 255, 0.16);
+    --border-glow:    rgba(113, 112, 255, 0.45);
+
+    --text-1: #f7f8f8;
+    --text-2: #d0d6e0;
+    --text-3: #8a8f98;
+    --text-4: #52595b;
+
+    --brand:           #7170ff;
+    --brand-hover:     #828fff;
+    --brand-deep:      #5e6ad2;
+    --brand-tint:      #18182f;
+    --brand-glow:      rgba(113, 112, 255, 0.22);
+    --brand-glow-soft: rgba(113, 112, 255, 0.10);
+
+    --success: #7bf1a8;
+    --warning: #f99c00;
+    --danger:  #fb2c36;
+
+    --terminal-prompt:  var(--brand);
+    --terminal-output:  var(--text-3);
+    --terminal-success: var(--success);
+    --terminal-caret:   var(--text-1);
+
+    --display-size: 80px;  --display-lh: 1.0;  --display-tracking: -0.01em;
+    --h1-size: 56px;       --h1-lh: 1.08;      --h1-tracking: -0.022em;
+    --h2-size: 40px;       --h2-lh: 1.1;       --h2-tracking: -0.022em;
+    --h3-size: 28px;       --h3-lh: 1.25;      --h3-tracking: -0.018em;
+    --body-lg-size: 18px;  --body-lg-lh: 1.6;
+    --body-size: 16px;     --body-lh: 1.55;
+    --body-sm-size: 14px;  --body-sm-lh: 1.5;
+    --caption-size: 12px;  --caption-lh: 1.4;  --caption-tracking: 0.08em;
+    --mono-size: 14px;     --mono-lh: 1.6;
+
+    --weight-regular:  400;
+    --weight-medium:   510;
+    --weight-semibold: 590;
+    --weight-bold:     680;
+
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+    --space-9: 96px; --space-10: 128px;
+
+    --container-narrow:    720px;
+    --container-wide:      1100px;
+    --container-bleed:     100%;
+    --page-padding-inline: 24px;
+    --section-y-mobile:    64px;
+    --section-y-tablet:    80px;
+    --section-y:           120px;
+    --grid-gap:            24px;
+
+    --radius-sm:   6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-pill: 999px;
+
+    --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md:   0 4px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg:   0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 32px -8px var(--brand-glow);
+
+    --ease-in-quad:      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    --ease-in-cubic:     cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-out-quad:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out-cubic:    cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-out-quart:    cubic-bezier(0.165, 0.84, 0.44, 1);
+    --ease-out-quint:    cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-expo:     cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+
+    --speed-fast:    0.16s;
+    --speed-regular: 0.25s;
+    --speed-slow:    0.35s;
+    --speed-glacial: 1.0s;
+  }
+
+  /* ================================================================
+     RESET + BASE
+     ================================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+    margin: 0; padding: 0; border: 0;
+    font: inherit;
+  }
+  ul, ol { list-style: none; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss04", "ss11", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: none;
+  }
+  body {
+    background: var(--bg-base);
+    color: var(--text-2);
+    font-size: var(--body-size);
+    line-height: var(--body-lh);
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--brand-glow); color: var(--text-1); }
+  a { color: inherit; text-decoration: none; transition: color var(--speed-fast) var(--ease-out-quad); }
+  a:hover { color: var(--text-1); }
+  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; padding: 0; }
+  img, svg, video { display: block; max-width: 100%; }
+  code, pre { font-family: var(--font-mono); }
+
+  /* ================================================================
+     KEYFRAMES
+     ================================================================ */
+  @keyframes drift {
+    0%   { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+    50%  { transform: translate3d(1%, 0.5%, 0)  scale(1.02); }
+    100% { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+  }
+  @keyframes caret-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.15; }
+  }
+  @keyframes copy-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  @keyframes check-draw {
+    0%   { stroke-dashoffset: 18; opacity: 0; }
+    30%  { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes toast-in {
+    0%   { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes border-draw {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    100% { transform: scaleY(1); transform-origin: top; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ================================================================
+     STICKY HEADER NAV
+     ================================================================ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .site-header-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 14px var(--page-padding-inline);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+  .header-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: var(--weight-medium);
+    color: var(--text-3);
+    transition: color var(--speed-fast) var(--ease-out-quad), transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover {
+    color: var(--text-1);
+    transform: translateX(-2px);
+  }
+  .header-back .arrow {
+    display: inline-block;
+    transition: transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover .arrow { transform: translateX(-2px); }
+  .header-brand {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-2);
+    letter-spacing: -0.01em;
+  }
+  .header-brand .accent { color: var(--brand-hover); }
+  .header-links {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .header-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .header-links a:hover { color: var(--text-1); }
+
+  /* ================================================================
+     PAGE INTRO
+     ================================================================ */
+  .page-intro {
+    position: relative;
+    padding: var(--space-10) var(--page-padding-inline) var(--space-9);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .page-intro::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 120%;
+    pointer-events: none;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 1100px 700px at 60% 20%,
+        rgba(113, 112, 255, 0.10) 0%,
+        rgba(113, 112, 255, 0.06) 25%,
+        rgba(113, 112, 255, 0.02) 50%,
+        transparent 75%),
+      radial-gradient(ellipse 70% 60% at 30% 90%,
+        rgba(94, 106, 210, 0.05) 0%,
+        rgba(94, 106, 210, 0.02) 40%,
+        transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+    animation: drift 32s var(--ease-in-out-cubic) infinite;
+  }
+  .page-intro::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 35%, #000 25%, transparent 80%);
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 35%, #000 25%, transparent 80%);
+  }
+  .page-intro-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .page-intro-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .page-intro-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    align-self: stretch;
+  }
+  .intro-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brand-hover);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    margin-bottom: var(--space-6);
+  }
+  .intro-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 5.6vw, 72px);
+    line-height: 1.04;
+    letter-spacing: var(--display-tracking);
+    font-weight: 400;
+    color: var(--text-1);
+    margin: 0 0 var(--space-5);
+    max-width: 18ch;
+    text-wrap: balance;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .intro-h1 .serif-italic {
+    font-style: italic;
+    font-family: var(--font-serif);
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .intro-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 600px;
+    margin: 0 0 var(--space-7);
+  }
+  .intro-lede em {
+    color: var(--text-2);
+    font-style: normal;
+  }
+  .intro-meta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .intro-meta .dot { color: var(--text-4); }
+
+  /* TOC */
+  .toc {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-5);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    min-width: 280px;
+    position: relative;
+  }
+  .toc::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-4);
+    margin-bottom: var(--space-2);
+  }
+  .toc a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-2);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: color var(--speed-fast) var(--ease-out-quad), padding var(--speed-fast) var(--ease-out-quad);
+  }
+  .toc a:last-child { border-bottom: 0; }
+  .toc a:hover {
+    color: var(--text-1);
+    padding-left: 4px;
+  }
+  .toc a .num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--brand-hover);
+    margin-right: var(--space-3);
+  }
+
+  /* ================================================================
+     SHARED SECTION CHROME
+     ================================================================ */
+  .ds-section {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .ds-section.is-elevated { background: var(--bg-elevated); }
+  .ds-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 65% 60% at 50% 30%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 65% 60% at 50% 30%, #000, transparent 80%);
+  }
+  .ds-section-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+  .ds-section-inner.is-narrow { max-width: var(--container-narrow); }
+  .ds-section-head {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ds-section-head.is-left {
+    text-align: left;
+    align-items: flex-start;
+  }
+  .ds-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brand-hover);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    margin-bottom: var(--space-5);
+  }
+  .ds-h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5.6vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin: 0 0 var(--space-5);
+    max-width: 22ch;
+    text-wrap: balance;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-h2.is-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(40px, 6.4vw, 64px);
+    letter-spacing: var(--display-tracking);
+    line-height: 1.05;
+  }
+  .ds-h2 .accent-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .ds-section-head.is-left .ds-lede { margin: 0; }
+
+  /* ================================================================
+     PULL QUOTE BLOCK
+     ================================================================ */
+  .pull-quote {
+    position: relative;
+    padding: var(--space-7) var(--space-7);
+    margin: var(--space-7) auto 0;
+    max-width: 760px;
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .pull-quote::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--brand) 0%, var(--brand-deep) 100%);
+    box-shadow: 0 0 24px var(--brand-glow);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1.2s var(--ease-out-quart);
+  }
+  .pull-quote.is-visible::before { transform: scaleY(1); }
+  .pull-quote::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .pull-quote blockquote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.8vw, 32px);
+    line-height: 1.32;
+    color: var(--text-1);
+    background: linear-gradient(180deg, #ffffff 0%, #cdd0ff 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-wrap: balance;
+  }
+  .pull-quote .attribution {
+    margin-top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .pull-quote .attribution a {
+    color: var(--text-3);
+  }
+  .pull-quote .attribution a:hover { color: var(--brand-hover); }
+
+  .pull-quote.is-flat {
+    background: transparent;
+    border: 0;
+    padding: var(--space-5) var(--space-7);
+  }
+  .pull-quote.is-flat::after { display: none; }
+
+  /* ================================================================
+     IS-NOT CARDS (3-card row)
+     ================================================================ */
+  .is-not-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+  .is-not-card {
+    position: relative;
+    padding: 22px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart);
+  }
+  .is-not-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .is-not-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated-2);
+    transform: translateY(-2px);
+  }
+  .is-not-card .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--danger);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    background: rgba(251, 44, 54, 0.08);
+    border: 1px solid rgba(251, 44, 54, 0.20);
+    margin-bottom: var(--space-3);
+  }
+  .is-not-card .label {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .is-not-card .body {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+
+  /* ================================================================
+     PARADOX STAT CARDS
+     ================================================================ */
+  .paradox-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+  }
+  .paradox-stat {
+    position: relative;
+    padding: 32px 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .paradox-stat::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .paradox-stat:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+  .paradox-stat .number {
+    font-family: var(--font-mono);
+    font-size: clamp(28px, 3.6vw, 40px);
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 32px var(--brand-glow-soft);
+  }
+  .paradox-stat .number .accent { color: var(--brand-hover); margin: 0 6px; }
+  .paradox-stat .label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    margin-top: var(--space-4);
+    line-height: 1.5;
+    max-width: 28ch;
+  }
+  .paradox-stat .source {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+  }
+  .paradox-stat .source a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     LAW CARDS GRID
+     ================================================================ */
+  .laws-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+  }
+  .law-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .law-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .law-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 18px 44px -18px var(--brand-glow);
+  }
+  .law-card-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .law-card-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--brand-hover);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .law-card-name {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  .law-card-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-3);
+    margin-bottom: var(--space-4);
+    flex: 1;
+  }
+  .law-card-body code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-2);
+    background: var(--bg-code);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+  .law-card-source {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .law-card-source a { color: var(--text-3); }
+  .law-card-source a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     OPERATIONS GRID (4 columns)
+     ================================================================ */
+  .ops-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+  }
+  .op-card {
+    position: relative;
+    padding: 28px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .op-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .op-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+  .op-card .op-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--brand-hover);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+  .op-card .op-name {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    line-height: 1;
+    color: var(--text-1);
+    margin-bottom: var(--space-3);
+    background: linear-gradient(180deg, #ffffff 0%, #cdd0ff 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .op-card .op-what {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: var(--space-3);
+    line-height: 1.5;
+  }
+  .op-card .op-how {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    line-height: 1.55;
+  }
+  .ops-attribution {
+    margin-top: var(--space-7);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .ops-attribution a { color: var(--text-3); }
+  .ops-attribution a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     STACK LIST (numbered vertical list)
+     ================================================================ */
+  .stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+  }
+  .stack-item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    gap: var(--space-5);
+    padding: 22px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .stack-item:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated-2);
+    transform: translateX(2px);
+  }
+  .stack-item .num {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--brand-hover);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 24px var(--brand-glow-soft);
+  }
+  .stack-item .body strong {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin-bottom: 2px;
+  }
+  .stack-item .body p {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+  .stack-attribution {
+    margin-top: var(--space-6);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .stack-attribution a { color: var(--text-3); }
+  .stack-attribution a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     ECOSYSTEM TABLE
+     ================================================================ */
+  .eco-table {
+    margin-top: var(--space-7);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    overflow: hidden;
+  }
+  .eco-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.4fr 2fr;
+    gap: var(--space-4);
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: center;
+  }
+  .eco-row:last-child { border-bottom: 0; }
+  .eco-row.is-head {
+    background: rgba(255, 255, 255, 0.02);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+  }
+  .eco-row .file {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-1);
+    font-weight: 600;
+  }
+  .eco-row .support {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .eco-row .best {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+  .eco-row:hover:not(.is-head) {
+    background: rgba(255, 255, 255, 0.018);
+  }
+  .eco-callout {
+    margin-top: var(--space-5);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.20);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+  .eco-callout strong {
+    color: var(--brand-hover);
+    font-weight: var(--weight-semibold);
+  }
+
+  /* ================================================================
+     STATISTICS / TRENDS GRID
+     ================================================================ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+  .stat-card {
+    position: relative;
+    padding: 28px 26px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .stat-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated-2);
+    transform: translateY(-2px);
+  }
+  .stat-card .figure {
+    font-family: var(--font-mono);
+    font-size: clamp(26px, 3.4vw, 34px);
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+  }
+  .stat-card .figure .accent { color: var(--brand-hover); }
+  .stat-card .desc {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
+  }
+  .stat-card .source {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+  }
+  .stat-card .source a { color: var(--text-3); }
+  .stat-card .source a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     FOOTER CTA
+     ================================================================ */
+  .footer-cta {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+  }
+  .footer-cta::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(ellipse 800px 500px at 50% 50%,
+        rgba(113, 112, 255, 0.08) 0%,
+        rgba(113, 112, 255, 0.03) 40%,
+        transparent 75%);
+  }
+  .footer-cta-inner {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-cta h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.08;
+    letter-spacing: var(--h1-tracking);
+    font-weight: 400;
+    color: var(--text-1);
+    margin-bottom: var(--space-6);
+    text-wrap: balance;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .footer-cta h2 .serif-italic {
+    font-style: italic;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .footer-cta-terminal {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--space-6);
+  }
+  .footer-cta .back-link {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .footer-cta .back-link:hover { color: var(--text-1); }
+
+  /* ================================================================
+     TERMINAL (shared install block)
+     ================================================================ */
+  .terminal {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-terminal);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    cursor: pointer;
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .terminal.is-glowing {
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow-soft), 0 0 60px -25px var(--brand-glow);
+  }
+  .terminal.is-glowing:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow), 0 0 80px -15px var(--brand-glow);
+  }
+  .code-chrome {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: #0e0f10;
+  }
+  .code-chrome .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  .code-chrome .dot.r { background: #ff5f57; }
+  .code-chrome .dot.y { background: #febc2e; }
+  .code-chrome .dot.g { background: #28c840; }
+  .code-chrome .file {
+    margin-left: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .code-chrome .copy {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    background: transparent;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity var(--speed-regular) var(--ease-out-quart),
+                color var(--speed-fast) var(--ease-out-quad),
+                border-color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad);
+  }
+  .code-chrome .copy:hover {
+    color: var(--text-1);
+    border-color: var(--border-strong);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .code-chrome .copy.is-copied {
+    color: var(--success);
+    border-color: rgba(123, 241, 168, 0.30);
+    background: rgba(123, 241, 168, 0.06);
+    animation: copy-pop 0.32s var(--ease-out-quart);
+  }
+  .code-chrome .copy .copy-icon {
+    width: 12px; height: 12px;
+    flex-shrink: 0;
+    color: currentColor;
+  }
+  .code-chrome .copy .copy-icon svg {
+    width: 100%; height: 100%; display: block;
+  }
+  .code-chrome .copy .copy-icon .check-path {
+    stroke-dasharray: 18;
+    stroke-dashoffset: 18;
+    opacity: 0;
+  }
+  .code-chrome .copy.is-copied .copy-icon .copy-square { opacity: 0; }
+  .code-chrome .copy.is-copied .copy-icon .check-path {
+    animation: check-draw 0.32s var(--ease-out-quart) forwards;
+  }
+  .code-body {
+    padding: 22px 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-1);
+    overflow-x: auto;
+    text-align: left;
+  }
+  .terminal .prompt {
+    color: var(--terminal-prompt);
+    user-select: none;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+  .terminal .cmd { color: var(--text-1); }
+  .terminal .caret {
+    display: inline-block;
+    width: 8px; height: 1.05em;
+    vertical-align: -2px;
+    background: var(--terminal-caret);
+    margin-left: 4px;
+    animation: caret-blink 1.4s var(--ease-in-out-cubic) infinite;
+  }
+
+  .copy-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 18px;
+    background: rgba(8, 9, 10, 0.92);
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--success);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px -8px var(--brand-glow);
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    animation: toast-in 0.4s var(--ease-out-quart) forwards;
+  }
+
+  /* ================================================================
+     PAGE FOOTER
+     ================================================================ */
+  .footer {
+    padding: var(--space-8) var(--page-padding-inline);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .footer-brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .footer-brand-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    font-weight: 600;
+  }
+  .footer-brand-by {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-4);
+  }
+  .footer-links {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .footer-links a:hover { color: var(--text-1); }
+  .footer-signature {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .footer-signature a { color: var(--text-3); }
+  .footer-signature a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     SCROLL REVEAL
+     ================================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+    transition: opacity 0.9s var(--ease-out-quart),
+                transform 0.9s var(--ease-out-quart),
+                filter 0.9s var(--ease-out-quart);
+    will-change: opacity, transform, filter;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  .reveal { transition-delay: var(--reveal-delay, 0s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1; transform: none; filter: none; transition: none;
+    }
+    .pull-quote::before { transform: scaleY(1); transition: none; }
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .ds-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .footer-cta { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .page-intro { padding: var(--space-9) var(--page-padding-inline) var(--space-8); }
+    .page-intro-inner { grid-template-columns: 1fr; gap: var(--space-7); }
+    .page-intro-right { flex-direction: row; flex-wrap: wrap; gap: var(--space-3); }
+    .toc { flex: 1 1 280px; min-width: 0; }
+    .laws-grid { grid-template-columns: repeat(2, 1fr); }
+    .ops-grid { grid-template-columns: repeat(2, 1fr); }
+    .paradox-stats { grid-template-columns: repeat(3, 1fr); }
+    .is-not-grid { grid-template-columns: repeat(3, 1fr); }
+    .eco-row { grid-template-columns: 1.2fr 1.2fr 1.6fr; }
+  }
+  @media (max-width: 720px) {
+    html { scroll-padding-top: 72px; }
+    .site-header-inner { padding: 12px var(--page-padding-inline); gap: var(--space-3); }
+    .header-brand { display: none; }
+    .ds-section { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .footer-cta { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .page-intro { padding: var(--space-8) var(--page-padding-inline) var(--space-7); }
+    .ds-h2 { font-size: clamp(30px, 8vw, 44px); }
+    .ds-h2.is-serif { font-size: clamp(34px, 9vw, 48px); }
+    .ds-section-head { margin-bottom: var(--space-7); }
+    .pull-quote { padding: var(--space-6) var(--space-5); }
+    .pull-quote blockquote { font-size: clamp(20px, 5.4vw, 26px); }
+    .is-not-grid { grid-template-columns: 1fr; }
+    .paradox-stats { grid-template-columns: 1fr; gap: var(--space-3); }
+    .laws-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+    .ops-grid { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    .stats-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+    .stack-item { grid-template-columns: 48px 1fr; padding: 18px 18px; }
+    .stack-item .num { font-size: 22px; }
+    .eco-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+      padding: 14px 18px;
+    }
+    .eco-row.is-head { display: none; }
+    .eco-row .support::before { content: "Support  "; color: var(--text-4); font-size: 11px; }
+    .eco-row .best::before { content: "Best for  "; color: var(--text-4); font-size: 11px; }
+    .footer-row { flex-direction: column; align-items: flex-start; }
+    .law-card { padding: 22px; }
+    .op-card { padding: 22px 20px; }
+    .op-card .op-name { font-size: 26px; }
+  }
+  @media (max-width: 380px) {
+    .ops-grid { grid-template-columns: 1fr; }
+    .terminal .code-body { font-size: 12px; padding: 16px 14px; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       STICKY HEADER NAV
+       ============================================================ -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="header-back" aria-label="Back to nv:context">
+        <span class="arrow" aria-hidden="true">&larr;</span>
+        Back to nv:context
+      </a>
+      <span class="header-brand" aria-hidden="true">nv<span class="accent">:</span>context &middot; synthesis</span>
+      <nav class="header-links" aria-label="Header">
+        <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md" target="_blank" rel="noopener">GitHub &nearr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PAGE INTRO
+       ============================================================ -->
+  <section class="page-intro" id="intro">
+    <div class="page-intro-inner">
+      <div class="page-intro-left">
+        <span class="intro-eyebrow">The Synthesis</span>
+        <h1 class="intro-h1">
+          Ten laws.<br />
+          Four operations.<br />
+          One <span class="serif-italic">methodology.</span>
+        </h1>
+        <p class="intro-lede">
+          Six parallel research agents. Two hundred plus sources. One consolidated view of
+          what <em>context engineering</em> actually is, and how to do it well. This is the
+          distilled output behind the nv:context skill.
+        </p>
+        <div class="intro-meta">
+          <span>Updated 2026.04.04</span>
+          <span class="dot">&middot;</span>
+          <span>6 research agents</span>
+          <span class="dot">&middot;</span>
+          <span>200+ sources</span>
+        </div>
+      </div>
+
+      <aside class="page-intro-right" aria-label="Synthesis sections">
+        <nav class="toc" aria-label="Jump to a section">
+          <span class="toc-label">Jump to</span>
+          <a href="#understanding"><span><span class="num">01</span> The understanding</span></a>
+          <a href="#paradox"><span><span class="num">02</span> The core paradox</span></a>
+          <a href="#laws"><span><span class="num">03</span> The 10 laws</span></a>
+          <a href="#operations"><span><span class="num">04</span> Four operations</span></a>
+          <a href="#stack"><span><span class="num">05</span> The context stack</span></a>
+          <a href="#ecosystem"><span><span class="num">06</span> File ecosystem</span></a>
+          <a href="#evidence"><span><span class="num">07</span> Evidence</span></a>
+          <a href="#install"><span><span class="num">08</span> Install</span></a>
+        </nav>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 1 / THE DEFINITIVE UNDERSTANDING
+       ============================================================ -->
+  <section id="understanding" class="ds-section">
+    <div class="ds-section-inner is-narrow">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">01 &middot; The definitive understanding</span>
+        <h2 class="ds-h2 is-serif">What context engineering <span class="accent-serif">actually is.</span></h2>
+        <p class="ds-lede">
+          The consensus definition, distilled from Karpathy, Schmid, Chase, Osmani, and Anthropic.
+          One sentence everyone in the field has independently converged on.
+        </p>
+      </div>
+
+      <figure class="pull-quote reveal">
+        <blockquote>
+          The systematic discipline of designing dynamic systems that provide the right
+          information and tools, in the right format, at the right time, so an LLM can
+          accomplish a task.
+        </blockquote>
+        <figcaption class="attribution">
+          Consensus definition &middot; Karpathy, Schmid, Chase, Osmani,
+          <a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Anthropic</a>
+        </figcaption>
+      </figure>
+
+      <div class="is-not-grid reveal" style="--reveal-delay: 0.06s;">
+        <div class="is-not-card">
+          <span class="tag">It is not</span>
+          <div class="label">Prompt engineering</div>
+          <p class="body">That's a subset. Prompts are one layer inside a much larger information system.</p>
+        </div>
+        <div class="is-not-card">
+          <span class="tag">It is not</span>
+          <div class="label">Just RAG</div>
+          <p class="body">Retrieval is one of four operations. Picking docs is the easy part of context.</p>
+        </div>
+        <div class="is-not-card">
+          <span class="tag">It is not</span>
+          <div class="label">A clever system prompt</div>
+          <p class="body">The system prompt is one of seven components. Treating it as everything is the failure mode.</p>
+        </div>
+      </div>
+
+      <figure class="pull-quote is-flat reveal" style="--reveal-delay: 0.12s;">
+        <blockquote>
+          Most agent failures are not model failures. They are context failures.
+        </blockquote>
+        <figcaption class="attribution">
+          Philipp Schmid &middot;
+          <a href="https://deepmind.google/research/publications/" target="_blank" rel="noopener">Google DeepMind</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 / THE CORE PARADOX
+       ============================================================ -->
+  <section id="paradox" class="ds-section is-elevated">
+    <div class="ds-section-inner is-narrow">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">02 &middot; The core paradox</span>
+        <h2 class="ds-h2 is-serif">
+          Agents need more context. Performance degrades as context <span class="accent-serif">grows.</span>
+        </h2>
+        <p class="ds-lede">
+          The single most counterintuitive finding in the entire research corpus. Every law
+          that follows is a strategy for resolving it.
+        </p>
+      </div>
+
+      <div class="paradox-stats reveal" style="--reveal-delay: 0.06s;">
+        <div class="paradox-stat">
+          <div class="number">300<span class="accent">&gt;</span>113K</div>
+          <span class="label">A focused 300-token context outperforms an unfocused 113K-token context.</span>
+          <span class="source">FlowHunt &middot; LongMemEval</span>
+        </div>
+        <div class="paradox-stat">
+          <div class="number">40<span class="accent">&gt;</span>90<span style="font-size: 0.55em; color: var(--text-3);">%</span></div>
+          <span class="label">Using 40% of the context window outperforms using 90%.</span>
+          <span class="source">
+            <a href="https://twitter.com/dexhorthy" target="_blank" rel="noopener">Dex Horthy</a>
+          </span>
+        </div>
+        <div class="paradox-stat">
+          <div class="number">~150<span style="font-size: 0.55em; color: var(--text-3);"> max</span></div>
+          <span class="label">Frontier LLMs follow roughly 150 to 200 instructions consistently. Then attention falls off.</span>
+          <span class="source">
+            <a href="https://ethz.ch/en/research.html" target="_blank" rel="noopener">ETH Zurich</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 / THE 10 LAWS
+       ============================================================ -->
+  <section id="laws" class="ds-section">
+    <div class="ds-section-inner">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">03 &middot; The ten laws</span>
+        <h2 class="ds-h2 is-serif">Ten laws of context <span class="accent-serif">engineering.</span></h2>
+        <p class="ds-lede">
+          Distilled from every source. Each one is a tested response to the core paradox.
+          The skill itself condenses these into eight working rules. The synthesis is the fuller source.
+        </p>
+      </div>
+
+      <div class="laws-grid">
+
+        <article class="law-card reveal">
+          <div class="law-card-head">
+            <span class="law-card-num">01</span>
+            <div class="law-card-name">Less Is More</div>
+          </div>
+          <p class="law-card-body">
+            LLM-generated config files reduce success by 3% and increase costs 20% or more.
+            Human-written files only marginally help. <strong style="color: var(--text-2);">Only include
+            what agents cannot discover by reading your code.</strong>
+          </p>
+          <div class="law-card-source">
+            The <a href="https://ethz.ch/en/research.html" target="_blank" rel="noopener">ETH Zurich</a> Law
+          </div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.04s;">
+          <div class="law-card-head">
+            <span class="law-card-num">02</span>
+            <div class="law-card-name">Commands Beat Prose</div>
+          </div>
+          <p class="law-card-body">
+            One executable command with full flags outperforms three paragraphs of description.
+            One code snippet showing a pattern outperforms lengthy explanations.
+          </p>
+          <div class="law-card-source">Cross-source consensus</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.06s;">
+          <div class="law-card-head">
+            <span class="law-card-num">03</span>
+            <div class="law-card-name">Context Is a Finite Resource</div>
+          </div>
+          <p class="law-card-body">
+            Every token in your config competes with the actual task. Frontier LLMs follow
+            ~150 to 200 instructions consistently. Claude Code's system prompt already uses ~50.
+            Target under 200 lines per root file.
+          </p>
+          <div class="law-card-source">The Attention Budget Law</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.08s;">
+          <div class="law-card-head">
+            <span class="law-card-num">04</span>
+            <div class="law-card-name">Progressive Disclosure</div>
+          </div>
+          <p class="law-card-body">
+            Root file orients. Subdirectory files scope details. Skills load on demand.
+            MCP retrieves dynamically. Never dump everything into one file.
+          </p>
+          <div class="law-card-source">The Architecture Law</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.10s;">
+          <div class="law-card-head">
+            <span class="law-card-num">05</span>
+            <div class="law-card-name">Stable Prefixes, Dynamic Suffixes</div>
+          </div>
+          <p class="law-card-body">
+            Keep system instructions and tool definitions static. Append dynamic content at
+            the end. Cached tokens cost 10x less. A single changed token at the start
+            invalidates the entire cache.
+          </p>
+          <div class="law-card-source">The KV-Cache Law &middot; Manus</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.12s;">
+          <div class="law-card-head">
+            <span class="law-card-num">06</span>
+            <div class="law-card-name">The Three-Tier Boundary Framework</div>
+          </div>
+          <p class="law-card-body">
+            Every configuration must include three buckets: <strong style="color: var(--text-2);">Always
+            do</strong>, <strong style="color: var(--text-2);">Ask first</strong>, and
+            <strong style="color: var(--text-2);">Never do</strong>. The single most common
+            helpful constraint: "Never commit secrets."
+          </p>
+          <div class="law-card-source">Cross-source consensus</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.14s;">
+          <div class="law-card-head">
+            <span class="law-card-num">07</span>
+            <div class="law-card-name">Deterministic Tools for Deterministic Tasks</div>
+          </div>
+          <p class="law-card-body">
+            Don't use LLMs for linting, formatting, or style enforcement. Use hooks and scripts.
+            Reserve agent config for things only an LLM can do.
+          </p>
+          <div class="law-card-source">The Hook Law</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.16s;">
+          <div class="law-card-head">
+            <span class="law-card-num">08</span>
+            <div class="law-card-name">File System as Extended Memory</div>
+          </div>
+          <p class="law-card-body">
+            Write state to files, read selectively. The <code>todo.md</code> pattern pushes
+            objectives into recent attention. Compression should be reversible: keep URLs
+            and paths even when dropping content.
+          </p>
+          <div class="law-card-source">The Manus Law</div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.18s;">
+          <div class="law-card-head">
+            <span class="law-card-num">09</span>
+            <div class="law-card-name">Isolation Over Sharing</div>
+          </div>
+          <p class="law-card-body">
+            Share memory by communicating, don't communicate by sharing memory. Sub-agents
+            work best with focused, isolated contexts. Each one explores extensively but
+            returns condensed summaries.
+          </p>
+          <div class="law-card-source">
+            The Multi-Agent Law &middot;
+            <a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Anthropic</a>
+          </div>
+        </article>
+
+        <article class="law-card reveal" style="--reveal-delay: 0.20s;">
+          <div class="law-card-head">
+            <span class="law-card-num">10</span>
+            <div class="law-card-name">Iterate on Observed Failures</div>
+          </div>
+          <p class="law-card-body">
+            Start minimal. Observe agent mistakes. Add instructions that prevent those
+            specific mistakes. Prune regularly. Treat config like code.
+          </p>
+          <div class="law-card-source">The Living Document Law</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 / FOUR UNIVERSAL OPERATIONS
+       ============================================================ -->
+  <section id="operations" class="ds-section is-elevated">
+    <div class="ds-section-inner">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">04 &middot; The four operations</span>
+        <h2 class="ds-h2 is-serif">Four universal <span class="accent-serif">operations.</span></h2>
+        <p class="ds-lede">
+          Independently identified by three different teams. If you do anything to context,
+          you are doing one of these four things.
+        </p>
+      </div>
+
+      <div class="ops-grid">
+        <article class="op-card reveal">
+          <span class="op-num">Operation 01</span>
+          <div class="op-name">Write</div>
+          <p class="op-what">Persist information beyond a single turn.</p>
+          <p class="op-how">Scratchpads, memories, files, todo.md</p>
+        </article>
+
+        <article class="op-card reveal" style="--reveal-delay: 0.06s;">
+          <span class="op-num">Operation 02</span>
+          <div class="op-name">Select</div>
+          <p class="op-what">Retrieve only the relevant information.</p>
+          <p class="op-how">RAG, tool selection, memory retrieval, glob/grep</p>
+        </article>
+
+        <article class="op-card reveal" style="--reveal-delay: 0.12s;">
+          <span class="op-num">Operation 03</span>
+          <div class="op-name">Compress</div>
+          <p class="op-what">Reduce tokens while retaining meaning.</p>
+          <p class="op-how">Summarization, observation masking, tool result clearing</p>
+        </article>
+
+        <article class="op-card reveal" style="--reveal-delay: 0.18s;">
+          <span class="op-num">Operation 04</span>
+          <div class="op-name">Isolate</div>
+          <p class="op-what">Partition context across boundaries.</p>
+          <p class="op-how">Sub-agents, fresh context windows, scoped rules</p>
+        </article>
+      </div>
+
+      <p class="ops-attribution reveal" style="--reveal-delay: 0.24s;">
+        Independently identified by
+        <a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Anthropic</a>,
+        LangChain, and
+        <a href="https://deepmind.google/research/publications/" target="_blank" rel="noopener">Google ADK</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5 / THE CONTEXT STACK (7 components)
+       ============================================================ -->
+  <section id="stack" class="ds-section">
+    <div class="ds-section-inner is-narrow">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">05 &middot; The context stack</span>
+        <h2 class="ds-h2 is-serif">Seven components inside the <span class="accent-serif">window.</span></h2>
+        <p class="ds-lede">
+          Philipp Schmid's framework. Every token your model sees belongs to exactly one of
+          these seven slots. If you cannot name the slot, you cannot engineer it.
+        </p>
+      </div>
+
+      <div class="stack-list">
+        <div class="stack-item reveal">
+          <div class="num">01</div>
+          <div class="body">
+            <strong>System Prompt &middot; Instructions</strong>
+            <p>Agent identity, behavior rules, boundaries. The persistent persona.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.04s;">
+          <div class="num">02</div>
+          <div class="body">
+            <strong>User Prompt</strong>
+            <p>The current task or question. The thing the user actually wants done.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.06s;">
+          <div class="num">03</div>
+          <div class="body">
+            <strong>State &middot; History</strong>
+            <p>Conversation turns, tool outputs, intermediate results from earlier in the session.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.08s;">
+          <div class="num">04</div>
+          <div class="body">
+            <strong>Long-Term Memory</strong>
+            <p>Cross-session facts, preferences, domain knowledge that survives a context reset.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.10s;">
+          <div class="num">05</div>
+          <div class="body">
+            <strong>Retrieved Information</strong>
+            <p>RAG results, file contents, documentation pulled in for the specific task.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.12s;">
+          <div class="num">06</div>
+          <div class="body">
+            <strong>Available Tools</strong>
+            <p>Tool descriptions and parameters. The actions the agent can take from here.</p>
+          </div>
+        </div>
+        <div class="stack-item reveal" style="--reveal-delay: 0.14s;">
+          <div class="num">07</div>
+          <div class="body">
+            <strong>Structured Output</strong>
+            <p>The expected response format or schema. Constraints on what comes back.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="stack-attribution reveal" style="--reveal-delay: 0.18s;">
+        Framework by Philipp Schmid &middot;
+        <a href="https://deepmind.google/research/publications/" target="_blank" rel="noopener">Google DeepMind</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6 / THE FILE ECOSYSTEM
+       ============================================================ -->
+  <section id="ecosystem" class="ds-section is-elevated">
+    <div class="ds-section-inner">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">06 &middot; The file ecosystem</span>
+        <h2 class="ds-h2 is-serif">Seven config files. One <span class="accent-serif">universal baseline.</span></h2>
+        <p class="ds-lede">
+          The current state of agent config files as of April 2026. Different tools,
+          different formats, mostly the same purpose.
+        </p>
+      </div>
+
+      <div class="eco-table reveal">
+        <div class="eco-row is-head">
+          <span class="file">File</span>
+          <span class="support">Tool support</span>
+          <span class="best">Best for</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">AGENTS.md</span>
+          <span class="support">25+ tools, Linux Foundation</span>
+          <span class="best">Universal baseline. The widest compatibility surface available.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">CLAUDE.md</span>
+          <span class="support">Claude Code, GitHub Copilot</span>
+          <span class="best">Claude-specific features: <code style="font-family: var(--font-mono); font-size: 12px; color: var(--text-2); background: var(--bg-code); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 1px 6px;">@imports</code>, skills, hooks integration.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">.cursor/rules/*.mdc</span>
+          <span class="support">Cursor</span>
+          <span class="best">Glob-scoped rule activation per file pattern.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">.github/copilot-instructions.md</span>
+          <span class="support">GitHub Copilot</span>
+          <span class="best">Copilot-specific instructions inside the repo.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">GEMINI.md</span>
+          <span class="support">Gemini CLI</span>
+          <span class="best">Gemini-specific behavior and guardrails.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">.windsurf/rules/*.md</span>
+          <span class="support">Windsurf</span>
+          <span class="best">Windsurf-specific rule files with cascade behavior.</span>
+        </div>
+        <div class="eco-row">
+          <span class="file">CONVENTIONS.md</span>
+          <span class="support">Aider</span>
+          <span class="best">Aider's conventions file for repo-wide rules.</span>
+        </div>
+      </div>
+
+      <p class="eco-callout reveal" style="--reveal-delay: 0.06s;">
+        <strong>Pragmatic recommendation.</strong> Start with AGENTS.md (widest support)
+        plus CLAUDE.md (deepest features). Keep overlap minimal. Generate other files only
+        for tools you actually use.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7 / EVIDENCE / KEY STATISTICS
+       ============================================================ -->
+  <section id="evidence" class="ds-section">
+    <div class="ds-section-inner is-narrow">
+      <div class="ds-section-head reveal">
+        <span class="ds-eyebrow">07 &middot; The evidence</span>
+        <h2 class="ds-h2 is-serif">Numbers worth <span class="accent-serif">remembering.</span></h2>
+        <p class="ds-lede">
+          A handful of statistics from the corpus that change how you think about
+          context engineering once you have read them.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card reveal">
+          <div class="figure"><span class="accent">&minus;</span>3<span style="font-size: 0.6em; color: var(--text-3);">%</span></div>
+          <p class="desc">
+            Auto-generated config files reduce agent success by 3% and increase costs by
+            20% or more vs no config at all. Human-written files only marginally help.
+          </p>
+          <div class="source">
+            <a href="https://ethz.ch/en/research.html" target="_blank" rel="noopener">ETH Zurich</a>
+            &middot; agent evaluation study
+          </div>
+        </article>
+
+        <article class="stat-card reveal" style="--reveal-delay: 0.04s;">
+          <div class="figure">19<span style="font-size: 0.6em; color: var(--text-3);">% slower</span></div>
+          <p class="desc">
+            Experienced developers are 19% slower with AI tools when context is poorly
+            managed, despite feeling 24% faster. A 39-percentage-point perception gap.
+          </p>
+          <div class="source">
+            <a href="https://metr.org/" target="_blank" rel="noopener">METR</a>
+            &middot; controlled developer study
+          </div>
+        </article>
+
+        <article class="stat-card reveal" style="--reveal-delay: 0.08s;">
+          <div class="figure">10<span class="accent">x</span></div>
+          <p class="desc">
+            Cached tokens cost 10x less than uncached tokens. A single changed token at
+            the start of your prompt invalidates the entire KV cache. Stable prefixes pay
+            for themselves immediately.
+          </p>
+          <div class="source">Manus &middot; production agent at scale</div>
+        </article>
+
+        <article class="stat-card reveal" style="--reveal-delay: 0.12s;">
+          <div class="figure">~150 <span style="font-size: 0.6em; color: var(--text-3);">instructions</span></div>
+          <p class="desc">
+            Frontier LLMs reliably follow 150 to 200 instructions before attention falls
+            off. Claude Code's own system prompt already burns about 50 of those. You
+            have less budget than you think.
+          </p>
+          <div class="source">Cross-source &middot; observed in evals</div>
+        </article>
+
+        <article class="stat-card reveal" style="--reveal-delay: 0.16s;">
+          <div class="figure">L1<span class="accent">&rarr;</span>L2</div>
+          <p class="desc">
+            The maturity level of most repositories on the L0 to L6 framework. Goal of
+            nv:context: get teams to L5 or L6 (path-scoped rules, active maintenance,
+            skills, MCP, dynamic capability loading).
+          </p>
+          <div class="source">L0&ndash;L6 maturity framework</div>
+        </article>
+
+        <article class="stat-card reveal" style="--reveal-delay: 0.20s;">
+          <div class="figure">50<span class="accent">+</span></div>
+          <p class="desc">
+            Tool calls per task at Manus, across four framework rebuilds. Their five
+            production patterns (KV-cache, tool masking, file system memory, error
+            preservation, diversity injection) are battle-tested at scale.
+          </p>
+          <div class="source">Manus &middot; production engineering blog</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER CTA
+       ============================================================ -->
+  <section id="install" class="footer-cta">
+    <div class="footer-cta-inner">
+      <h2 class="reveal">
+        Stop fighting your AI agent.<br />
+        Start engineering its <span class="serif-italic">context.</span>
+      </h2>
+
+      <div class="footer-cta-terminal reveal" style="--reveal-delay: 0.08s;">
+        <div
+          class="terminal is-glowing"
+          id="install-terminal"
+          role="button"
+          tabindex="0"
+          aria-label="Click to copy install command"
+        >
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+            <button type="button" class="copy" id="copy-btn" aria-label="Copy install command">
+              <span class="copy-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <g class="copy-square">
+                    <rect x="4" y="4" width="9" height="9" rx="1.5"/>
+                    <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H11"/>
+                  </g>
+                  <path class="check-path" d="M3 8.5 L6.5 12 L13 4.5"/>
+                </svg>
+              </span>
+              <span class="copy-label">Install in 30 seconds</span>
+            </button>
+          </div>
+          <div class="code-body">
+            <span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-context -g -y</span><span class="caret" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <a href="/" class="back-link reveal" style="--reveal-delay: 0.16s;">&larr; Back to nv:context</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <div class="footer-brand">
+          <span class="footer-brand-name">nv:context</span>
+          <span class="footer-brand-by">by johnnichev</span>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/">Home</a>
+          <a href="/research.html">Research</a>
+          <a href="/case-studies.html">Case studies</a>
+          <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md" target="_blank" rel="noopener">Source</a>
+        </nav>
+      </div>
+      <div class="footer-signature">
+        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a>, the methodology that built this page
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var INSTALL_CMD = 'npx skills add johnnichev/nv-context -g -y';
+
+    var terminal  = document.getElementById('install-terminal');
+    var copyBtn   = document.getElementById('copy-btn');
+    var copyLabel = copyBtn ? copyBtn.querySelector('.copy-label') : null;
+    var resetTimer = null;
+
+    function showToast(text) {
+      var existing = document.querySelector('.copy-toast');
+      if (existing) existing.remove();
+      var toast = document.createElement('div');
+      toast.className = 'copy-toast';
+      toast.textContent = text;
+      document.body.appendChild(toast);
+      setTimeout(function () {
+        toast.style.transition = 'opacity 0.4s var(--ease-out-quart)';
+        toast.style.opacity = '0';
+        setTimeout(function () { toast.remove(); }, 400);
+      }, 1800);
+    }
+
+    function flashCopiedState() {
+      if (!copyBtn || !copyLabel) return;
+      copyBtn.classList.add('is-copied');
+      copyLabel.textContent = 'Copied';
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        copyBtn.classList.remove('is-copied');
+        copyLabel.textContent = 'Install in 30 seconds';
+      }, 2000);
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    function copyText(text, onSuccess) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { onSuccess(); },
+          function () { fallbackCopy(text); onSuccess(); }
+        );
+      } else {
+        fallbackCopy(text);
+        onSuccess();
+      }
+    }
+
+    function copyInstall() {
+      copyText(INSTALL_CMD, function () {
+        flashCopiedState();
+        showToast('Copied install command');
+      });
+    }
+
+    if (terminal) {
+      terminal.addEventListener('click', copyInstall);
+      terminal.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          copyInstall();
+        }
+      });
+    }
+
+    /* ----------------------------------------------------------------
+       Scroll-triggered reveal / same pattern as case-studies.html.
+       ---------------------------------------------------------------- */
+    var revealEls = document.querySelectorAll('.reveal, .pull-quote');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -8% 0px',
+          threshold: 0.12
+        });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>

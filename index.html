@@ -1917,6 +1917,79 @@
   }
   .research-cta-wrap {
     text-align: center;
+    margin-top: var(--space-7);
+  }
+  .btn-research {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, rgba(113, 112, 255, 0.18) 0%, rgba(113, 112, 255, 0.08) 100%);
+    border: 1px solid var(--border-glow);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semibold);
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    box-shadow: 0 0 0 1px rgba(113, 112, 255, 0.18) inset,
+                0 16px 40px -16px var(--brand-glow);
+    transition: transform var(--speed-fast) var(--ease-out-quad),
+                box-shadow var(--speed-regular) var(--ease-out-quart),
+                background var(--speed-regular) var(--ease-out-quart),
+                border-color var(--speed-regular) var(--ease-out-quart);
+  }
+  .btn-research:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, rgba(113, 112, 255, 0.28) 0%, rgba(113, 112, 255, 0.14) 100%);
+    border-color: var(--brand-hover);
+    box-shadow: 0 0 0 1px rgba(113, 112, 255, 0.30) inset,
+                0 24px 60px -16px var(--brand-glow);
+  }
+  .btn-research:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 4px;
+  }
+  .btn-research .icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    color: var(--brand-hover);
+  }
+  .btn-research .icon svg { width: 100%; height: 100%; display: block; }
+  .btn-research .arrow {
+    display: inline-block;
+    transition: transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .btn-research:hover .arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-research, .btn-research:hover { transform: none; }
+    .btn-research:hover .arrow { transform: none; }
+  }
+  .problem-research-link {
+    display: block;
+    text-align: center;
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  .problem-research-link .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    color: var(--brand-hover);
+    transition: transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .problem-research-link:hover { color: var(--text-1); }
+  .problem-research-link:hover .arrow { transform: translateX(3px); }
+  @media (prefers-reduced-motion: reduce) {
+    .problem-research-link:hover .arrow { transform: none; }
   }
   .btn-ghost {
     display: inline-flex;
@@ -2470,6 +2543,10 @@
         </div>
       </div>
 
+      <a href="/research.html" class="problem-research-link reveal" style="--reveal-delay: 0.56s;">
+        See all 200+ sources <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+
       <p class="problem-coda reveal" style="--reveal-delay: 0.60s;">
         We applied all of this to <span class="accent">nv:context</span>.
       </p>
@@ -2848,16 +2925,16 @@
 
       <div class="research-stats reveal" style="--reveal-delay: 0.16s;">
         <div class="research-stat-card">
-          <span class="research-stat-num">12</span>
-          <span class="research-stat-label">documents</span>
+          <span class="research-stat-num">200+</span>
+          <span class="research-stat-label">sources</span>
+        </div>
+        <div class="research-stat-card">
+          <span class="research-stat-num">3</span>
+          <span class="research-stat-label">production proofs</span>
         </div>
         <div class="research-stat-card">
           <span class="research-stat-num">471 KB</span>
-          <span class="research-stat-label">source material</span>
-        </div>
-        <div class="research-stat-card">
-          <span class="research-stat-num">200+</span>
-          <span class="research-stat-label">sources</span>
+          <span class="research-stat-label">distilled findings</span>
         </div>
       </div>
 
@@ -3014,8 +3091,12 @@
       </div>
 
       <div class="research-cta-wrap reveal" style="--reveal-delay: 0.32s;">
-        <a href="/research.html" class="btn-ghost">
-          Browse the research &rarr;
+        <a href="/research.html" class="btn-research" aria-label="Browse the full research library">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L4 20 L20 20 L20 8 L16 4 Z"/><path d="M16 4 L16 8 L20 8"/><path d="M8 12 L16 12"/><path d="M8 16 L14 16"/></svg>
+          </span>
+          <span>Browse the full research library</span>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
         </a>
       </div>
     </div>
@@ -3125,6 +3206,9 @@
           <span class="footer-brand-by">by johnnichev</span>
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/research.html">Research</a>
+          <a href="/case-studies.html">Case studies</a>
+          <a href="/synthesis.html">Synthesis</a>
           <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
           <a href="https://twitter.com/johnnichev" target="_blank" rel="noopener">Twitter</a>
           <a href="https://skills.sh" target="_blank" rel="noopener">Skills.sh</a>

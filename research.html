@@ -4,17 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>The Research | nv:context</title>
-  <meta name="description" content="200+ sources. 12 documents. One methodology. Every recommendation in nv:context links back to a real source: published papers, production data, experienced practitioners." />
+  <meta name="description" content="200+ external sources, distilled into 12 focused research logs. Every recommendation in nv:context links back to a real source: published papers, production data, experienced practitioners." />
 
   <!-- Open Graph / Social -->
   <meta property="og:title" content="The Research | nv:context">
-  <meta property="og:description" content="200+ sources. 12 documents. One methodology. The full research library behind nv:context.">
+  <meta property="og:description" content="200+ external sources, 3 production proofs, one methodology. The full research library behind nv:context.">
   <meta property="og:image" content="https://skills.nichevlabs.com/og-image.png">
   <meta property="og:url" content="https://skills.nichevlabs.com/research">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Research | nv:context">
-  <meta name="twitter:description" content="200+ sources. 12 documents. The research library behind nv:context.">
+  <meta name="twitter:description" content="200+ external sources, distilled into 12 focused logs. The research library behind nv:context.">
   <meta name="twitter:image" content="https://skills.nichevlabs.com/og-image.png">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -212,11 +212,14 @@
     max-width: var(--container-wide);
     margin-inline: auto;
     padding: 14px var(--page-padding-inline);
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-5);
   }
+  .site-header-inner > .header-back { justify-self: start; }
+  .site-header-inner > .header-brand { justify-self: center; }
+  .site-header-inner > .header-links { justify-self: end; }
   .header-back {
     display: inline-flex;
     align-items: center;
@@ -240,17 +243,12 @@
     transform: translateX(-2px);
   }
   .header-brand {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
     color: var(--text-2);
     letter-spacing: -0.01em;
   }
-  .header-brand .colon {
-    color: var(--brand-hover);
-    font-style: normal;
-    font-family: var(--font-mono);
-  }
+  .header-brand .accent { color: var(--brand-hover); }
   .header-links {
     display: flex;
     align-items: center;
@@ -271,7 +269,10 @@
     font-size: 10px;
   }
   @media (max-width: 720px) {
-    .site-header-inner { padding: 12px var(--page-padding-inline); }
+    .site-header-inner {
+      padding: 12px var(--page-padding-inline);
+      grid-template-columns: 1fr auto;
+    }
     .header-brand { display: none; }
     .header-link { font-size: 12px; }
   }
@@ -630,6 +631,26 @@
     margin-bottom: var(--space-4);
     padding-bottom: var(--space-4);
     border-bottom: 1px solid var(--border-subtle);
+    display: block;
+    text-decoration: none;
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  a.finding-source:hover { color: var(--text-1); }
+  a.finding-source:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .finding-source .ext {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 9px;
+    color: var(--text-4);
+    transition: transform var(--speed-fast) var(--ease-out-quad), color var(--speed-fast) var(--ease-out-quad);
+  }
+  a.finding-source:hover .ext {
+    color: var(--brand-hover);
+    transform: translate(2px, -2px);
   }
   .finding-desc {
     font-family: var(--font-sans);
@@ -856,10 +877,25 @@
     gap: var(--space-3);
     padding: 12px 0;
     border-bottom: 1px solid var(--border-subtle);
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--speed-fast) var(--ease-out-quad),
+                transform var(--speed-fast) var(--ease-out-quad);
   }
   .source-item:last-child,
   .source-item:nth-last-child(2):nth-child(odd) {
     border-bottom: 0;
+  }
+  a.source-item:hover {
+    color: var(--text-1);
+    transform: translateX(2px);
+  }
+  a.source-item:hover .source-name { color: var(--brand-hover); }
+  a.source-item:hover .source-mark { color: var(--brand-hover); transform: scale(1.08) rotate(3deg); }
+  a.source-item:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 4px;
+    border-radius: 4px;
   }
   .source-bullet {
     flex-shrink: 0;
@@ -869,6 +905,24 @@
     background: var(--brand-hover);
     margin-top: 8px;
     box-shadow: 0 0 10px var(--brand-glow);
+  }
+  .source-mark {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    color: var(--text-3);
+    transition: color var(--speed-regular) var(--ease-out-quart),
+                transform var(--speed-regular) var(--ease-out-quart);
+  }
+  .source-mark svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a.source-item:hover { transform: none; }
+    a.source-item:hover .source-mark { transform: none; }
   }
   .source-body {
     display: flex;
@@ -1154,16 +1208,16 @@
        ============================================================ -->
   <header class="site-header">
     <div class="site-header-inner">
-      <a href="/" class="header-back">
-        <span class="arrow">&larr;</span>
+      <a href="/" class="header-back" aria-label="Back to nv:context">
+        <span class="arrow" aria-hidden="true">&larr;</span>
         <span>Back to nv:context</span>
       </a>
-      <span class="header-brand">nv<span class="colon">:</span>context</span>
-      <div class="header-links">
+      <span class="header-brand" aria-hidden="true">nv<span class="accent">:</span>context &middot; research</span>
+      <nav class="header-links" aria-label="Header">
         <a href="https://github.com/johnnichev/nv-context" class="header-link" target="_blank" rel="noopener">
           GitHub<span class="ext">&#8599;</span>
         </a>
-      </div>
+      </nav>
     </div>
   </header>
 
@@ -1177,7 +1231,7 @@
 
       <h1 class="research-h1">
         <span class="line"><span class="stat">200+</span> sources.</span>
-        <span class="line"><span class="stat">12</span> documents.</span>
+        <span class="line"><span class="stat">3</span> production proofs.</span>
         <span class="line">One methodology.</span>
       </h1>
 
@@ -1189,7 +1243,7 @@
       <nav class="research-toc" aria-label="Page sections">
         <span class="toc-label">Jump to</span>
         <a class="toc-link" href="#findings"><span class="num">01</span> Key findings</a>
-        <a class="toc-link" href="#documents"><span class="num">02</span> Documents</a>
+        <a class="toc-link" href="#documents"><span class="num">02</span> Research logs</a>
         <a class="toc-link" href="#sources"><span class="num">03</span> Sources</a>
       </nav>
 
@@ -1218,7 +1272,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.18s;">
           <div class="finding-num">&minus;3<span class="unit">%</span></div>
           <h3 class="finding-title">Auto-generated configs reduce success</h3>
-          <div class="finding-source">ETH Z&uuml;rich</div>
+          <a class="finding-source" href="https://ethz.ch/en/research.html" target="_blank" rel="noopener noreferrer">ETH Z&uuml;rich<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             LLM-generated AGENTS.md files cut agent success by <strong>3%</strong> and increase costs
             <strong>20%+</strong>. Human-written files only marginally help (+4%). Most repos would do
@@ -1229,7 +1283,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.24s;">
           <div class="finding-num">19<span class="unit">%</span></div>
           <h3 class="finding-title">Experienced devs slower with bad context</h3>
-          <div class="finding-source">METR &middot; controlled study</div>
+          <a class="finding-source" href="https://metr.org/" target="_blank" rel="noopener noreferrer">METR &middot; controlled study<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             16 senior developers in a controlled study were <strong>19% slower</strong> with AI tools,
             despite feeling <strong>24% faster</strong>. The 39-point perception gap is the
@@ -1240,7 +1294,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.30s;">
           <div class="finding-num">40<span class="unit">%</span></div>
           <h3 class="finding-title">Sweet spot beats max utilization</h3>
-          <div class="finding-source">Dex Horthy &middot; HumanLayer</div>
+          <a class="finding-source" href="https://twitter.com/dexhorthy" target="_blank" rel="noopener noreferrer">Dex Horthy &middot; HumanLayer<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             Using <strong>40%</strong> of the context window outperforms using <strong>90%</strong>.
             A focused 300-token context can outperform an unfocused 113K-token context.
@@ -1251,7 +1305,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.36s;">
           <div class="finding-num">85<span class="unit">% drop</span></div>
           <h3 class="finding-title">Context degrades on a curve</h3>
-          <div class="finding-source">Anthropic &middot; Manus production</div>
+          <a class="finding-source" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer">Anthropic &middot; Manus production<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             At <strong>60%</strong> capacity context is safe. At <strong>70%</strong> precision drops.
             At <strong>85%</strong> hallucinations begin. Compact proactively. Never wait for
@@ -1262,7 +1316,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.42s;">
           <div class="finding-num">~150<span class="unit">max</span></div>
           <h3 class="finding-title">The instruction budget is finite</h3>
-          <div class="finding-source">Frontier LLM benchmarks</div>
+          <a class="finding-source" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer">Frontier LLM benchmarks<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             Frontier models follow <strong>150&ndash;200 instructions</strong> consistently. Claude Code&rsquo;s
             system prompt already uses <strong>~50</strong>. Every line in your CLAUDE.md
@@ -1273,7 +1327,7 @@
         <article class="finding-card reveal" style="--reveal-delay: 0.48s;">
           <div class="finding-num">10<span class="unit">x</span></div>
           <h3 class="finding-title">Stable prefixes cut cost 10x</h3>
-          <div class="finding-source">Manus &middot; KV-cache law</div>
+          <a class="finding-source" href="https://manus.im/" target="_blank" rel="noopener noreferrer">Manus &middot; KV-cache law<span class="ext" aria-hidden="true">&nearr;</span></a>
           <p class="finding-desc">
             Cached tokens cost <strong>10&times; less</strong> than uncached. Keep system instructions
             and tool definitions static; append dynamic content at the end. A single
@@ -1286,7 +1340,7 @@
   </section>
 
   <!-- ============================================================
-       SECTION / THE 12 RESEARCH DOCUMENTS
+       SECTION / THE 12 RESEARCH LOGS
        ============================================================ -->
   <section id="documents" class="ds-section documents-section">
     <div class="ds-section-inner">
@@ -1294,11 +1348,11 @@
       <div class="ds-section-head">
         <span class="ds-eyebrow reveal">02 / The Library</span>
         <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
-          The 12 research <span class="accent-serif">documents.</span>
+          12 research <span class="accent-serif">logs.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Six parallel research agents. 200+ primary sources. ~471 KB of distilled findings.
-          Each document is open-source on GitHub.
+          200+ external sources digested into 12 focused logs, organized by research dimension.
+          Six parallel research agents. ~471 KB of distilled findings. Each log is open-source on GitHub.
         </p>
       </div>
 
@@ -1574,8 +1628,8 @@
           Where the evidence <span class="accent-serif">comes from.</span>
         </h2>
         <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
-          Grouped by origin. Each name below is a primary source cited inside the 12 documents.
-          The full source URLs live in the research logs on GitHub.
+          Grouped by origin. Each name below is a primary source cited inside the 12 research logs.
+          The full source URLs live in the logs on GitHub.
         </p>
       </div>
 
@@ -1588,90 +1642,114 @@
             <span class="source-group-count">~<span class="num">40</span> sources</span>
           </div>
           <div class="source-list">
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            <a class="source-item" href="https://www.anthropic.com/engineering" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.6 10.4 L22 12 L13.6 13.6 L12 22 L10.4 13.6 L2 12 L10.4 10.4 Z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Anthropic</span>
                 <span class="source-desc">Claude Code, Agent SDK, official engineering blog on context engineering</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://deepmind.google/research/publications/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Google DeepMind</span>
                 <span class="source-desc">Gemini, ADK multi-agent framework, Philipp Schmid&rsquo;s context essays</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://openai.com/research" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L19 7 L19 15 L12 19 L5 15 L5 7 Z"/><circle cx="12" cy="11" r="3"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">OpenAI</span>
                 <span class="source-desc">Agent SDK, GPT evaluation methods, Codex / OpenAI Agents Python</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://github.blog/category/engineering/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C6.48 2 2 6.58 2 12.26 c0 4.54 2.87 8.39 6.84 9.75 c0.5 0.09 0.68-0.22 0.68-0.49 c0-0.24-0.01-0.88-0.01-1.73 c-2.78 0.62-3.37-1.36-3.37-1.36 c-0.45-1.18-1.11-1.49-1.11-1.49 c-0.91-0.63 0.07-0.62 0.07-0.62 c1 0.07 1.53 1.05 1.53 1.05 c0.89 1.56 2.34 1.11 2.91 0.85 c0.09-0.66 0.35-1.11 0.63-1.36 c-2.22-0.26-4.55-1.13-4.55-5.04 c0-1.11 0.39-2.02 1.03-2.74 c-0.1-0.26-0.45-1.3 0.1-2.71 c0 0 0.84-0.27 2.75 1.05 c0.8-0.23 1.65-0.34 2.5-0.34 c0.85 0 1.7 0.11 2.5 0.34 c1.91-1.32 2.75-1.05 2.75-1.05 c0.55 1.41 0.2 2.45 0.1 2.71 c0.64 0.72 1.03 1.63 1.03 2.74 c0 3.92-2.34 4.78-4.57 5.03 c0.36 0.32 0.68 0.94 0.68 1.9 c0 1.37-0.01 2.48-0.01 2.81 c0 0.27 0.18 0.59 0.69 0.49 C19.14 20.65 22 16.79 22 12.26 C22 6.58 17.52 2 12 2 z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">GitHub</span>
                 <span class="source-desc">Copilot deployment data, AGENTS.md spec analysis across thousands of repos</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://manus.im/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7 16 L7 9 L12 14 L17 9 L17 16"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Manus</span>
                 <span class="source-desc">Production agent data: 50+ tool calls per task, 4 framework rebuilds, KV-cache laws</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://blog.jetbrains.com/ai/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3 L21 3 L21 21 L3 21 Z M5 5 L5 19 L11 19 L19 5 Z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">JetBrains</span>
                 <span class="source-desc">NeurIPS 2025 paper on AI in IDEs, agent evaluation methodology</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.cursor.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L20 12 L4 20 Z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Cursor</span>
                 <span class="source-desc">.cursor/rules MDC format, glob-scoped activation patterns</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://aider.chat/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L12 4 L20 20"/><path d="M8 14 L16 14"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">Aider &middot; Continue &middot; Codeium</span>
+                <span class="source-name">Aider, Continue, Codeium</span>
                 <span class="source-desc">CONVENTIONS.md, alternative agent harnesses, IDE integrations</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://windsurf.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16 C5 13 7 13 10 16 C13 19 15 19 18 16 C20 14 21 14 22 15"/><path d="M2 11 C5 8 7 8 10 11 C13 14 15 14 18 11 C20 9 21 9 22 10"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">Windsurf &middot; Zed</span>
+                <span class="source-name">Windsurf, Zed</span>
                 <span class="source-desc">.windsurf/rules, editor-native agent patterns and rule scoping</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.langchain.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 a4 4 0 0 1 0 10 H6"/><path d="M15 17 a4 4 0 0 1 0-10 H18"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">LangChain &middot; LlamaIndex</span>
+                <span class="source-name">LangChain, LlamaIndex</span>
                 <span class="source-desc">Framework guides on the Write / Select / Compress / Isolate operations</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.trychroma.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3 L12 21"/><path d="M3 12 L21 12"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Chroma</span>
                 <span class="source-desc">Jeff Huber on the &ldquo;Gather and Glean&rdquo; methodology, vector retrieval</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.humanlayer.dev/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">HumanLayer &middot; Inngest</span>
+                <span class="source-name">HumanLayer, Inngest</span>
                 <span class="source-desc">RPI workflow, harness engineering, 12-Factor Agents framework</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -1682,62 +1760,78 @@
             <span class="source-group-count">~<span class="num">30</span> sources</span>
           </div>
           <div class="source-list">
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            <a class="source-item" href="https://ethz.ch/en/research.html" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 L5 20 L19 20 L19 10"/><path d="M9 20 L9 13 L15 13 L15 20"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">ETH Z&uuml;rich</span>
                 <span class="source-desc">The agent config study: the &minus;3% finding for auto-generated AGENTS.md files</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://metr.org/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="6"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">METR</span>
                 <span class="source-desc">Controlled study (16 senior devs) showing 19% slowdown with poorly-contextualized AI</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.flowhunt.io/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16 C5 13 7 13 10 16 C13 19 15 19 18 16 C20 14 21 14 22 15"/><path d="M2 11 C5 8 7 8 10 11 C13 14 15 14 18 11 C20 9 21 9 22 10"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">FlowHunt / LongMemEval</span>
+                <span class="source-name">FlowHunt, LongMemEval</span>
                 <span class="source-desc">Context window benchmarks proving focused 300-token wins over 113K-token contexts</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://neurips.cc/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L4 20 L20 20"/><path d="M4 16 L9 11 L13 14 L20 7"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">NeurIPS 2025 papers</span>
                 <span class="source-desc">Multiple agent evaluation studies, IDE-integrated AI research, scaffolding ablations</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://arxiv.org/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 L5 20 L19 20 L19 10"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">Stanford / MIT / CMU</span>
+                <span class="source-name">Stanford, MIT, CMU</span>
                 <span class="source-desc">LLM reasoning, RAG analysis, attention degradation across long contexts</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://survey.stackoverflow.co/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 12 L11 12"/><path d="M7 8 L17 8"/><path d="M7 16 L15 16"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Stack Overflow Survey 2026</span>
                 <span class="source-desc">Industry-wide developer adoption data, AI tooling preferences, productivity self-reports</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://dora.dev/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7 L12 12 L16 14"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Google DORA</span>
                 <span class="source-desc">Measured delivery speed dips 1.5% per 25% AI adoption when context is poor</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.gartner.com/en/research" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 L9 14 L13 18 L21 6"/><path d="M15 6 L21 6 L21 12"/></svg>
+              </span>
               <div class="source-body">
-                <span class="source-name">IntuitionLabs &middot; Gartner</span>
+                <span class="source-name">IntuitionLabs, Gartner</span>
                 <span class="source-desc">40%+ of AI project failures stem from poor context management (industry analysis)</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -1748,76 +1842,96 @@
             <span class="source-group-count">~<span class="num">25</span> sources</span>
           </div>
           <div class="source-list">
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            <a class="source-item" href="https://twitter.com/bcherny" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Boris Cherny</span>
                 <span class="source-desc">Claude Code co-creator. 5 parallel sessions, Opus 4.5, 259 PRs in 30 days</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://twitter.com/dexhorthy" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21 C5 16 8 13 12 13 C16 13 19 16 19 21"/><path d="M9 6 L8 4"/><path d="M15 6 L16 4"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Dex Horthy</span>
                 <span class="source-desc">Coined &ldquo;context engineering&rdquo; (June 2025). Founder of HumanLayer. RPI workflow author</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://twitter.com/karpathy" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Andrej Karpathy</span>
                 <span class="source-desc">The &ldquo;delicate art and science of filling the context window&rdquo; definition</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://twitter.com/tobi" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Tobi Lutke</span>
                 <span class="source-desc">Shopify CEO. The viral tweet that took the term mainstream (June 19, 2025)</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.philschmid.de/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Philipp Schmid</span>
                 <span class="source-desc">Google DeepMind. &ldquo;Most agent failures are not model failures. They are context failures.&rdquo;</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://addyosmani.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Addy Osmani</span>
                 <span class="source-desc">Google Chrome. &ldquo;Context engineering is writing the full screenplay for the AI&rdquo;</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://simonwillison.net/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Simon Willison</span>
                 <span class="source-desc">Independent. Definitions, anti-patterns, and why the term &ldquo;stuck&rdquo;</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://martinfowler.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Martin Fowler</span>
                 <span class="source-desc">Coding agents from a software engineering discipline perspective</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://twitter.com/swyx" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">swyx (Shawn Wang)</span>
                 <span class="source-desc">SmolAI / AI Engineer. Amplified Dex&rsquo;s talk, removed RAG track in favor of context</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Rodrigo Tadewald</span>
                 <span class="source-desc">Vibe Design methodology: the design lineage behind nv:design and nv:context</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -1828,62 +1942,78 @@
             <span class="source-group-count">~<span class="num">100+</span> sources</span>
           </div>
           <div class="source-list">
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            <a class="source-item" href="https://www.reddit.com/r/ClaudeAI/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><circle cx="9" cy="13" r="1.2" fill="currentColor"/><circle cx="15" cy="13" r="1.2" fill="currentColor"/><path d="M8 17 C9 18 11 18.5 12 18.5 C13 18.5 15 18 16 17"/><circle cx="12" cy="3" r="1.2"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">r/ClaudeAI</span>
                 <span class="source-desc">Power-user threads on CLAUDE.md, hooks, skills, and session management</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><circle cx="9" cy="13" r="1.2" fill="currentColor"/><circle cx="15" cy="13" r="1.2" fill="currentColor"/><path d="M8 17 C9 18 11 18.5 12 18.5 C13 18.5 15 18 16 17"/><circle cx="12" cy="3" r="1.2"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">r/LocalLLaMA</span>
                 <span class="source-desc">Open-source LLM context tactics, prompt compression, model behavior under load</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.reddit.com/r/MachineLearning/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><circle cx="9" cy="13" r="1.2" fill="currentColor"/><circle cx="15" cy="13" r="1.2" fill="currentColor"/><path d="M8 17 C9 18 11 18.5 12 18.5 C13 18.5 15 18 16 17"/><circle cx="12" cy="3" r="1.2"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">r/MachineLearning</span>
                 <span class="source-desc">Academic-adjacent discussion of agent evaluation, RAG, long-context degradation</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 8 L12 13 L16 8"/><path d="M12 13 L12 17"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">Hacker News</span>
                 <span class="source-desc">Threads on Claude Code, Boris Cherny&rsquo;s workflow, agent harnesses, ETH study debate</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">X / Twitter</span>
                 <span class="source-desc">Technical threads from Karpathy, Schmid, swyx, Dex, Tobi, Simon Willison, Addy Osmani</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 C6.48 2 2 6.58 2 12.26 c0 4.54 2.87 8.39 6.84 9.75 c0.5 0.09 0.68-0.22 0.68-0.49 c0-0.24-0.01-0.88-0.01-1.73 c-2.78 0.62-3.37-1.36-3.37-1.36 c-0.45-1.18-1.11-1.49-1.11-1.49 c-0.91-0.63 0.07-0.62 0.07-0.62 c1 0.07 1.53 1.05 1.53 1.05 c0.89 1.56 2.34 1.11 2.91 0.85 c0.09-0.66 0.35-1.11 0.63-1.36 c-2.22-0.26-4.55-1.13-4.55-5.04 c0-1.11 0.39-2.02 1.03-2.74 c-0.1-0.26-0.45-1.3 0.1-2.71 c0 0 0.84-0.27 2.75 1.05 c0.8-0.23 1.65-0.34 2.5-0.34 c0.85 0 1.7 0.11 2.5 0.34 c1.91-1.32 2.75-1.05 2.75-1.05 c0.55 1.41 0.2 2.45 0.1 2.71 c0.64 0.72 1.03 1.63 1.03 2.74 c0 3.92-2.34 4.78-4.57 5.03 c0.36 0.32 0.68 0.94 0.68 1.9 c0 1.37-0.01 2.48-0.01 2.81 c0 0.27 0.18 0.59 0.69 0.49 C19.14 20.65 22 16.79 22 12.26 C22 6.58 17.52 2 12 2 z"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">GitHub Discussions &amp; Issues</span>
                 <span class="source-desc">Real CLAUDE.md files, hooks configurations, awesome-lists, gists, real bug reports</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><polygon points="10 9 15 12 10 15 10 9" fill="currentColor" stroke="none"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">YouTube &amp; Conference talks</span>
                 <span class="source-desc">YC Root Access, AI Engineer World&rsquo;s Fair, Latent Space, Dometrain, HumanLayer talks</span>
               </div>
-            </div>
-            <div class="source-item">
-              <span class="source-bullet" aria-hidden="true"></span>
+            </a>
+            <a class="source-item" href="https://dev.to/" target="_blank" rel="noopener noreferrer">
+              <span class="source-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9 L7 15"/><path d="M7 9 L10 9 L10 15 L7 15"/><path d="M13 9 L13 15 L17 15"/><path d="M13 12 L16 12"/></svg>
+              </span>
               <div class="source-body">
                 <span class="source-name">dev.to &amp; personal blogs</span>
                 <span class="source-desc">HumanLayer blog, addyosmani.com, Inngest, Faros, CodeConductor, Vellum, Zep</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -1923,8 +2053,7 @@
           <span class="arrow">&larr;</span>
           <span>Back to nv:context</span>
         </a>
-        <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md"
-           class="btn-ghost" target="_blank" rel="noopener">
+        <a href="/synthesis.html" class="btn-ghost">
           <span>Read the synthesis</span>
           <span class="arrow">&rarr;</span>
         </a>
@@ -1947,11 +2076,11 @@
           <a href="/">Home</a>
           <a href="/research">Research</a>
           <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md" target="_blank" rel="noopener">Synthesis</a>
+          <a href="/synthesis.html">Synthesis</a>
         </div>
       </div>
       <div class="footer-signature">
-        For engineers who ship. &middot; 200+ sources. 12 documents. One methodology.
+        For engineers who ship. &middot; 200+ sources. 3 production proofs. One methodology.
       </div>
     </div>
   </footer>
