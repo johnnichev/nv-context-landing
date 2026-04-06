@@ -1,0 +1,2261 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case Studies — nv:context</title>
+  <meta name="description" content="Three production codebases. Same context engineering skill applied. Real numbers, real changes, real insights from selectools, saas-platform, and sheriff." />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Case Studies — nv:context">
+  <meta property="og:description" content="Three production repos. Three real transformations. The full reports on what nv:context did to selectools, saas-platform, and sheriff.">
+  <meta property="og:image" content="https://nvcontext.dev/og-image.png">
+  <meta property="og:url" content="https://nvcontext.dev/case-studies.html">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Case Studies — nv:context">
+  <meta name="twitter:description" content="Three production repos. Three real transformations. Full technical reports.">
+  <meta name="twitter:image" content="https://nvcontext.dev/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts: Inter (sans), Instrument Serif (display), JetBrains Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ================================================================
+     nv:context HYBRID DESIGN TOKENS  (from hybrid-ds.html)
+     Resend restraint × Linear motion vocabulary
+     Same tokens as index.html for visual consistency.
+     ================================================================ */
+  :root, .dark {
+    /* ---------- FONTS ---------- */
+    --font-sans:  "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --font-mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+    /* ---------- SURFACE / BACKGROUND ---------- */
+    --bg-base:       #000000;
+    --bg-elevated:   #0c0d0f;
+    --bg-elevated-2: #141517;
+    --bg-code:       #08090a;
+    --bg-terminal:   #050506;
+    --bg-glass:      rgba(255, 255, 255, 0.03);
+
+    /* ---------- BORDERS ---------- */
+    --border-subtle:  rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.10);
+    --border-strong:  rgba(255, 255, 255, 0.16);
+    --border-glow:    rgba(113, 112, 255, 0.45);
+
+    /* ---------- TEXT (4 levels) ---------- */
+    --text-1: #f7f8f8;
+    --text-2: #d0d6e0;
+    --text-3: #8a8f98;
+    --text-4: #52595b;
+
+    /* ---------- BRAND ACCENT ---------- */
+    --brand:           #7170ff;
+    --brand-hover:     #828fff;
+    --brand-deep:      #5e6ad2;
+    --brand-tint:      #18182f;
+    --brand-glow:      rgba(113, 112, 255, 0.22);
+    --brand-glow-soft: rgba(113, 112, 255, 0.10);
+
+    /* ---------- STATUS ---------- */
+    --success: #7bf1a8;
+    --warning: #f99c00;
+    --danger:  #fb2c36;
+
+    /* Terminal */
+    --terminal-prompt:  var(--brand);
+    --terminal-output:  var(--text-3);
+    --terminal-success: var(--success);
+    --terminal-caret:   var(--text-1);
+
+    /* ---------- TYPE SCALE ---------- */
+    --display-size: 80px;  --display-lh: 1.0;  --display-tracking: -0.01em;
+    --h1-size: 56px;       --h1-lh: 1.08;      --h1-tracking: -0.022em;
+    --h2-size: 40px;       --h2-lh: 1.1;       --h2-tracking: -0.022em;
+    --h3-size: 28px;       --h3-lh: 1.25;      --h3-tracking: -0.018em;
+    --body-lg-size: 18px;  --body-lg-lh: 1.6;
+    --body-size: 16px;     --body-lh: 1.55;
+    --body-sm-size: 14px;  --body-sm-lh: 1.5;
+    --caption-size: 12px;  --caption-lh: 1.4;  --caption-tracking: 0.08em;
+    --mono-size: 14px;     --mono-lh: 1.6;
+
+    --weight-regular:  400;
+    --weight-medium:   510;
+    --weight-semibold: 590;
+    --weight-bold:     680;
+
+    /* ---------- SPACING ---------- */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+    --space-9: 96px; --space-10: 128px;
+
+    /* ---------- LAYOUT ---------- */
+    --container-narrow:    720px;
+    --container-wide:      1100px;
+    --container-bleed:     100%;
+    --page-padding-inline: 24px;
+    --section-y-mobile:    64px;
+    --section-y-tablet:    80px;
+    --section-y:           120px;
+    --grid-gap:            24px;
+
+    /* ---------- RADIUS ---------- */
+    --radius-sm:   6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-pill: 999px;
+
+    /* ---------- SHADOWS ---------- */
+    --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md:   0 4px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg:   0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 32px -8px var(--brand-glow);
+
+    /* ---------- MOTION ---------- */
+    --ease-in-quad:      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    --ease-in-cubic:     cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-in-quart:     cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    --ease-out-quad:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out-cubic:    cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-out-quart:    cubic-bezier(0.165, 0.84, 0.44, 1);  /* DEFAULT */
+    --ease-out-quint:    cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-expo:     cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-in-out-expo:  cubic-bezier(1, 0, 0, 1);
+
+    --speed-fast:    0.16s;
+    --speed-regular: 0.25s;
+    --speed-slow:    0.35s;
+    --speed-glacial: 1.0s;
+  }
+
+  /* ================================================================
+     RESET + BASE
+     ================================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+    margin: 0; padding: 0; border: 0;
+    font: inherit;
+  }
+  ul, ol { list-style: none; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px; /* offset for sticky header on hash jumps */
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss04", "ss11", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: none;
+  }
+  body {
+    background: var(--bg-base);
+    color: var(--text-2);
+    font-size: var(--body-size);
+    line-height: var(--body-lh);
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--brand-glow); color: var(--text-1); }
+  a { color: inherit; text-decoration: none; transition: color var(--speed-fast) var(--ease-out-quad); }
+  a:hover { color: var(--text-1); }
+  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; padding: 0; }
+  img, svg, video { display: block; max-width: 100%; }
+  code, pre { font-family: var(--font-mono); }
+
+  /* ================================================================
+     KEYFRAMES
+     ================================================================ */
+  @keyframes hero-fade-up-blur {
+    0%   { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+  @keyframes drift {
+    0%   { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+    50%  { transform: translate3d(1%, 0.5%, 0)  scale(1.02); }
+    100% { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+  }
+  @keyframes caret-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.15; }
+  }
+  @keyframes copy-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  @keyframes check-draw {
+    0%   { stroke-dashoffset: 18; opacity: 0; }
+    30%  { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes toast-in {
+    0%   { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ================================================================
+     STICKY HEADER NAV
+     ================================================================ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .site-header-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 14px var(--page-padding-inline);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+  .header-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: var(--weight-medium);
+    color: var(--text-3);
+    transition: color var(--speed-fast) var(--ease-out-quad), transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover {
+    color: var(--text-1);
+    transform: translateX(-2px);
+  }
+  .header-back .arrow {
+    display: inline-block;
+    transition: transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover .arrow { transform: translateX(-2px); }
+  .header-brand {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-2);
+    letter-spacing: -0.01em;
+  }
+  .header-brand .accent { color: var(--brand-hover); }
+  .header-links {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .header-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .header-links a:hover { color: var(--text-1); }
+
+  /* ================================================================
+     PAGE INTRO (hero-light)
+     ================================================================ */
+  .page-intro {
+    position: relative;
+    padding: var(--space-10) var(--page-padding-inline) var(--space-9);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .page-intro::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 120%;
+    pointer-events: none;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 1100px 700px at 60% 20%,
+        rgba(113, 112, 255, 0.10) 0%,
+        rgba(113, 112, 255, 0.06) 25%,
+        rgba(113, 112, 255, 0.02) 50%,
+        transparent 75%),
+      radial-gradient(ellipse 70% 60% at 30% 90%,
+        rgba(94, 106, 210, 0.05) 0%,
+        rgba(94, 106, 210, 0.02) 40%,
+        transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+    animation: drift 32s var(--ease-in-out-cubic) infinite;
+  }
+  .page-intro::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 35%, #000 25%, transparent 80%);
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 35%, #000 25%, transparent 80%);
+  }
+  .page-intro-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .intro-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brand-hover);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    margin-bottom: var(--space-6);
+  }
+  .intro-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(44px, 7.6vw, 88px);
+    line-height: 1.04;
+    letter-spacing: var(--display-tracking);
+    font-weight: 400;
+    color: var(--text-1);
+    margin: 0 0 var(--space-5);
+    max-width: 16ch;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .intro-h1 .serif-italic {
+    font-style: italic;
+    font-family: var(--font-serif);
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .intro-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 600px;
+    margin: 0 0 var(--space-7);
+  }
+  .intro-lede em {
+    color: var(--text-2);
+    font-style: normal;
+  }
+
+  /* ---------- TOC / Jump-to ---------- */
+  .toc {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-5);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    min-width: 280px;
+    position: relative;
+  }
+  .toc::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-4);
+    margin-bottom: var(--space-2);
+  }
+  .toc a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-2);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: color var(--speed-fast) var(--ease-out-quad), padding var(--speed-fast) var(--ease-out-quad);
+  }
+  .toc a:last-child { border-bottom: 0; }
+  .toc a:hover {
+    color: var(--text-1);
+    padding-left: 4px;
+  }
+  .toc a .toc-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--brand-hover);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    border-radius: var(--radius-pill);
+    padding: 2px 8px;
+  }
+
+  /* ================================================================
+     CASE STUDY SECTION
+     ================================================================ */
+  .case {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .case::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 65% 60% at 50% 30%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 65% 60% at 50% 30%, #000, transparent 80%);
+  }
+  .case-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+
+  /* Case header */
+  .case-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: var(--space-8);
+  }
+  .case-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-4);
+    margin-bottom: var(--space-5);
+  }
+  .case-meta .num {
+    color: var(--brand-hover);
+  }
+  .case-meta .featured {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brand-hover);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.22);
+    border-radius: var(--radius-pill);
+    padding: 3px 10px;
+  }
+  .case-name {
+    font-family: var(--font-serif);
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1.0;
+    letter-spacing: var(--display-tracking);
+    font-weight: 400;
+    color: var(--text-1);
+    margin: 0 0 var(--space-4);
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .case-tag {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-3);
+    letter-spacing: -0.01em;
+  }
+  .case-tag .dot { color: var(--text-4); margin: 0 8px; }
+
+  /* Headline stat row */
+  .case-headline-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    margin-bottom: var(--space-9);
+  }
+  .case-headline-stats.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .headline-stat {
+    position: relative;
+    padding: 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .headline-stat::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .headline-stat:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+  .headline-stat .number {
+    font-family: var(--font-mono);
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 32px var(--brand-glow-soft);
+  }
+  .headline-stat .number .accent { color: var(--brand-hover); font-weight: 500; }
+  .headline-stat .number .small { font-size: 0.6em; color: var(--text-3); }
+  .headline-stat .label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: var(--weight-medium);
+    margin-top: var(--space-3);
+  }
+  .headline-stat .sublabel {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    margin-top: 2px;
+  }
+
+  /* Subsections (Baseline / What changed / Results / Insight) */
+  .case-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-9);
+  }
+  .case-subsection {
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+  .case-subsection-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-4);
+    padding-top: 6px;
+    position: sticky;
+    top: 88px;
+  }
+  .case-subsection-label .num {
+    color: var(--brand-hover);
+    margin-right: 6px;
+  }
+  .case-subsection-content > h3 {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.18;
+    letter-spacing: -0.018em;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin: 0 0 var(--space-4);
+    max-width: 22ch;
+  }
+  .case-subsection-content > p {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-2);
+    max-width: 60ch;
+    margin-bottom: var(--space-4);
+  }
+  .case-subsection-content > p + p {
+    margin-top: var(--space-3);
+  }
+  .case-subsection-content .small-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+  .small-stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .small-stat .v { color: var(--text-1); font-weight: 500; }
+  .small-stat .v.brand { color: var(--brand-hover); }
+
+  /* Change list */
+  .change-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+  .change-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--space-4);
+    padding: 18px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .change-item:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated-2);
+    transform: translateY(-1px);
+  }
+  .change-item .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--brand-hover);
+    padding-top: 2px;
+  }
+  .change-item .body strong {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .change-item .body p {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-3);
+    max-width: 64ch;
+  }
+  .change-item .body code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-2);
+    background: var(--bg-code);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  /* Results table */
+  .results-table {
+    margin-top: var(--space-5);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    overflow: hidden;
+  }
+  .results-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: var(--space-4);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: center;
+  }
+  .results-row:last-child { border-bottom: 0; }
+  .results-row.is-head {
+    background: rgba(255, 255, 255, 0.02);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+  }
+  .results-row .metric {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: var(--weight-medium);
+  }
+  .results-row .before {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-3);
+  }
+  .results-row .after {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    font-weight: 500;
+  }
+  .results-row .delta {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--brand-hover);
+  }
+  .results-row .delta.pos { color: var(--success); }
+
+  /* Insight pull quote */
+  .insight {
+    border-left: 2px solid var(--brand);
+    padding: 6px 0 6px 28px;
+    margin-top: var(--space-4);
+    max-width: 64ch;
+  }
+  .insight blockquote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.32;
+    color: var(--text-1);
+    background: linear-gradient(180deg, #ffffff 0%, #cdd0ff 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .insight .attribution {
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Code/diagram block */
+  .case-pre {
+    margin-top: var(--space-5);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--bg-code);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .case-pre-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: #0e0f10;
+  }
+  .case-pre-chrome .dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+  }
+  .case-pre-chrome .dot.r { background: #ff5f57; }
+  .case-pre-chrome .dot.y { background: #febc2e; }
+  .case-pre-chrome .dot.g { background: #28c840; }
+  .case-pre-chrome .file {
+    margin-left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+  }
+  .case-pre pre {
+    padding: 20px 22px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--text-2);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .case-pre pre .c { color: var(--text-4); }
+  .case-pre pre .k { color: var(--brand-hover); }
+  .case-pre pre .s { color: var(--success); }
+
+  /* Footer back link inside case */
+  .case-foot {
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .case-foot a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+    transition: color var(--speed-fast) var(--ease-out-quad), transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .case-foot a:hover {
+    color: var(--text-1);
+  }
+
+  /* ================================================================
+     FOOTER CTA — install command
+     ================================================================ */
+  .footer-cta {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+  }
+  .footer-cta::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(ellipse 800px 500px at 50% 50%,
+        rgba(113, 112, 255, 0.08) 0%,
+        rgba(113, 112, 255, 0.03) 40%,
+        transparent 75%);
+  }
+  .footer-cta-inner {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-cta h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.08;
+    letter-spacing: var(--h1-tracking);
+    font-weight: 400;
+    color: var(--text-1);
+    margin-bottom: var(--space-6);
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .footer-cta h2 .serif-italic {
+    font-style: italic;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .footer-cta-terminal {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: var(--space-6);
+  }
+  .footer-cta .back-link {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .footer-cta .back-link:hover { color: var(--text-1); }
+
+  /* ================================================================
+     TERMINAL (shared block — install command)
+     ================================================================ */
+  .terminal {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-terminal);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    cursor: pointer;
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .terminal.is-glowing {
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow-soft), 0 0 60px -25px var(--brand-glow);
+  }
+  .terminal.is-glowing:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow), 0 0 80px -15px var(--brand-glow);
+  }
+  .code-chrome {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: #0e0f10;
+  }
+  .code-chrome .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  .code-chrome .dot.r { background: #ff5f57; }
+  .code-chrome .dot.y { background: #febc2e; }
+  .code-chrome .dot.g { background: #28c840; }
+  .code-chrome .file {
+    margin-left: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .code-chrome .copy {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    background: transparent;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity var(--speed-regular) var(--ease-out-quart),
+                color var(--speed-fast) var(--ease-out-quad),
+                border-color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad);
+  }
+  .code-chrome .copy:hover {
+    color: var(--text-1);
+    border-color: var(--border-strong);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .code-chrome .copy.is-copied {
+    color: var(--success);
+    border-color: rgba(123, 241, 168, 0.30);
+    background: rgba(123, 241, 168, 0.06);
+    animation: copy-pop 0.32s var(--ease-out-quart);
+  }
+  .code-chrome .copy .copy-icon {
+    width: 12px; height: 12px;
+    flex-shrink: 0;
+    color: currentColor;
+  }
+  .code-chrome .copy .copy-icon svg {
+    width: 100%; height: 100%; display: block;
+  }
+  .code-chrome .copy .copy-icon .check-path {
+    stroke-dasharray: 18;
+    stroke-dashoffset: 18;
+    opacity: 0;
+  }
+  .code-chrome .copy.is-copied .copy-icon .copy-square { opacity: 0; }
+  .code-chrome .copy.is-copied .copy-icon .check-path {
+    animation: check-draw 0.32s var(--ease-out-quart) forwards;
+  }
+  .code-body {
+    padding: 22px 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-1);
+    overflow-x: auto;
+    text-align: left;
+  }
+  .terminal .prompt {
+    color: var(--terminal-prompt);
+    user-select: none;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+  .terminal .cmd { color: var(--text-1); }
+  .terminal .caret {
+    display: inline-block;
+    width: 8px; height: 1.05em;
+    vertical-align: -2px;
+    background: var(--terminal-caret);
+    margin-left: 4px;
+    animation: caret-blink 1.4s var(--ease-in-out-cubic) infinite;
+  }
+
+  /* ---------- Toast (copy feedback) ---------- */
+  .copy-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 18px;
+    background: rgba(8, 9, 10, 0.92);
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--success);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px -8px var(--brand-glow);
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    animation: toast-in 0.4s var(--ease-out-quart) forwards;
+  }
+
+  /* ================================================================
+     PAGE FOOTER
+     ================================================================ */
+  .footer {
+    padding: var(--space-8) var(--page-padding-inline);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer-inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .footer-brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .footer-brand-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-1);
+    font-weight: 600;
+  }
+  .footer-brand-by {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-4);
+  }
+  .footer-links {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+  }
+  .footer-links a:hover { color: var(--text-1); }
+  .footer-signature {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .footer-signature a { color: var(--text-3); }
+  .footer-signature a:hover { color: var(--brand-hover); }
+
+  /* ================================================================
+     SCROLL REVEAL
+     ================================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+    transition: opacity 0.9s var(--ease-out-quart),
+                transform 0.9s var(--ease-out-quart),
+                filter 0.9s var(--ease-out-quart);
+    will-change: opacity, transform, filter;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  .reveal { transition-delay: var(--reveal-delay, 0s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1; transform: none; filter: none; transition: none;
+    }
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .case { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .footer-cta { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .page-intro { padding: var(--space-9) var(--page-padding-inline) var(--space-8); }
+    .case-headline-stats { grid-template-columns: repeat(2, 1fr); }
+    .case-subsection { grid-template-columns: 1fr; gap: var(--space-4); }
+    .case-subsection-label { position: static; }
+    .results-row { grid-template-columns: 1.2fr 1fr 1fr 0.8fr; gap: var(--space-3); }
+  }
+  @media (max-width: 720px) {
+    html { scroll-padding-top: 72px; }
+    .site-header-inner { padding: 12px var(--page-padding-inline); gap: var(--space-3); }
+    .header-brand { display: none; }
+    .case { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .footer-cta { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .page-intro { padding: var(--space-8) var(--page-padding-inline) var(--space-7); }
+    .case-headline-stats { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+    .headline-stat { padding: 22px; }
+    .toc { min-width: 0; width: 100%; }
+    .case-foot { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+    .results-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+      padding: 14px 16px;
+    }
+    .results-row.is-head { display: none; }
+    .results-row .metric::after { content: ""; }
+    .results-row .before::before { content: "Before  "; color: var(--text-4); font-size: 11px; }
+    .results-row .after::before  { content: "After   "; color: var(--text-4); font-size: 11px; }
+    .results-row .delta::before  { content: "Change  "; color: var(--text-4); font-size: 11px; }
+    .change-item { padding: 16px; }
+    .insight { padding-left: 18px; }
+    .footer-row { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 380px) {
+    .case-headline-stats { grid-template-columns: 1fr; }
+    .terminal .code-body { font-size: 12px; padding: 16px 14px; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       STICKY HEADER NAV
+       ============================================================ -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="header-back" aria-label="Back to nv:context">
+        <span class="arrow" aria-hidden="true">&larr;</span>
+        Back to nv:context
+      </a>
+      <span class="header-brand" aria-hidden="true">nv<span class="accent">:</span>context &middot; case studies</span>
+      <nav class="header-links" aria-label="Header">
+        <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PAGE INTRO
+       ============================================================ -->
+  <section class="page-intro">
+    <div class="page-intro-inner">
+      <span class="intro-eyebrow">Case Studies</span>
+      <h1 class="intro-h1">
+        Three production repos.<br />
+        Three real <span class="serif-italic">transformations.</span>
+      </h1>
+      <p class="intro-lede">
+        I applied <em>nv:context</em> to three very different production codebases &mdash;
+        a Python SDK with 4,612 tests, a multi-product AI SaaS, and a bilingual
+        WhatsApp agent. Here's what changed in each, and what I learned.
+      </p>
+
+      <div class="toc" aria-label="Jump to a case study">
+        <span class="toc-label">Jump to</span>
+        <a href="#selectools">
+          <span>selectools</span>
+          <span class="toc-tag">Most detailed</span>
+        </a>
+        <a href="#saas-platform">
+          <span>saas-platform</span>
+        </a>
+        <a href="#sheriff">
+          <span>sheriff</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CASE STUDY 1 — selectools
+       ============================================================ -->
+  <section id="selectools" class="case">
+    <div class="case-inner">
+
+      <header class="case-head">
+        <div class="case-meta reveal">
+          <span><span class="num">01</span> &middot; Case Study</span>
+          <span class="featured">Most detailed</span>
+        </div>
+        <h2 class="case-name reveal" style="--reveal-delay: 0.04s;">selectools</h2>
+        <div class="case-tag reveal" style="--reveal-delay: 0.08s;">
+          Python SDK
+          <span class="dot">&middot;</span>
+          4,612 tests
+          <span class="dot">&middot;</span>
+          L3 &rarr; L5&ndash;L6
+        </div>
+      </header>
+
+      <div class="case-headline-stats">
+        <div class="headline-stat reveal" style="--reveal-delay: 0.10s;">
+          <div class="number">440<span class="accent">&rarr;</span>67</div>
+          <span class="label">CLAUDE.md lines</span>
+          <span class="sublabel">&minus;85% reduction</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.16s;">
+          <div class="number">49<span class="accent">&rarr;</span>58<span class="small">/60</span></div>
+          <span class="label">leverage score</span>
+          <span class="sublabel">+9 across 6 layers</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.22s;">
+          <div class="number"><span class="accent">&minus;</span>53<span class="small">%</span></div>
+          <span class="label">always-loaded tokens</span>
+          <span class="sublabel">16.3K &rarr; 7.6K</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.28s;">
+          <div class="number">5</div>
+          <span class="label">deterministic hooks</span>
+          <span class="sublabel">format, lint, push, compact, stale</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+
+        <!-- Baseline -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">01</span> Baseline</div>
+          <div class="case-subsection-content">
+            <h3>One file trying to do everything.</h3>
+            <p>
+              The repo had a single 440-line CLAUDE.md doing the work of six files at once:
+              project overview, directory tree, code conventions, testing patterns, feature
+              checklists, release workflows, 26 common pitfalls, and the project roadmap.
+            </p>
+            <p>
+              ETH Zurich research shows LLMs reliably follow ~150&ndash;200 instructions before
+              attention starts to fall off. At 440 lines, the agent was hitting diminishing
+              returns on later instructions long before it ever read the code it was supposed
+              to change.
+            </p>
+            <div class="small-stats">
+              <span class="small-stat">CLAUDE.md <span class="v">440 lines</span></span>
+              <span class="small-stat">Subdirectory configs <span class="v">0</span></span>
+              <span class="small-stat">Hooks <span class="v">0</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L3</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- What changed -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">02</span> What changed</div>
+          <div class="case-subsection-content">
+            <h3>Progressive disclosure: 67-line root, scoped subdirectories, 5 hooks.</h3>
+            <p>
+              The 440-line file was rewritten as a 67-line root focused on commands, stability
+              markers, and the 26 pitfalls condensed to one-liners. Everything else moved to
+              the place an agent would actually need it.
+            </p>
+
+            <div class="change-list">
+              <div class="change-item">
+                <span class="num">01</span>
+                <div class="body">
+                  <strong>Root CLAUDE.md: 440 &rarr; 67 lines</strong>
+                  <p>
+                    Removed the 80-line directory tree (agents discover this), the 50-line
+                    conventions block (moved to <code>src/selectools/CLAUDE.md</code>), the
+                    50-line feature checklist (the <code>/feature</code> skill already covers
+                    this), the release history pattern (discoverable from <code>git log</code>),
+                    and the roadmap (already in <code>ROADMAP.md</code>). What stayed: 7 exact
+                    commands, the stability-markers table, the 27-StepType reference, and 26
+                    pitfalls condensed to one line each.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">02</span>
+                <div class="body">
+                  <strong>3 scoped subdirectory CLAUDE.md files (130 lines total)</strong>
+                  <p>
+                    <code>tests/CLAUDE.md</code> (46 lines) for Agent setup, mock patterns and
+                    test gotchas. <code>src/selectools/CLAUDE.md</code> (51 lines) for code
+                    style, stability markers, the provider protocol, and source-only pitfalls.
+                    <code>docs/CLAUDE.md</code> (43 lines) for the MkDocs Material build and
+                    the 8-item feature documentation checklist.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">03</span>
+                <div class="body">
+                  <strong>Universal AGENTS.md (89 lines)</strong>
+                  <p>
+                    Three-tier boundaries (Always / Ask First / Never), 15 condensed
+                    landmines, the subagent fan-out and worktree patterns. AGENTS.md is the
+                    universal baseline read by 25+ tools &mdash; Cursor, Copilot, Windsurf,
+                    Aider, Gemini CLI &mdash; not just Claude.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">04</span>
+                <div class="body">
+                  <strong>5 hooks for the things that MUST happen 100% of the time</strong>
+                  <p>
+                    PostToolUse auto-formats every <code>.py</code> file with Black + isort.
+                    PreToolUse blocks <code>git push</code> to <code>main</code>/<code>master</code>.
+                    PreToolUse runs <code>flake8</code> before any commit. PostCompact re-injects
+                    the top 30 lines of CLAUDE.md after context compression. SessionStart warns
+                    if configs are older than 14 days.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">05</span>
+                <div class="body">
+                  <strong>.claudeignore: 45 patterns</strong>
+                  <p>
+                    Excluded the 2,000-line landing/ directory, notebooks, build artifacts,
+                    and the docs CSS/JS assets. Without this, every read wasted context on
+                    files irrelevant to Python work.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">06</span>
+                <div class="body">
+                  <strong>CI coverage gate at 90%</strong>
+                  <p>
+                    The test command in <code>.github/workflows/ci.yml</code> changed from
+                    <code>pytest -n auto</code> to
+                    <code>pytest -n auto --cov=selectools --cov-fail-under=90</code>. The
+                    project sits at 95% &mdash; the gate is a floor, not a target.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">07</span>
+                <div class="body">
+                  <strong>HANDOFF.md template + /handoff skill</strong>
+                  <p>
+                    Five structured sections (What I Was Doing, Current State, What's Left,
+                    Key Decisions, Watch Out For), filled by a skill that reads git status
+                    and test status before <code>/clear</code>. Document-and-clear outperforms
+                    auto-compaction because human-curated handoffs preserve nuance.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-pre">
+              <div class="case-pre-chrome">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="file">selectools / progressive disclosure</span>
+              </div>
+<pre><span class="c">// Always loaded for any task</span>
+Root CLAUDE.md (67 lines)        <span class="c">&larr; orientation + commands + 26 pitfalls</span>
+AGENTS.md      (89 lines)        <span class="c">&larr; universal boundaries + landmines</span>
+
+<span class="c">// Loaded only when working in that directory</span>
+tests/CLAUDE.md          (46)
+src/selectools/CLAUDE.md (51)
+docs/CLAUDE.md           (43)
+
+<span class="c">// On demand</span>
+.claude/skills/   (10 skills, only when invoked by name)
+.claude/settings.json  (5 hooks, always active, deterministic)
+</pre>
+            </div>
+
+            <p style="margin-top: var(--space-5);">
+              An agent editing <code style="font-family: var(--font-mono); font-size: 13px; color: var(--text-2);">src/selectools/agent/core.py</code>
+              now loads root (67) + AGENTS.md (89) + src/selectools/CLAUDE.md (51) =
+              <strong style="color: var(--text-1);">207 lines of highly relevant context</strong>.
+              Previously the same agent loaded 440 lines, 60% of which was irrelevant to the task.
+            </p>
+          </div>
+        </article>
+
+        <!-- Results -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">03</span> Results</div>
+          <div class="case-subsection-content">
+            <h3>Token budget down 53%. Leverage score up 9 points.</h3>
+            <p>
+              The "always-loaded" budget dropped from ~16.3K tokens to ~7.6K. The full set
+              of files an agent could load (when working in any directory) dropped from
+              ~16.3K to ~10.4K. More effective context, fewer tokens.
+            </p>
+
+            <div class="results-table">
+              <div class="results-row is-head">
+                <span class="metric">Layer</span>
+                <span class="before">Before</span>
+                <span class="after">After</span>
+                <span class="delta">Change</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Verification</span>
+                <span class="before">&mdash;</span>
+                <span class="after">10 / 10</span>
+                <span class="delta">CI + 90% gate</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">CLAUDE.md / AGENTS.md</span>
+                <span class="before">&mdash;</span>
+                <span class="after">10 / 10</span>
+                <span class="delta">Progressive disclosure</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Hooks</span>
+                <span class="before">0 / 10</span>
+                <span class="after">10 / 10</span>
+                <span class="delta pos">+10</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Skills</span>
+                <span class="before">&mdash;</span>
+                <span class="after">10 / 10</span>
+                <span class="delta">10 skills</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Subagent patterns</span>
+                <span class="before">&mdash;</span>
+                <span class="after">9 / 10</span>
+                <span class="delta">Documented</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Session management</span>
+                <span class="before">&mdash;</span>
+                <span class="after">9 / 10</span>
+                <span class="delta">HANDOFF + .claudeignore</span>
+              </div>
+              <div class="results-row">
+                <span class="metric"><strong style="color: var(--text-1);">Overall</strong></span>
+                <span class="before">49 / 60</span>
+                <span class="after">58 / 60</span>
+                <span class="delta pos">+9</span>
+              </div>
+            </div>
+
+            <div class="small-stats">
+              <span class="small-stat">Always-loaded tokens <span class="v brand">16.3K &rarr; 7.6K</span></span>
+              <span class="small-stat">Max-loaded tokens <span class="v brand">16.3K &rarr; 10.4K</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L3 &rarr; L5&ndash;L6</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Insight -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">04</span> Key insight</div>
+          <div class="case-subsection-content">
+            <h3>Loading fewer, more relevant lines beats loading everything.</h3>
+            <div class="insight">
+              <blockquote>
+                "At 440 lines, every additional rule was making the file worse. At 67 lines,
+                every line is a landmine or a command &mdash; content the agent cannot
+                discover by reading code."
+              </blockquote>
+              <div class="attribution">selectools &middot; final report</div>
+            </div>
+            <p style="margin-top: var(--space-5);">
+              The agent gets 207 lines of highly relevant context per task instead of 440
+              lines of everything. The total context budget dropped 53% &mdash; and the
+              agent makes fewer mistakes, not more. That's the entire thesis of context
+              engineering in one repository.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="case-foot">
+        <a href="#saas-platform">Next case study: saas-platform &rarr;</a>
+        <a href="/">&larr; Back to nv:context</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CASE STUDY 2 — saas-platform
+       ============================================================ -->
+  <section id="saas-platform" class="case">
+    <div class="case-inner">
+
+      <header class="case-head">
+        <div class="case-meta reveal">
+          <span><span class="num">02</span> &middot; Case Study</span>
+        </div>
+        <h2 class="case-name reveal" style="--reveal-delay: 0.04s;">saas-platform</h2>
+        <div class="case-tag reveal" style="--reveal-delay: 0.08s;">
+          Multi-product AI SaaS
+          <span class="dot">&middot;</span>
+          NichevLabs
+          <span class="dot">&middot;</span>
+          L4 &rarr; L6
+        </div>
+      </header>
+
+      <div class="case-headline-stats">
+        <div class="headline-stat reveal" style="--reveal-delay: 0.10s;">
+          <div class="number">805<span class="accent">&rarr;</span>59</div>
+          <span class="label">SESSION.md lines</span>
+          <span class="sublabel">&minus;93% reduction</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.16s;">
+          <div class="number">17<span class="accent">&rarr;</span>49<span class="small">/60</span></div>
+          <span class="label">leverage score</span>
+          <span class="sublabel">+32 points</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.22s;">
+          <div class="number">15.8<span class="accent">K</span></div>
+          <span class="label">tokens saved / session</span>
+          <span class="sublabel">on session start alone</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.28s;">
+          <div class="number">81</div>
+          <span class="label">bugs found + fixed</span>
+          <span class="sublabel">in orchestration + control plane</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+
+        <!-- Baseline -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">01</span> Baseline</div>
+          <div class="case-subsection-content">
+            <h3>L4 setup, 17 / 60 leverage. SESSION.md was eating the context window.</h3>
+            <p>
+              The repo had a 52-line CLAUDE.md and a clean directory layout, so the maturity
+              level looked OK on paper. The reality: an 805-line SESSION.md was being loaded
+              on every session start &mdash; ~17K tokens of historical build log, Steps
+              1&ndash;4 checklists, and a directory tree that agents could discover for free.
+            </p>
+            <p>
+              No AGENTS.md. No subdirectory CLAUDE.md files. No <code>.claudeignore</code>.
+              No HANDOFF.md. No hooks at all. Tests existed (554 passing) but had no coverage
+              floor &mdash; a future change could silently drop coverage and nothing would
+              catch it.
+            </p>
+            <div class="small-stats">
+              <span class="small-stat">SESSION.md <span class="v">805 lines / ~17K tokens</span></span>
+              <span class="small-stat">AGENTS.md <span class="v">none</span></span>
+              <span class="small-stat">Hooks <span class="v">0</span></span>
+              <span class="small-stat">Subdirectory configs <span class="v">0</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L4</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- What changed -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">02</span> What changed</div>
+          <div class="case-subsection-content">
+            <h3>Split SESSION.md, write AGENTS.md, scope by subdirectory, hook the rest.</h3>
+            <p>
+              The biggest single win was splitting SESSION.md. Then a fresh AGENTS.md with
+              three-tier boundaries, six scoped subdirectory configs, and four hooks
+              &mdash; and a bug-hunt subagent that found 81 real bugs while it was at it.
+            </p>
+
+            <div class="change-list">
+              <div class="change-item">
+                <span class="num">01</span>
+                <div class="body">
+                  <strong>SESSION.md split: 805 &rarr; 59 lines (highest impact)</strong>
+                  <p>
+                    Current state stayed in the 59-line file. The full history moved to
+                    <code>docs/SESSION_ARCHIVE.md</code>. ~80% of the original was historical
+                    build log and a directory tree &mdash; content agents never reference.
+                    <strong style="color: var(--text-1);">Saved ~15,800 tokens per session start.</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">02</span>
+                <div class="body">
+                  <strong>AGENTS.md created (120 lines, pruned from 126 after a bug hunt)</strong>
+                  <p>
+                    Three-tier boundaries (Always / Ask First / Never), 7 landmines (down from 10
+                    once the bug hunt fixed 4 of them), and the universal commands. Pruned the
+                    obsolete landmines so agents wouldn't waste effort on non-issues.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">03</span>
+                <div class="body">
+                  <strong>6 scoped subdirectory CLAUDE.md files (23&ndash;39 lines each)</strong>
+                  <p>
+                    <code>web/src/CLAUDE.md</code>, <code>api/src/platform/CLAUDE.md</code>,
+                    <code>api/tests/CLAUDE.md</code>, <code>api/.../agents/CLAUDE.md</code>,
+                    <code>api/.../products/CLAUDE.md</code>, and <code>supabase/CLAUDE.md</code>.
+                    Each loads only when an agent is working inside that directory.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">04</span>
+                <div class="body">
+                  <strong>4 hooks: format, migration guard, PostCompact, pre-commit</strong>
+                  <p>
+                    PreToolUse blocks edits to migration files (100% enforcement, not 95%).
+                    PostToolUse auto-formats Python after every Write/Edit. PostCompact
+                    re-injects the current landmines. Pre-commit re-checks formatting before
+                    the commit lands.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">05</span>
+                <div class="body">
+                  <strong>CI coverage gate added (60% floor)</strong>
+                  <p>
+                    Added <code>pytest-cov</code> with <code>--cov-fail-under=60</code> to the
+                    deploy.yml API job. 60% is a starting floor &mdash; the plan is to ratchet
+                    it up as the suite matures. The point is: a future change can no longer
+                    silently drop coverage.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">06</span>
+                <div class="body">
+                  <strong>learn-from-reviews GitHub Action (compounding engineering)</strong>
+                  <p>
+                    When a reviewer comments <code>@claude-learn [rule]</code> on a PR, the
+                    Action auto-creates a follow-up PR that adds that rule to AGENTS.md. The
+                    codebase learns from every review. Input is sanitized through env-var
+                    indirection to prevent script injection.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">07</span>
+                <div class="body">
+                  <strong>Continuous sync: <code>.githooks/ultracontext-sync.sh</code></strong>
+                  <p>
+                    A non-blocking pre-commit warning that fires when package/CI/lint configs
+                    change, when agent configs are older than 14 days, or when soft negatives
+                    appear in any config file. Catches drift at commit time, before it
+                    becomes stale advice.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">08</span>
+                <div class="body">
+                  <strong>Negative-instruction scan: 4 soft negatives &rarr; 0</strong>
+                  <p>
+                    Re-scanned every config file for "don't" / "avoid" / "do not". Rewrote
+                    each one as a positive RFC 2119 instruction (<code>MUST</code>,
+                    <code>NEVER</code>). Negative instructions increase the probability of the
+                    agent doing the wrong thing &mdash; they draw attention to it.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Results -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">03</span> Results</div>
+          <div class="case-subsection-content">
+            <h3>17 / 60 to 49 / 60. Five layers improved, one stayed at &ldquo;working as designed.&rdquo;</h3>
+            <p>
+              The leverage score nearly tripled. Token budget sits at ~7K (about 5.5% of the
+              128K context window) &mdash; well under the 40% threshold where research shows
+              precision starts to drop.
+            </p>
+
+            <div class="results-table">
+              <div class="results-row is-head">
+                <span class="metric">Layer</span>
+                <span class="before">Before</span>
+                <span class="after">After</span>
+                <span class="delta">Change</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Verification</span>
+                <span class="before">5 / 10</span>
+                <span class="after">8 / 10</span>
+                <span class="delta pos">+3</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">CLAUDE.md / AGENTS.md</span>
+                <span class="before">3 / 10</span>
+                <span class="after">9 / 10</span>
+                <span class="delta pos">+6</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Hooks</span>
+                <span class="before">0 / 10</span>
+                <span class="after">9 / 10</span>
+                <span class="delta pos">+9</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Skills</span>
+                <span class="before">5 / 10</span>
+                <span class="after">7 / 10</span>
+                <span class="delta pos">+2</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Subagent patterns</span>
+                <span class="before">4 / 10</span>
+                <span class="after">7 / 10</span>
+                <span class="delta pos">+3</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Session management</span>
+                <span class="before">0 / 10</span>
+                <span class="after">9 / 10</span>
+                <span class="delta pos">+9</span>
+              </div>
+              <div class="results-row">
+                <span class="metric"><strong style="color: var(--text-1);">Overall</strong></span>
+                <span class="before">17 / 60</span>
+                <span class="after">49 / 60</span>
+                <span class="delta pos">+32</span>
+              </div>
+            </div>
+
+            <div class="small-stats">
+              <span class="small-stat">Token budget <span class="v brand">~7K (5.5% of 128K)</span></span>
+              <span class="small-stat">Bugs found in bug-hunt <span class="v brand">81</span></span>
+              <span class="small-stat">Soft negatives <span class="v brand">4 &rarr; 0</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L4 &rarr; L6</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Insight -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">04</span> Key insight</div>
+          <div class="case-subsection-content">
+            <h3>SESSION.md is where context goes to die.</h3>
+            <div class="insight">
+              <blockquote>
+                "Eighty percent of SESSION.md was historical build log and a directory tree.
+                Agents never reference it &mdash; they reference the code. Splitting it saved
+                fifteen thousand eight hundred tokens on every session start."
+              </blockquote>
+              <div class="attribution">saas-platform &middot; final report</div>
+            </div>
+            <p style="margin-top: var(--space-5);">
+              The corollary: a bug hunt found 81 real bugs while writing AGENTS.md, and 4 of
+              the 10 landmines I'd written turned out to describe bugs that had since been
+              fixed. <strong style="color: var(--text-1);">Stale landmines waste tokens AND
+              confuse agents.</strong> A config file is only useful if you delete the lines
+              that stop being true.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="case-foot">
+        <a href="#sheriff">Next case study: sheriff &rarr;</a>
+        <a href="/">&larr; Back to nv:context</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CASE STUDY 3 — sheriff
+       ============================================================ -->
+  <section id="sheriff" class="case">
+    <div class="case-inner">
+
+      <header class="case-head">
+        <div class="case-meta reveal">
+          <span><span class="num">03</span> &middot; Case Study</span>
+        </div>
+        <h2 class="case-name reveal" style="--reveal-delay: 0.04s;">sheriff</h2>
+        <div class="case-tag reveal" style="--reveal-delay: 0.08s;">
+          Python + TypeScript
+          <span class="dot">&middot;</span>
+          WhatsApp agent
+          <span class="dot">&middot;</span>
+          L4 &rarr; L5
+        </div>
+      </header>
+
+      <div class="case-headline-stats cols-3">
+        <div class="headline-stat reveal" style="--reveal-delay: 0.10s;">
+          <div class="number">36<span class="accent">&rarr;</span>42<span class="small">/60</span></div>
+          <span class="label">leverage score</span>
+          <span class="sublabel">+6 points</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.16s;">
+          <div class="number">10</div>
+          <span class="label">files modified</span>
+          <span class="sublabel">2 created &middot; 1 deleted</span>
+        </div>
+        <div class="headline-stat reveal" style="--reveal-delay: 0.22s;">
+          <div class="number">~10<span class="small">%</span></div>
+          <span class="label">context window used</span>
+          <span class="sublabel">healthy &mdash; under the 40% threshold</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+
+        <!-- Baseline -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">01</span> Baseline</div>
+          <div class="case-subsection-content">
+            <h3>An already-strong L4 setup. The work was incremental polish, not rewrite.</h3>
+            <p>
+              Sheriff already had a 31-line root CLAUDE.md, a 115-line AGENTS.md with proper
+              RFC 2119 language, three scoped subdirectory CLAUDE.md files, an active
+              <code>whatsapp-reviewer</code> agent with an 8-point checklist, and HANDOFF.md
+              for session continuity. The original author had followed best practices.
+            </p>
+            <p>
+              The starting leverage was 36 / 60. Verification was the weakest layer at
+              5 / 10 &mdash; tests existed but no coverage gate, no type checking in CI, and
+              the web tests weren't even being run. There was a 222-line stale
+              <code>session.md</code> from a previous brand name that was duplicating
+              HANDOFF.md's role with outdated information.
+            </p>
+            <div class="small-stats">
+              <span class="small-stat">CLAUDE.md (root) <span class="v">31 lines</span></span>
+              <span class="small-stat">AGENTS.md <span class="v">115 lines</span></span>
+              <span class="small-stat">Subdirectory configs <span class="v">3</span></span>
+              <span class="small-stat">Hooks <span class="v">3</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L4</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- What changed -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">02</span> What changed</div>
+          <div class="case-subsection-content">
+            <h3>Add the missing safety hooks. Add a coverage floor. Delete the stale stuff.</h3>
+            <p>
+              Twelve targeted edits across hooks, CI, and config hygiene. No rewrites.
+              The principle: when a setup is already strong, the highest-leverage gaps are
+              usually missing guardrails and stale artifacts &mdash; not new files.
+            </p>
+
+            <div class="change-list">
+              <div class="change-item">
+                <span class="num">01</span>
+                <div class="body">
+                  <strong>PreToolUse hook: block <code>git push</code> to main</strong>
+                  <p>
+                    The single highest-impact missing guardrail. Prevents accidental pushes
+                    to production via the agent. 100% enforcement &mdash; the hook either
+                    runs or it doesn't, no probabilistic instruction-following involved.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">02</span>
+                <div class="body">
+                  <strong>Enhanced PostCompact hook</strong>
+                  <p>
+                    PostCompact now re-injects CLAUDE.md plus the full three-tier boundaries
+                    plus all current landmines after context compression. The original hook
+                    only re-injected the landmines &mdash; agents would lose the boundaries
+                    after every compaction.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">03</span>
+                <div class="body">
+                  <strong>CI coverage gate at 40%, mypy on whatsapp.py, web tests in CI</strong>
+                  <p>
+                    Added <code>--cov=src/cashcop --cov-fail-under=40</code> to pytest in
+                    <code>deploy.yml</code>, added a mypy step for <code>whatsapp.py</code>,
+                    and added <code>pnpm test</code> to the web job. Web tests existed but
+                    weren't actually being run in CI &mdash; that's the kind of thing you
+                    only catch when you do the audit.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">04</span>
+                <div class="body">
+                  <strong>Brand name cleanup</strong>
+                  <p>
+                    The project was rebranded from MyCashCop to Sheriff. Updated
+                    <code>api/pyproject.toml</code> from <code>mycashcop-api</code> to
+                    <code>sheriff-api</code>, and fixed the <code>whatsapp-reviewer</code>
+                    agent's description and body to match. User-facing names should be
+                    consistent &mdash; agents will copy what they see.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">05</span>
+                <div class="body">
+                  <strong>Hardened <code>.claudeignore</code></strong>
+                  <p>
+                    Added <code>.env*</code> (defense in depth for secrets), the stale
+                    <code>session.md</code>, <code>docs/superpowers/</code>, media files
+                    (<code>.svg</code>, <code>.mp3</code>, <code>.wav</code>, <code>.mp4</code>),
+                    and mobile build artifacts. None of this is content the agent should be
+                    spending tokens on.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">06</span>
+                <div class="body">
+                  <strong>Deleted the 222-line stale <code>session.md</code></strong>
+                  <p>
+                    The file was MyCashCop-era. It duplicated HANDOFF.md's role with
+                    outdated information and could only confuse agents about the current
+                    state of the world. Some of the highest-leverage edits to a config
+                    setup are deletions.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">07</span>
+                <div class="body">
+                  <strong>Makefile: <code>test-web</code> + <code>test-all</code> targets</strong>
+                  <p>
+                    The Makefile had API test targets but no web test target despite
+                    <code>pnpm test</code> being available. Added the web target and a
+                    <code>test-all</code> target that runs both, then surfaced
+                    <code>make test-all</code> in <code>AGENTS.md</code>'s commands section.
+                  </p>
+                </div>
+              </div>
+              <div class="change-item">
+                <span class="num">08</span>
+                <div class="body">
+                  <strong>learn-from-reviews GitHub Action</strong>
+                  <p>
+                    Same compounding engineering pattern: when a reviewer comments
+                    <code>@claude-learn [rule]</code>, the Action opens a PR that adds the
+                    sanitized rule to AGENTS.md. Input is run through env-var indirection
+                    to block script injection &mdash; <code>${{ }}</code> never appears
+                    inside a <code>run:</code> block.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Results -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">03</span> Results</div>
+          <div class="case-subsection-content">
+            <h3>+6 points across the layers that mattered. ~7% token cost increase.</h3>
+            <p>
+              The token cost went up slightly (~300 tokens, +7%) because the enhanced
+              PostCompact hook re-injects more content. That's a worthwhile trade for
+              boundaries that survive compaction. Total context cost stayed at ~10% of the
+              200K window &mdash; healthy by every metric in the research.
+            </p>
+
+            <div class="results-table">
+              <div class="results-row is-head">
+                <span class="metric">Layer</span>
+                <span class="before">Before</span>
+                <span class="after">After</span>
+                <span class="delta">Change</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Verification</span>
+                <span class="before">5 / 10</span>
+                <span class="after">7 / 10</span>
+                <span class="delta pos">+2</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">CLAUDE.md / AGENTS.md</span>
+                <span class="before">7 / 10</span>
+                <span class="after">8 / 10</span>
+                <span class="delta pos">+1</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Hooks</span>
+                <span class="before">7 / 10</span>
+                <span class="after">9 / 10</span>
+                <span class="delta pos">+2</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Skills</span>
+                <span class="before">5 / 10</span>
+                <span class="after">5 / 10</span>
+                <span class="delta">unchanged (solo dev)</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Subagent patterns</span>
+                <span class="before">5 / 10</span>
+                <span class="after">5 / 10</span>
+                <span class="delta">unchanged (solo dev)</span>
+              </div>
+              <div class="results-row">
+                <span class="metric">Session management</span>
+                <span class="before">7 / 10</span>
+                <span class="after">8 / 10</span>
+                <span class="delta pos">+1</span>
+              </div>
+              <div class="results-row">
+                <span class="metric"><strong style="color: var(--text-1);">Overall</strong></span>
+                <span class="before">36 / 60</span>
+                <span class="after">42 / 60</span>
+                <span class="delta pos">+6</span>
+              </div>
+            </div>
+
+            <div class="small-stats">
+              <span class="small-stat">Files modified <span class="v">10</span></span>
+              <span class="small-stat">Files created <span class="v">2</span></span>
+              <span class="small-stat">Files deleted <span class="v brand">1</span></span>
+              <span class="small-stat">Maturity <span class="v brand">L4 &rarr; L5</span></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Insight -->
+        <article class="case-subsection reveal">
+          <div class="case-subsection-label"><span class="num">04</span> Key insight</div>
+          <div class="case-subsection-content">
+            <h3>When the setup is already strong, the leverage is in the gaps and the deletions.</h3>
+            <div class="insight">
+              <blockquote>
+                "Can the agent discover this by reading the code? If yes, delete it. The
+                highest-leverage gaps in a strong setup are usually missing safety hooks
+                and stale artifacts &mdash; not new files."
+              </blockquote>
+              <div class="attribution">sheriff &middot; final report</div>
+            </div>
+            <p style="margin-top: var(--space-5);">
+              The other lesson: the negative-instruction audit found exactly one soft
+              negative across six files, in a HANDOFF.md template comment that wasn't even
+              agent guidance. The original author had already followed RFC 2119 throughout.
+              <strong style="color: var(--text-1);">A good config setup is mostly a
+              discipline of subtraction</strong> &mdash; and Sheriff's author had been
+              practicing it from day one.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="case-foot">
+        <a href="#selectools">&uarr; Back to top: selectools</a>
+        <a href="/">&larr; Back to nv:context</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER CTA
+       ============================================================ -->
+  <section class="footer-cta">
+    <div class="footer-cta-inner">
+      <h2 class="reveal">
+        Try it on <span class="serif-italic">your repo.</span>
+      </h2>
+
+      <div class="footer-cta-terminal reveal" style="--reveal-delay: 0.08s;">
+        <div
+          class="terminal is-glowing"
+          id="install-terminal"
+          role="button"
+          tabindex="0"
+          aria-label="Click to copy install command"
+        >
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+            <button type="button" class="copy" id="copy-btn" aria-label="Copy install command">
+              <span class="copy-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <g class="copy-square">
+                    <rect x="4" y="4" width="9" height="9" rx="1.5"/>
+                    <path d="M3 11V3.5A1.5 1.5 0 0 1 4.5 2H11"/>
+                  </g>
+                  <path class="check-path" d="M3 8.5 L6.5 12 L13 4.5"/>
+                </svg>
+              </span>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <div class="code-body">
+            <span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-context -g -y</span><span class="caret" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <a href="/" class="back-link reveal" style="--reveal-delay: 0.16s;">&larr; Back to nv:context</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <div class="footer-brand">
+          <span class="footer-brand-name">nv:context</span>
+          <span class="footer-brand-by">by johnnichev</span>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="/">Home</a>
+          <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://twitter.com/johnnichev" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://skills.sh" target="_blank" rel="noopener">Skills.sh</a>
+        </nav>
+      </div>
+      <div class="footer-signature">
+        Built with <a href="https://github.com/johnnichev/nv-design" target="_blank" rel="noopener">nv:design</a> &mdash; the methodology that built this page
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var INSTALL_CMD = 'npx skills add johnnichev/nv-context -g -y';
+
+    var terminal  = document.getElementById('install-terminal');
+    var copyBtn   = document.getElementById('copy-btn');
+    var copyLabel = copyBtn ? copyBtn.querySelector('.copy-label') : null;
+    var resetTimer = null;
+
+    function showToast(text) {
+      var existing = document.querySelector('.copy-toast');
+      if (existing) existing.remove();
+      var toast = document.createElement('div');
+      toast.className = 'copy-toast';
+      toast.textContent = text;
+      document.body.appendChild(toast);
+      setTimeout(function () {
+        toast.style.transition = 'opacity 0.4s var(--ease-out-quart)';
+        toast.style.opacity = '0';
+        setTimeout(function () { toast.remove(); }, 400);
+      }, 1800);
+    }
+
+    function flashCopiedState() {
+      if (!copyBtn || !copyLabel) return;
+      copyBtn.classList.add('is-copied');
+      copyLabel.textContent = 'Copied';
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        copyBtn.classList.remove('is-copied');
+        copyLabel.textContent = 'Copy';
+      }, 2000);
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    function copyText(text, onSuccess) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { onSuccess(); },
+          function () { fallbackCopy(text); onSuccess(); }
+        );
+      } else {
+        fallbackCopy(text);
+        onSuccess();
+      }
+    }
+
+    function copyInstall() {
+      copyText(INSTALL_CMD, function () {
+        flashCopiedState();
+        showToast('Copied install command');
+      });
+    }
+
+    if (terminal) {
+      terminal.addEventListener('click', copyInstall);
+      terminal.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          copyInstall();
+        }
+      });
+    }
+
+    /* ----------------------------------------------------------------
+       Scroll-triggered reveal — same pattern as index.html.
+       ---------------------------------------------------------------- */
+    var revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -8% 0px',
+          threshold: 0.12
+        });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>

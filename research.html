@@ -1,0 +1,1988 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Research — nv:context</title>
+  <meta name="description" content="200+ sources. 12 documents. One methodology. Every recommendation in nv:context links back to a real source — published papers, production data, experienced practitioners." />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="The Research — nv:context">
+  <meta property="og:description" content="200+ sources. 12 documents. One methodology. The full research library behind nv:context.">
+  <meta property="og:image" content="https://nvcontext.dev/og-image.png">
+  <meta property="og:url" content="https://nvcontext.dev/research.html">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Research — nv:context">
+  <meta name="twitter:description" content="200+ sources. 12 documents. The research library behind nv:context.">
+  <meta name="twitter:image" content="https://nvcontext.dev/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Fonts: Inter (sans), Instrument Serif (display), JetBrains Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ================================================================
+     nv:context HYBRID DESIGN TOKENS  (mirror of index.html)
+     Resend restraint × Linear motion vocabulary
+     ================================================================ */
+  :root, .dark {
+    /* ---------- FONTS ---------- */
+    --font-sans:  "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --font-mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+    /* ---------- SURFACE / BACKGROUND ---------- */
+    --bg-base:       #000000;
+    --bg-elevated:   #0c0d0f;
+    --bg-elevated-2: #141517;
+    --bg-code:       #08090a;
+    --bg-terminal:   #050506;
+    --bg-glass:      rgba(255, 255, 255, 0.03);
+
+    /* ---------- BORDERS ---------- */
+    --border-subtle:  rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.10);
+    --border-strong:  rgba(255, 255, 255, 0.16);
+    --border-glow:    rgba(113, 112, 255, 0.45);
+
+    /* ---------- TEXT (4 levels) ---------- */
+    --text-1: #f7f8f8;
+    --text-2: #d0d6e0;
+    --text-3: #8a8f98;
+    --text-4: #52595b;
+
+    /* ---------- BRAND ACCENT ---------- */
+    --brand:           #7170ff;
+    --brand-hover:     #828fff;
+    --brand-deep:      #5e6ad2;
+    --brand-tint:      #18182f;
+    --brand-glow:      rgba(113, 112, 255, 0.22);
+    --brand-glow-soft: rgba(113, 112, 255, 0.10);
+
+    /* ---------- STATUS ---------- */
+    --success: #7bf1a8;
+    --warning: #f99c00;
+    --danger:  #fb2c36;
+
+    /* Terminal */
+    --terminal-prompt:  var(--brand);
+    --terminal-output:  var(--text-3);
+    --terminal-success: var(--success);
+    --terminal-caret:   var(--text-1);
+
+    /* ---------- TYPE SCALE ---------- */
+    --display-size: 80px;  --display-lh: 1.0;  --display-tracking: -0.01em;
+    --h1-size: 56px;       --h1-lh: 1.08;      --h1-tracking: -0.022em;
+    --h2-size: 40px;       --h2-lh: 1.1;       --h2-tracking: -0.022em;
+    --h3-size: 28px;       --h3-lh: 1.25;      --h3-tracking: -0.018em;
+    --body-lg-size: 18px;  --body-lg-lh: 1.6;
+    --body-size: 16px;     --body-lh: 1.55;
+    --body-sm-size: 14px;  --body-sm-lh: 1.5;
+    --caption-size: 12px;  --caption-lh: 1.4;  --caption-tracking: 0.08em;
+    --mono-size: 14px;     --mono-lh: 1.6;
+
+    --weight-regular:  400;
+    --weight-medium:   510;
+    --weight-semibold: 590;
+    --weight-bold:     680;
+
+    /* ---------- SPACING ---------- */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+    --space-9: 96px; --space-10: 128px;
+
+    /* ---------- LAYOUT ---------- */
+    --container-narrow:    720px;
+    --container-wide:      1100px;
+    --container-bleed:     100%;
+    --page-padding-inline: 24px;
+    --section-y-mobile:    64px;
+    --section-y-tablet:    80px;
+    --section-y:           120px;
+    --grid-gap:            24px;
+
+    /* ---------- RADIUS ---------- */
+    --radius-sm:   6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-pill: 999px;
+
+    /* ---------- SHADOWS ---------- */
+    --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md:   0 4px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg:   0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 32px -8px var(--brand-glow);
+
+    /* ---------- MOTION ---------- */
+    --ease-in-quad:      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    --ease-in-cubic:     cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-in-quart:     cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    --ease-out-quad:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out-cubic:    cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-out-quart:    cubic-bezier(0.165, 0.84, 0.44, 1);  /* DEFAULT */
+    --ease-out-quint:    cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-expo:     cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-in-out-expo:  cubic-bezier(1, 0, 0, 1);
+
+    --speed-fast:    0.16s;
+    --speed-regular: 0.25s;
+    --speed-slow:    0.35s;
+    --speed-glacial: 1.0s;
+  }
+
+  /* ================================================================
+     RESET + BASE
+     ================================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+    margin: 0; padding: 0; border: 0;
+    font: inherit;
+  }
+  ul, ol { list-style: none; }
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss04", "ss11", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: none;
+    scroll-padding-top: 80px;
+  }
+  body {
+    background: var(--bg-base);
+    color: var(--text-2);
+    font-size: var(--body-size);
+    line-height: var(--body-lh);
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--brand-glow); color: var(--text-1); }
+  a { color: inherit; text-decoration: none; transition: color var(--speed-fast) var(--ease-out-quad); }
+  a:hover { color: var(--text-1); }
+  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; padding: 0; }
+  img, svg, video { display: block; max-width: 100%; }
+  code, pre { font-family: var(--font-mono); }
+
+  /* ================================================================
+     KEYFRAMES
+     ================================================================ */
+  @keyframes hero-fade-up-blur {
+    0%   { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+  @keyframes drift {
+    0%   { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+    50%  { transform: translate3d(1%, 0.5%, 0)  scale(1.02); }
+    100% { transform: translate3d(-0.5%, -0.5%, 0) scale(1); }
+  }
+  @keyframes Hero_pulse {
+    to { box-shadow: 0 0 0 10px rgba(113, 112, 255, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ================================================================
+     HEADER NAV — thin sticky bar
+     ================================================================ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .site-header-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 14px var(--page-padding-inline);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+  .header-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+    transition: color var(--speed-fast) var(--ease-out-quad), gap var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover {
+    color: var(--text-1);
+    gap: 12px;
+  }
+  .header-back .arrow {
+    font-family: var(--font-mono);
+    color: var(--brand-hover);
+    transition: transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-back:hover .arrow {
+    transform: translateX(-2px);
+  }
+  .header-brand {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text-2);
+    letter-spacing: -0.01em;
+  }
+  .header-brand .colon {
+    color: var(--brand-hover);
+    font-style: normal;
+    font-family: var(--font-mono);
+  }
+  .header-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .header-link {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: var(--weight-medium);
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  .header-link:hover { color: var(--text-1); }
+  .header-link .ext {
+    display: inline-block;
+    margin-left: 4px;
+    color: var(--text-4);
+    font-size: 10px;
+  }
+  @media (max-width: 720px) {
+    .site-header-inner { padding: 12px var(--page-padding-inline); }
+    .header-brand { display: none; }
+    .header-link { font-size: 12px; }
+  }
+
+  /* ================================================================
+     HERO — research-page variant
+     ================================================================ */
+  .research-hero {
+    position: relative;
+    padding: 120px var(--page-padding-inline) 80px;
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .research-hero::before {
+    content: "";
+    position: absolute;
+    inset: -10% -10% auto -10%;
+    height: 110vh;
+    pointer-events: none;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 1100px 700px at 50% 10%,
+        rgba(113, 112, 255, 0.12) 0%,
+        rgba(113, 112, 255, 0.07) 22%,
+        rgba(113, 112, 255, 0.03) 45%,
+        transparent 75%),
+      radial-gradient(ellipse 60% 50% at 50% 0%,
+        rgba(94, 106, 210, 0.07) 0%,
+        transparent 70%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%);
+    animation: drift 30s var(--ease-in-out-cubic) infinite;
+  }
+  .research-hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%,
+      #000 18%,
+      rgba(0, 0, 0, 0.6) 50%,
+      transparent 88%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 35%,
+      #000 18%,
+      rgba(0, 0, 0, 0.6) 50%,
+      transparent 88%);
+  }
+  .research-hero-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .research-hero .ds-eyebrow {
+    margin-bottom: var(--space-5);
+    opacity: 0;
+    animation: hero-fade-up-blur 0.9s var(--ease-out-quart) 0s forwards;
+  }
+  .research-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(44px, 8vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.018em;
+    font-weight: 400;
+    margin: 0 0 var(--space-6);
+    max-width: 14ch;
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 1.0) 0%,
+      rgba(255, 255, 255, 0.55) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    opacity: 0;
+    animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.08s forwards;
+  }
+  .research-h1 .stat {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.86em;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .research-h1 .line { display: block; }
+  .research-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 600px;
+    margin: 0 auto var(--space-7);
+    opacity: 0;
+    animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.16s forwards;
+  }
+  .research-lede strong {
+    color: var(--text-2);
+    font-weight: var(--weight-medium);
+  }
+
+  /* TOC — small jump links */
+  .research-toc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0;
+    animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.24s forwards;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-4);
+    margin-right: var(--space-3);
+  }
+  .toc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    transition: border-color var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad),
+                transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .toc-link:hover {
+    border-color: var(--border-glow);
+    color: var(--brand-hover);
+    background: rgba(113, 112, 255, 0.06);
+    transform: translateY(-1px);
+  }
+  .toc-link .num {
+    color: var(--text-4);
+    font-size: 10px;
+  }
+  .toc-link:hover .num { color: var(--brand-hover); }
+
+  @media (max-width: 720px) {
+    .research-hero { padding: 80px var(--page-padding-inline) 56px; }
+    .research-h1 { font-size: clamp(40px, 12vw, 56px); }
+    .research-lede { font-size: 16px; }
+    .toc-label { width: 100%; text-align: center; margin: 0 0 var(--space-2); }
+  }
+
+  /* ================================================================
+     SCROLL REVEAL
+     ================================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+    transition: opacity 0.9s var(--ease-out-quart),
+                transform 0.9s var(--ease-out-quart),
+                filter 0.9s var(--ease-out-quart);
+    will-change: opacity, transform, filter;
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
+
+  /* ================================================================
+     SHARED SECTION CHROME
+     ================================================================ */
+  .ds-section {
+    position: relative;
+    padding: var(--section-y) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .ds-section-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+  }
+  .ds-section-inner.is-narrow { max-width: var(--container-narrow); }
+  .ds-section-head {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ds-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brand-hover);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--brand-glow-soft);
+    border: 1px solid rgba(113, 112, 255, 0.18);
+    margin-bottom: var(--space-5);
+  }
+  .ds-h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5.6vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    margin: 0 0 var(--space-5);
+    max-width: 22ch;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-h2 .accent-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, #cdd0ff 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ds-lede {
+    font-family: var(--font-sans);
+    font-size: var(--body-lg-size);
+    line-height: var(--body-lg-lh);
+    color: var(--text-3);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ================================================================
+     SECTION — KEY FINDINGS
+     ================================================================ */
+  .findings-section {
+    background: var(--bg-base);
+  }
+  .findings-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+  }
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+  .finding-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .finding-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .finding-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+  }
+  .finding-card:hover .finding-num {
+    transform: translateY(-1px);
+  }
+  .finding-num {
+    font-family: var(--font-mono);
+    font-size: clamp(48px, 5.6vw, 72px);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    background: linear-gradient(180deg, var(--brand-hover) 0%, var(--brand-deep) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 64px var(--brand-glow-soft);
+    margin-bottom: var(--space-4);
+    transition: transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .finding-num .unit {
+    font-size: 0.5em;
+    color: var(--text-3);
+    background: none;
+    -webkit-text-fill-color: var(--text-3);
+    margin-left: 4px;
+    font-weight: 500;
+  }
+  .finding-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-3);
+  }
+  .finding-source {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--brand-hover);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .finding-desc {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-3);
+    margin-top: auto;
+  }
+  .finding-desc strong {
+    color: var(--text-2);
+    font-weight: var(--weight-medium);
+  }
+
+  /* ================================================================
+     SECTION — DOCUMENTS
+     ================================================================ */
+  .documents-section {
+    background: var(--bg-elevated);
+  }
+  .documents-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 50%,
+        rgba(113, 112, 255, 0.05) 0%,
+        transparent 65%);
+  }
+  .documents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+  .doc-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 26px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-base);
+    overflow: hidden;
+    text-align: left;
+    color: var(--text-2);
+    transition: transform var(--speed-slow) var(--ease-out-quart),
+                border-color var(--speed-slow) var(--ease-out-quart),
+                background var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart);
+  }
+  .doc-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .doc-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-glow);
+    background: var(--bg-elevated-2);
+    box-shadow: 0 16px 40px -16px var(--brand-glow);
+    color: var(--text-1);
+  }
+  .doc-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .doc-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-default);
+    background: var(--brand-glow-soft);
+    color: var(--brand-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad);
+  }
+  .doc-card:hover .doc-icon {
+    border-color: var(--border-glow);
+    background: rgba(113, 112, 255, 0.12);
+  }
+  .doc-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .doc-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--text-4);
+    text-align: right;
+    line-height: 1.4;
+  }
+  .doc-meta .kb {
+    color: var(--text-3);
+  }
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.3;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-3);
+  }
+  .doc-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-3);
+    margin-bottom: var(--space-5);
+    flex: 1;
+  }
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--brand-hover);
+    margin-top: auto;
+    transition: gap var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad);
+  }
+  .doc-card:hover .doc-link {
+    gap: 10px;
+    color: var(--text-1);
+  }
+
+  /* ================================================================
+     SECTION — SOURCES BY CATEGORY
+     ================================================================ */
+  .sources-section {
+    background: var(--bg-base);
+  }
+  .sources-section::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000, transparent 80%);
+  }
+  .sources-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .source-group {
+    position: relative;
+    padding: 36px 32px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    overflow: hidden;
+  }
+  .source-group::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .source-group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+  }
+  .source-group-title {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.01em;
+  }
+  .source-group-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--brand-hover);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+  }
+  .source-group-count .num {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .source-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-5);
+  }
+  .source-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .source-item:last-child,
+  .source-item:nth-last-child(2):nth-child(odd) {
+    border-bottom: 0;
+  }
+  .source-bullet {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-hover);
+    margin-top: 8px;
+    box-shadow: 0 0 10px var(--brand-glow);
+  }
+  .source-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+  .source-name {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: var(--weight-semibold);
+    color: var(--text-1);
+    letter-spacing: -0.005em;
+  }
+  .source-desc {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+
+  /* ================================================================
+     CTA / FOOTER
+     ================================================================ */
+  .cta-section {
+    position: relative;
+    background: var(--bg-base);
+    padding: calc(var(--section-y) * 1.1) var(--page-padding-inline);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    inset: -10% -10% auto -10%;
+    height: 120%;
+    pointer-events: none;
+    z-index: -2;
+    background: radial-gradient(ellipse 55% 50% at 50% 40%,
+      rgba(113, 112, 255, 0.18) 0%,
+      rgba(94, 106, 210, 0.08) 30%,
+      transparent 70%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  }
+  .cta-section::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 75%);
+            mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, #000, transparent 75%);
+  }
+  .cta-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .cta-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    margin-bottom: var(--space-4);
+  }
+  .cta-h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.018em;
+    font-weight: 400;
+    margin: 0 0 var(--space-7);
+    max-width: 18ch;
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 1.0) 0%,
+      rgba(255, 255, 255, 0.6) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-h2 .serif-italic {
+    font-style: italic;
+    background: linear-gradient(180deg, #b4bcd0 0%, var(--brand-hover) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-terminal {
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: var(--space-6);
+  }
+  .terminal {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-terminal);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow-soft), 0 0 60px -25px var(--brand-glow);
+    position: relative;
+    transition: border-color var(--speed-slow) var(--ease-out-quart),
+                box-shadow var(--speed-slow) var(--ease-out-quart),
+                transform var(--speed-slow) var(--ease-out-quart);
+  }
+  .terminal:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow), 0 0 80px -15px var(--brand-glow);
+  }
+  .code-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: #0e0f10;
+  }
+  .code-chrome .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  .code-chrome .dot.r { background: #ff5f57; }
+  .code-chrome .dot.y { background: #febc2e; }
+  .code-chrome .dot.g { background: #28c840; }
+  .code-chrome .file {
+    margin-left: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .code-body {
+    padding: 22px 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-1);
+    overflow-x: auto;
+    text-align: left;
+  }
+  .terminal .prompt {
+    color: var(--terminal-prompt);
+    user-select: none;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+  .terminal .cmd { color: var(--text-1); }
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid var(--border-default);
+    color: var(--text-2);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-medium);
+    font-size: var(--body-size);
+    transition: border-color var(--speed-fast) var(--ease-out-quad),
+                color var(--speed-fast) var(--ease-out-quad),
+                background var(--speed-fast) var(--ease-out-quad),
+                transform var(--speed-fast) var(--ease-out-quad);
+  }
+  .btn-ghost:hover {
+    border-color: var(--border-glow);
+    color: var(--text-1);
+    background: rgba(113, 112, 255, 0.04);
+    transform: translateY(-1px);
+  }
+  .btn-ghost .arrow {
+    color: var(--brand-hover);
+  }
+
+  /* ================================================================
+     FOOTER
+     ================================================================ */
+  .footer {
+    padding: var(--space-7) var(--page-padding-inline) var(--space-6);
+    background: var(--bg-base);
+  }
+  .footer-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+  .footer-brand-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text-2);
+  }
+  .footer-brand-by {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-4);
+  }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-3);
+    transition: color var(--speed-fast) var(--ease-out-quad);
+  }
+  .footer-links a:hover { color: var(--text-1); }
+  .footer-signature {
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 1024px) {
+    .ds-section { padding: var(--section-y-tablet) var(--page-padding-inline); }
+    .findings-grid { grid-template-columns: repeat(2, 1fr); }
+    .documents-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .ds-section { padding: var(--section-y-mobile) var(--page-padding-inline); }
+    .ds-h2 { font-size: clamp(32px, 9vw, 44px); }
+    .ds-section-head { margin-bottom: var(--space-7); }
+    .findings-grid { grid-template-columns: 1fr; }
+    .documents-grid { grid-template-columns: 1fr; }
+    .source-list { grid-template-columns: 1fr; }
+    .source-group { padding: 26px 22px; }
+    .source-group-title { font-size: 19px; }
+    .finding-card { padding: 26px 22px; }
+    .doc-card { padding: 22px; }
+    .footer-row { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+  }
+  @media (max-width: 380px) {
+    .ds-h2 { font-size: 30px; }
+    .finding-num { font-size: 44px; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER NAV
+       ============================================================ -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="header-back">
+        <span class="arrow">&larr;</span>
+        <span>Back to nv:context</span>
+      </a>
+      <span class="header-brand">nv<span class="colon">:</span>context</span>
+      <div class="header-links">
+        <a href="https://github.com/johnnichev/nv-context" class="header-link" target="_blank" rel="noopener">
+          GitHub<span class="ext">&#8599;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="research-hero">
+    <div class="research-hero-inner">
+
+      <span class="ds-eyebrow">The Research</span>
+
+      <h1 class="research-h1">
+        <span class="line"><span class="stat">200+</span> sources.</span>
+        <span class="line"><span class="stat">12</span> documents.</span>
+        <span class="line">One methodology.</span>
+      </h1>
+
+      <p class="research-lede">
+        This isn&rsquo;t pop AI. Every recommendation in nv:context links back to a real source &mdash;
+        published papers, production data, experienced practitioners. <strong>Here&rsquo;s the full library.</strong>
+      </p>
+
+      <nav class="research-toc" aria-label="Page sections">
+        <span class="toc-label">Jump to</span>
+        <a class="toc-link" href="#findings"><span class="num">01</span> Key findings</a>
+        <a class="toc-link" href="#documents"><span class="num">02</span> Documents</a>
+        <a class="toc-link" href="#sources"><span class="num">03</span> Sources</a>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION — KEY FINDINGS
+       ============================================================ -->
+  <section id="findings" class="ds-section findings-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">01 &mdash; Key Findings</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Six numbers that <span class="accent-serif">change</span> how you build with AI.
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Pulled from primary sources. Each one upends a common assumption about
+          how AI coding agents should work.
+        </p>
+      </div>
+
+      <div class="findings-grid">
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.18s;">
+          <div class="finding-num">&minus;3<span class="unit">%</span></div>
+          <h3 class="finding-title">Auto-generated configs reduce success</h3>
+          <div class="finding-source">ETH Z&uuml;rich</div>
+          <p class="finding-desc">
+            LLM-generated AGENTS.md files cut agent success by <strong>3%</strong> and increase costs
+            <strong>20%+</strong>. Human-written files only marginally help (+4%). Most repos would do
+            better deleting their config than running <code>/init</code>.
+          </p>
+        </article>
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.24s;">
+          <div class="finding-num">19<span class="unit">%</span></div>
+          <h3 class="finding-title">Experienced devs slower with bad context</h3>
+          <div class="finding-source">METR &middot; controlled study</div>
+          <p class="finding-desc">
+            16 senior developers in a controlled study were <strong>19% slower</strong> with AI tools,
+            despite feeling <strong>24% faster</strong>. The 39-point perception gap is the
+            cost of context failure.
+          </p>
+        </article>
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.30s;">
+          <div class="finding-num">40<span class="unit">%</span></div>
+          <h3 class="finding-title">Sweet spot beats max utilization</h3>
+          <div class="finding-source">Dex Horthy &middot; HumanLayer</div>
+          <p class="finding-desc">
+            Using <strong>40%</strong> of the context window outperforms using <strong>90%</strong>.
+            A focused 300-token context can outperform an unfocused 113K-token context.
+            More tokens is not the answer.
+          </p>
+        </article>
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.36s;">
+          <div class="finding-num">85<span class="unit">% drop</span></div>
+          <h3 class="finding-title">Context degrades on a curve</h3>
+          <div class="finding-source">Anthropic &middot; Manus production</div>
+          <p class="finding-desc">
+            At <strong>60%</strong> capacity context is safe. At <strong>70%</strong> precision drops.
+            At <strong>85%</strong> hallucinations begin. Compact proactively &mdash; never wait for
+            the auto-compact at 95%.
+          </p>
+        </article>
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.42s;">
+          <div class="finding-num">~150<span class="unit">max</span></div>
+          <h3 class="finding-title">The instruction budget is finite</h3>
+          <div class="finding-source">Frontier LLM benchmarks</div>
+          <p class="finding-desc">
+            Frontier models follow <strong>150&ndash;200 instructions</strong> consistently. Claude Code&rsquo;s
+            system prompt already uses <strong>~50</strong>. Every line in your CLAUDE.md
+            competes with the actual task for attention.
+          </p>
+        </article>
+
+        <article class="finding-card reveal" style="--reveal-delay: 0.48s;">
+          <div class="finding-num">10<span class="unit">x</span></div>
+          <h3 class="finding-title">Stable prefixes cut cost 10x</h3>
+          <div class="finding-source">Manus &middot; KV-cache law</div>
+          <p class="finding-desc">
+            Cached tokens cost <strong>10&times; less</strong> than uncached. Keep system instructions
+            and tool definitions static; append dynamic content at the end. A single
+            changed token at the start invalidates the entire cache.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION — THE 12 RESEARCH DOCUMENTS
+       ============================================================ -->
+  <section id="documents" class="ds-section documents-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">02 &mdash; The Library</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          The 12 research <span class="accent-serif">documents.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Six parallel research agents. 200+ primary sources. ~471 KB of distilled findings.
+          Each document is open-source on GitHub.
+        </p>
+      </div>
+
+      <div class="documents-grid">
+
+        <!-- 1. Advanced Claude Patterns -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.18s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/advanced_claude_patterns_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">45 KB</span><br/>1308 lines</div>
+          </div>
+          <h3 class="doc-title">Advanced Claude Patterns</h3>
+          <p class="doc-desc">
+            Boris Cherny&rsquo;s workflow, progressive disclosure, path-specific rules, skills, hooks,
+            subagents, worktrees, and the compounding engineering pattern.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 2. Agent Config -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.22s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/agent_config_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">41 KB</span><br/>933 lines</div>
+          </div>
+          <h3 class="doc-title">Agent Config Research</h3>
+          <p class="doc-desc">
+            CLAUDE.md, AGENTS.md, .cursorrules, copilot-instructions, GEMINI.md, Windsurf.
+            The complete file format matrix and the ETH Z&uuml;rich findings.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 3. Articles -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.26s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/articles_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">55 KB</span><br/>1193 lines</div>
+          </div>
+          <h3 class="doc-title">Articles Research</h3>
+          <p class="doc-desc">
+            32-source literature review: Anthropic, Manus, Martin Fowler, LangChain, LlamaIndex,
+            Weaviate, Schmid, Karpathy, Inngest, Google ADK and academic papers.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 4. Community Forums -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.30s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/community_forums_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">31 KB</span><br/>586 lines</div>
+          </div>
+          <h3 class="doc-title">Community Forums Research</h3>
+          <p class="doc-desc">
+            dev.to, Hacker News, and developer communities. Anti-patterns, productivity data
+            (incl. METR&rsquo;s 19% finding), session management, and Claude Code source-leak insights.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 5. Definitions -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.34s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/definitions_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">36 KB</span><br/>636 lines</div>
+          </div>
+          <h3 class="doc-title">Definitions Research</h3>
+          <p class="doc-desc">
+            The theoretical foundation. Karpathy, Tobi Lutke, Schmid, Simon Willison, and
+            the origin of the term &ldquo;context engineering&rdquo; (June 2025, AI Engineer conference).
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 6. GitHub Discussions -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.38s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/github_discussions_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">49 KB</span><br/>1225 lines</div>
+          </div>
+          <h3 class="doc-title">GitHub Discussions Research</h3>
+          <p class="doc-desc">
+            Real CLAUDE.md files from production repos, shared skills, working hooks, the Ralph
+            Wiggum loop, worktree patterns, and 38+ TypeScript exemplar repositories.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 7. Python Specific -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.42s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/python_specific_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">31 KB</span><br/>822 lines</div>
+          </div>
+          <h3 class="doc-title">Python Specific Research</h3>
+          <p class="doc-desc">
+            CLAUDE.md / AGENTS.md patterns from MCP Python SDK, OpenAI Agents Python, Google ADK,
+            LangChain, LangGraph, Pydantic AI, and the elite uv-mandating consensus.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 8. Reddit Forums -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.46s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/reddit_forums_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                <circle cx="17" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">39 KB</span><br/>790 lines</div>
+          </div>
+          <h3 class="doc-title">Reddit Forums Research</h3>
+          <p class="doc-desc">
+            r/ClaudeAI, r/LocalLLaMA, r/MachineLearning. The golden rules of CLAUDE.md
+            (under 60 lines), real before/after stories, and power-user task decomposition.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 9. Tools -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.50s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/tools_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">36 KB</span><br/>635 lines</div>
+          </div>
+          <h3 class="doc-title">Tools Research</h3>
+          <p class="doc-desc">
+            Repomix, Agnix, Context7, codebase-memory-mcp, LLMLingua-2, Mem0, Graphiti.
+            The full tooling ecosystem for context packaging, memory, and validation.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 10. Twitter -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.54s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/twitter_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4l11.7 16h4.3L8.3 4z"/>
+                <path d="M4 20l6.5-8.5"/>
+                <path d="M13.5 11L20 4"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">34 KB</span><br/>460 lines</div>
+          </div>
+          <h3 class="doc-title">Twitter / X Research</h3>
+          <p class="doc-desc">
+            The origin story. Dex Horthy coining the term, swyx amplifying, Tobi Lutke&rsquo;s viral tweet,
+            Karpathy&rsquo;s endorsement, and the timeline of how the discourse formed.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 11. Workflow Patterns -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.58s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/workflow_patterns_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">46 KB</span><br/>988 lines</div>
+          </div>
+          <h3 class="doc-title">Workflow Patterns Research</h3>
+          <p class="doc-desc">
+            How power users actually work: RPI workflow, Plan Mode, session management, subagent patterns,
+            worktrees, TDD with agents, the 20% context-budget rule, and 12-Factor Agents.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+        <!-- 12. YouTube -->
+        <a class="doc-card reveal" style="--reveal-delay: 0.62s;"
+           href="https://github.com/johnnichev/nv-context/blob/main/research/logs/youtube_research.md"
+           target="_blank" rel="noopener">
+          <div class="doc-head">
+            <div class="doc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <polygon points="10 9 15 12 10 15 10 9" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <div class="doc-meta"><span class="kb">28 KB</span><br/>558 lines</div>
+          </div>
+          <h3 class="doc-title">YouTube Research</h3>
+          <p class="doc-desc">
+            Video and audio sources. Dex Horthy&rsquo;s Y Combinator talk, Jeff Huber on Chroma, conference
+            keynotes, podcasts, and the "everything is context engineering" thesis on tape.
+          </p>
+          <span class="doc-link">View on GitHub <span aria-hidden="true">&rarr;</span></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION — SOURCES BY CATEGORY
+       ============================================================ -->
+  <section id="sources" class="ds-section sources-section">
+    <div class="ds-section-inner">
+
+      <div class="ds-section-head">
+        <span class="ds-eyebrow reveal">03 &mdash; The 200+ Sources</span>
+        <h2 class="ds-h2 reveal" style="--reveal-delay: 0.06s;">
+          Where the evidence <span class="accent-serif">comes from.</span>
+        </h2>
+        <p class="ds-lede reveal" style="--reveal-delay: 0.12s;">
+          Grouped by origin. Each name below is a primary source cited inside the 12 documents.
+          The full source URLs live in the research logs on GitHub.
+        </p>
+      </div>
+
+      <div class="sources-stack">
+
+        <!-- ================ AI Labs & Companies ================ -->
+        <div class="source-group reveal" style="--reveal-delay: 0.16s;">
+          <div class="source-group-head">
+            <h3 class="source-group-title">AI Labs &amp; Companies</h3>
+            <span class="source-group-count">~<span class="num">40</span> sources</span>
+          </div>
+          <div class="source-list">
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Anthropic</span>
+                <span class="source-desc">Claude Code, Agent SDK, official engineering blog on context engineering</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Google DeepMind</span>
+                <span class="source-desc">Gemini, ADK multi-agent framework, Philipp Schmid&rsquo;s context essays</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">OpenAI</span>
+                <span class="source-desc">Agent SDK, GPT evaluation methods, Codex / OpenAI Agents Python</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">GitHub</span>
+                <span class="source-desc">Copilot deployment data, AGENTS.md spec analysis across thousands of repos</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Manus</span>
+                <span class="source-desc">Production agent data: 50+ tool calls per task, 4 framework rebuilds, KV-cache laws</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">JetBrains</span>
+                <span class="source-desc">NeurIPS 2025 paper on AI in IDEs, agent evaluation methodology</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Cursor</span>
+                <span class="source-desc">.cursor/rules MDC format, glob-scoped activation patterns</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Aider &middot; Continue &middot; Codeium</span>
+                <span class="source-desc">CONVENTIONS.md, alternative agent harnesses, IDE integrations</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Windsurf &middot; Zed</span>
+                <span class="source-desc">.windsurf/rules, editor-native agent patterns and rule scoping</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">LangChain &middot; LlamaIndex</span>
+                <span class="source-desc">Framework guides on the Write / Select / Compress / Isolate operations</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Chroma</span>
+                <span class="source-desc">Jeff Huber on the &ldquo;Gather and Glean&rdquo; methodology, vector retrieval</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">HumanLayer &middot; Inngest</span>
+                <span class="source-desc">RPI workflow, harness engineering, 12-Factor Agents framework</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================ Academic ================ -->
+        <div class="source-group reveal" style="--reveal-delay: 0.20s;">
+          <div class="source-group-head">
+            <h3 class="source-group-title">Academic &amp; Research</h3>
+            <span class="source-group-count">~<span class="num">30</span> sources</span>
+          </div>
+          <div class="source-list">
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">ETH Z&uuml;rich</span>
+                <span class="source-desc">The agent config study &mdash; the &minus;3% finding for auto-generated AGENTS.md files</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">METR</span>
+                <span class="source-desc">Controlled study (16 senior devs) showing 19% slowdown with poorly-contextualized AI</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">FlowHunt / LongMemEval</span>
+                <span class="source-desc">Context window benchmarks proving focused 300-token wins over 113K-token contexts</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">NeurIPS 2025 papers</span>
+                <span class="source-desc">Multiple agent evaluation studies, IDE-integrated AI research, scaffolding ablations</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Stanford / MIT / CMU</span>
+                <span class="source-desc">LLM reasoning, RAG analysis, attention degradation across long contexts</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Stack Overflow Survey 2026</span>
+                <span class="source-desc">Industry-wide developer adoption data, AI tooling preferences, productivity self-reports</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Google DORA</span>
+                <span class="source-desc">Measured delivery speed dips 1.5% per 25% AI adoption when context is poor</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">IntuitionLabs &middot; Gartner</span>
+                <span class="source-desc">40%+ of AI project failures stem from poor context management (industry analysis)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================ Practitioners ================ -->
+        <div class="source-group reveal" style="--reveal-delay: 0.24s;">
+          <div class="source-group-head">
+            <h3 class="source-group-title">Practitioners</h3>
+            <span class="source-group-count">~<span class="num">25</span> sources</span>
+          </div>
+          <div class="source-list">
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Boris Cherny</span>
+                <span class="source-desc">Claude Code co-creator. 5 parallel sessions, Opus 4.5, 259 PRs in 30 days</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Dex Horthy</span>
+                <span class="source-desc">Coined &ldquo;context engineering&rdquo; (June 2025). Founder of HumanLayer. RPI workflow author</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Andrej Karpathy</span>
+                <span class="source-desc">The &ldquo;delicate art and science of filling the context window&rdquo; definition</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Tobi Lutke</span>
+                <span class="source-desc">Shopify CEO. The viral tweet that took the term mainstream (June 19, 2025)</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Philipp Schmid</span>
+                <span class="source-desc">Google DeepMind. &ldquo;Most agent failures are not model failures &mdash; they are context failures&rdquo;</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Addy Osmani</span>
+                <span class="source-desc">Google Chrome. &ldquo;Context engineering is writing the full screenplay for the AI&rdquo;</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Simon Willison</span>
+                <span class="source-desc">Independent. Definitions, anti-patterns, and why the term &ldquo;stuck&rdquo;</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Martin Fowler</span>
+                <span class="source-desc">Coding agents from a software engineering discipline perspective</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">swyx (Shawn Wang)</span>
+                <span class="source-desc">SmolAI / AI Engineer. Amplified Dex&rsquo;s talk, removed RAG track in favor of context</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Rodrigo Tadewald</span>
+                <span class="source-desc">Vibe Design methodology &mdash; the design lineage behind nv:design and nv:context</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================ Community ================ -->
+        <div class="source-group reveal" style="--reveal-delay: 0.28s;">
+          <div class="source-group-head">
+            <h3 class="source-group-title">Community</h3>
+            <span class="source-group-count">~<span class="num">100+</span> sources</span>
+          </div>
+          <div class="source-list">
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">r/ClaudeAI</span>
+                <span class="source-desc">Power-user threads on CLAUDE.md, hooks, skills, and session management</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">r/LocalLLaMA</span>
+                <span class="source-desc">Open-source LLM context tactics, prompt compression, model behavior under load</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">r/MachineLearning</span>
+                <span class="source-desc">Academic-adjacent discussion of agent evaluation, RAG, long-context degradation</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">Hacker News</span>
+                <span class="source-desc">Threads on Claude Code, Boris Cherny&rsquo;s workflow, agent harnesses, ETH study debate</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">X / Twitter</span>
+                <span class="source-desc">Technical threads from Karpathy, Schmid, swyx, Dex, Tobi, Simon Willison, Addy Osmani</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">GitHub Discussions &amp; Issues</span>
+                <span class="source-desc">Real CLAUDE.md files, hooks configurations, awesome-lists, gists, real bug reports</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">YouTube &amp; Conference talks</span>
+                <span class="source-desc">YC Root Access, AI Engineer World&rsquo;s Fair, Latent Space, Dometrain, HumanLayer talks</span>
+              </div>
+            </div>
+            <div class="source-item">
+              <span class="source-bullet" aria-hidden="true"></span>
+              <div class="source-body">
+                <span class="source-name">dev.to &amp; personal blogs</span>
+                <span class="source-desc">HumanLayer blog, addyosmani.com, Inngest, Faros, CodeConductor, Vellum, Zep</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA — Install + back to landing
+       ============================================================ -->
+  <section class="cta-section">
+    <div class="cta-inner">
+
+      <div class="cta-eyebrow reveal">Convinced?</div>
+
+      <h2 class="cta-h2 reveal" style="--reveal-delay: 0.04s;">
+        Stop guessing.<br/>
+        <span class="serif-italic">Start engineering.</span>
+      </h2>
+
+      <div class="cta-terminal reveal" style="--reveal-delay: 0.08s;">
+        <div class="terminal" role="presentation">
+          <div class="code-chrome">
+            <span class="dot r" aria-hidden="true"></span>
+            <span class="dot y" aria-hidden="true"></span>
+            <span class="dot g" aria-hidden="true"></span>
+            <span class="file">~/your-repo</span>
+          </div>
+          <div class="code-body">
+            <span class="prompt">$</span><span class="cmd">npx skills add johnnichev/nv-context -g -y</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-actions reveal" style="--reveal-delay: 0.16s;">
+        <a href="/" class="btn-ghost">
+          <span class="arrow">&larr;</span>
+          <span>Back to nv:context</span>
+        </a>
+        <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md"
+           class="btn-ghost" target="_blank" rel="noopener">
+          <span>Read the synthesis</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <div class="footer-brand">
+          <span class="footer-brand-name">nv:context</span>
+          <span class="footer-brand-by">by NichevLabs</span>
+        </div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/research.html">Research</a>
+          <a href="https://github.com/johnnichev/nv-context" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/johnnichev/nv-context/blob/main/research/SYNTHESIS.md" target="_blank" rel="noopener">Synthesis</a>
+        </div>
+      </div>
+      <div class="footer-signature">
+        For engineers who ship. &middot; 200+ sources. 12 documents. One methodology.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    /* ----------------------------------------------------------------
+       Scroll-triggered reveal — same pattern as index.html.
+       ---------------------------------------------------------------- */
+    var revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -8% 0px',
+          threshold: 0.12
+        });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>
