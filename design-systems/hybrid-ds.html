@@ -1,0 +1,1975 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>nv:context — Hybrid Design System (Resend × Linear)</title>
+<meta name="description" content="The unified visual identity for nv:context. Resend's restraint as the base, Linear's motion vocabulary on top." />
+
+<!-- ============================================================
+     FONTS
+     - Inter (sans, body + UI)            — verbatim from Resend & Linear
+     - Instrument Serif (display serif)   — Resend's Domaine substitute, hero only
+     - JetBrains Mono (mono)              — code blocks, install commands, big numbers
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+<style>
+/* ================================================================
+   nv:context HYBRID DESIGN TOKENS
+   Base identity: Resend (restraint, dark, serif display, code blocks)
+   Motion vocabulary + brand accent: Linear (eases, pulse, hover lift)
+   ================================================================ */
+:root, .dark {
+
+  /* ---------- FONTS ---------- */
+  --font-sans:    "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif:   "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  /* ---------- SURFACE / BACKGROUND ---------- */
+  /* Resend's true-black base + a tighter elevation ramp */
+  --bg-base:       #000000;       /* page background — true black */
+  --bg-elevated:   #0c0d0f;       /* cards, panels (slightly above base) */
+  --bg-elevated-2: #141517;       /* nested / hover */
+  --bg-code:       #08090a;       /* code block background — even darker than base for contrast on top of cards */
+  --bg-terminal:   #050506;       /* terminal chrome variant */
+  --bg-glass:      rgba(255, 255, 255, 0.03); /* glass panels over hero */
+
+  /* ---------- BORDERS ---------- */
+  --border-subtle:    rgba(255, 255, 255, 0.06); /* hairline default */
+  --border-default:   rgba(255, 255, 255, 0.10); /* card borders */
+  --border-strong:    rgba(255, 255, 255, 0.16); /* hover state */
+  --border-glow:      rgba(113, 112, 255, 0.45); /* brand-tinted hover glow */
+
+  /* ---------- TEXT (4 levels) ---------- */
+  --text-1: #f7f8f8;   /* primary — headings, key statements */
+  --text-2: #d0d6e0;   /* body */
+  --text-3: #8a8f98;   /* muted — captions, helper, eyebrows */
+  --text-4: #52595b;   /* placeholder, disabled, line numbers */
+
+  /* ---------- BRAND ACCENT (Linear's indigo, used SPARINGLY) ---------- */
+  --brand:        #7170ff;        /* primary accent */
+  --brand-hover:  #828fff;        /* hover state */
+  --brand-deep:   #5e6ad2;        /* deeper, for buttons/badges bg */
+  --brand-tint:   #18182f;        /* tinted background for badges */
+  --brand-glow:   rgba(113, 112, 255, 0.22); /* halo glow on hover / focus */
+  --brand-glow-soft: rgba(113, 112, 255, 0.10);
+
+  /* ---------- STATUS COLORS (used very rarely) ---------- */
+  --success:  #7bf1a8;  /* Resend green-300 — for "shipping" / "stable" pills */
+  --warning:  #f99c00;  /* Resend amber-500 — for "beta" */
+  --danger:   #fb2c36;  /* Resend red-500 — for errors only */
+
+  /* ---------- CODE SYNTAX TOKENS (Resend's exact set) ---------- */
+  --syntax-keyword:  #c084fc;  /* violet — import, const, function, return */
+  --syntax-string:   #7bf1a8;  /* green-300 — string literals */
+  --syntax-function: #60a5fa;  /* blue — function calls */
+  --syntax-number:   #fb7185;  /* rose — numeric literals */
+  --syntax-comment:  #52595b;  /* gray — comments (italic) */
+  --syntax-property: #f99c00;  /* amber — object props */
+  --syntax-variable: #f0f0f0;  /* white — variables */
+  --syntax-punct:    #8a8f98;  /* gray-9 — punctuation */
+
+  /* Terminal-specific */
+  --terminal-prompt: var(--brand);     /* the $ prompt — brand violet */
+  --terminal-output: var(--text-3);
+  --terminal-success: var(--success);
+  --terminal-caret:  var(--text-1);
+
+  /* ---------- TYPOGRAPHY SCALE ---------- */
+  /* Display (serif) — hero only */
+  --display-size:    80px;   --display-lh: 1.0;   --display-tracking: -0.01em;
+  /* Sans (Inter) section headings + body */
+  --h1-size:         56px;   --h1-lh: 1.08;       --h1-tracking: -0.022em;
+  --h2-size:         40px;   --h2-lh: 1.1;        --h2-tracking: -0.022em;
+  --h3-size:         28px;   --h3-lh: 1.25;       --h3-tracking: -0.018em;
+  --h4-size:         22px;   --h4-lh: 1.3;        --h4-tracking: -0.012em;
+  --body-lg-size:    18px;   --body-lg-lh: 1.6;
+  --body-size:       16px;   --body-lh: 1.55;
+  --body-sm-size:    14px;   --body-sm-lh: 1.5;   --body-sm-tracking: -0.011em;
+  --caption-size:    12px;   --caption-lh: 1.4;   --caption-tracking: 0.08em;
+  --mono-size:       14px;   --mono-lh: 1.6;
+
+  /* Font weights */
+  --weight-regular:  400;
+  --weight-medium:   510;
+  --weight-semibold: 590;
+  --weight-bold:     680;
+
+  /* ---------- SPACING SCALE ---------- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   24px;
+  --space-6:   32px;
+  --space-7:   48px;
+  --space-8:   64px;
+  --space-9:   96px;
+  --space-10: 128px;
+
+  /* ---------- LAYOUT ---------- */
+  --container-narrow: 720px;   /* prose, text content */
+  --container-wide:  1100px;   /* cards, full sections */
+  --container-bleed: 100%;     /* full-bleed backgrounds */
+  --page-padding-inline: 24px;
+  --section-y-mobile:  64px;
+  --section-y-tablet:  80px;
+  --section-y:        120px;   /* desktop section vertical padding */
+  --grid-gap:         24px;
+
+  /* ---------- BORDER RADIUS ---------- */
+  --radius-sm:    6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md:    0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg:    0 30px 60px -15px rgba(0, 0, 0, 0.6);
+  --shadow-glow:  0 0 32px -8px var(--brand-glow);
+
+  /* ============================================================
+     MOTION — All 8 of Linear's named easing curves (verbatim).
+     These are the canonical motion vocabulary. Use --ease-out-quart
+     as the default for entrances and hover transitions.
+     ============================================================ */
+  --ease-in-quad:    cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic:   cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart:   cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-out-quad:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic:  cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart:  cubic-bezier(0.165, 0.84, 0.44, 1);  /* DEFAULT */
+  --ease-out-quint:  cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo:   cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-expo:  cubic-bezier(1, 0, 0, 1);
+
+  /* Speeds */
+  --speed-fast:    0.16s;
+  --speed-regular: 0.25s;
+  --speed-slow:    0.35s;
+  --speed-glacial: 1.0s;
+}
+
+/* ================================================================
+   RESET + BASE
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+  margin: 0; padding: 0; border: 0;
+  font: inherit;
+}
+ul, ol { list-style: none; }
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss04", "ss11", "cv11"; /* Resend's stylistic sets + Linear's */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: none;
+}
+body {
+  background: var(--bg-base);
+  color: var(--text-2);
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  overflow-x: hidden;
+}
+::selection { background: var(--brand-glow); color: var(--text-1); }
+a { color: inherit; text-decoration: none; transition: color var(--speed-fast) var(--ease-out-quad); }
+a:hover { color: var(--text-1); }
+button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; padding: 0; }
+img, svg, video { display: block; max-width: 100%; }
+code, pre { font-family: var(--font-mono); }
+
+/* ================================================================
+   KEYFRAMES (Resend's set + Linear's pulse + a unified scroll-reveal)
+   ================================================================ */
+@keyframes hero-text-slide-up-fade {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade-up-blur {
+  /* Linear's blurred entrance — used on hero text */
+  0%   { opacity: 0; transform: translateY(14px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes header-slide-down-fade {
+  0%   { opacity: 0; transform: translateY(-12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes shine {
+  /* Resend's gradient sweep — used on words like "context" in flow */
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes drift {
+  /* Slow background mesh drift — hero glow */
+  0%   { transform: translate3d(-1%, -1%, 0) scale(1); }
+  50%  { transform: translate3d(2%, 1%, 0)  scale(1.04); }
+  100% { transform: translate3d(-1%, -1%, 0) scale(1); }
+}
+@keyframes Hero_pulse {
+  /* Linear's eyebrow pulse — for "shipping" status dot */
+  to { box-shadow: 0 0 0 10px rgba(113, 112, 255, 0); }
+}
+@keyframes pulse-soft {
+  /* Generic dot pulse — gentler than Linear's */
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(0.95); }
+}
+@keyframes caret-blink {
+  /* Resend's terminal caret — verbatim */
+  0%, 100% { opacity: 1; }
+  20%, 50% { opacity: 0; }
+  70%      { opacity: 1; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes scroll-reveal {
+  /* Unified scroll-reveal: fade up 20px with blur */
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================================================
+   LAYOUT PRIMITIVES
+   ================================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--page-padding-inline);
+}
+.container-narrow { max-width: var(--container-narrow); }
+.container-bleed  { max-width: var(--container-bleed); }
+
+section[id] {
+  padding-block: var(--section-y);
+  position: relative;
+  border-bottom: 1px solid var(--border-subtle);
+}
+@media (max-width: 1024px) { section[id] { padding-block: var(--section-y-tablet); } }
+@media (max-width: 640px)  { section[id] { padding-block: var(--section-y-mobile); } }
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: var(--space-3);
+}
+.section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 4.5vw, var(--h2-size));
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-tracking);
+  font-weight: var(--weight-semibold);
+  color: var(--text-1);
+  margin: 0 0 var(--space-3);
+  background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-lede {
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-lh);
+  color: var(--text-3);
+  max-width: 640px;
+  margin: 0 0 var(--space-7);
+}
+
+/* ================================================================
+   TOP NAV
+   ================================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 64px;
+  display: flex; align-items: center;
+  padding-inline: var(--page-padding-inline);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+  animation: header-slide-down-fade 0.7s var(--ease-out-quart);
+}
+.nav-inner {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  display: flex; align-items: center; gap: var(--space-5);
+}
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  margin-right: auto;
+}
+.nav-logo .colon { color: var(--brand); }
+.nav-list {
+  display: flex; gap: 4px;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+}
+.nav-list a {
+  padding: 6px 10px;
+  color: var(--text-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--speed-fast) var(--ease-out-quad),
+              background var(--speed-fast) var(--ease-out-quad);
+}
+.nav-list a:hover { color: var(--text-1); background: rgba(255, 255, 255, 0.04); }
+@media (max-width: 720px) {
+  .nav-list a { padding: 6px 6px; font-size: 12px; }
+  .nav-list { gap: 2px; }
+}
+
+/* ================================================================
+   SECTION 0 — HERO
+   Resend's spotlight + dot grid, Linear's drifting glow
+   ================================================================ */
+.hero {
+  position: relative;
+  min-height: 88vh;
+  padding: 160px var(--page-padding-inline) 120px;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid var(--border-subtle);
+}
+/* Layer 1: Resend's spotlight (radial conic) */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 110vh;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%,
+      rgba(113, 112, 255, 0.30) 0%,
+      rgba(94, 106, 210, 0.16) 25%,
+      rgba(48, 128, 255, 0.06)  45%,
+      rgba(0, 0, 0, 0)          70%),
+    conic-gradient(from 200deg at 50% 0%,
+      rgba(255, 255, 255, 0.04) 0deg,
+      rgba(255, 255, 255, 0.10) 25deg,
+      rgba(255, 255, 255, 0.03) 60deg,
+      rgba(255, 255, 255, 0)   180deg,
+      rgba(255, 255, 255, 0.03) 300deg,
+      rgba(255, 255, 255, 0.10) 335deg,
+      rgba(255, 255, 255, 0.04) 360deg);
+  -webkit-mask-image: linear-gradient(to top, transparent 12%, #000 32%);
+          mask-image: linear-gradient(to top, transparent 12%, #000 32%);
+  animation: drift 24s var(--ease-in-out-cubic) infinite;
+}
+/* Layer 2: Resend's faint dot grid mask */
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000, transparent 75%);
+          mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000, transparent 75%);
+}
+.hero-inner {
+  position: relative;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px 6px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-default);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: var(--space-6);
+  opacity: 0;
+  animation: hero-fade-up-blur 0.9s var(--ease-out-quart) 0.05s forwards;
+}
+/* Linear's pulse-dot — verbatim */
+.hero-eyebrow .pulse-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(113, 112, 255, 0.18);
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(113, 112, 255, 0.10);
+  animation: Hero_pulse 1.75s cubic-bezier(0.66, 0, 0, 1) infinite;
+}
+.hero-eyebrow .pulse-dot::after {
+  content: "";
+  position: absolute;
+  width: 6px; height: 6px;
+  background: var(--brand);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hero H1 — Instrument Serif, gradient text (Resend pattern) */
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 8vw, var(--display-size));
+  line-height: var(--display-lh);
+  letter-spacing: var(--display-tracking);
+  font-weight: 400;
+  margin: 0 0 var(--space-5);
+  max-width: 18ch;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.55) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  opacity: 0;
+  animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.18s forwards;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(180deg, #b4bcd0 0%, var(--brand-hover) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p.subhead {
+  font-family: var(--font-sans);
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-lh);
+  color: var(--text-3);
+  max-width: 560px;
+  margin: 0 0 var(--space-7);
+  opacity: 0;
+  animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.32s forwards;
+}
+.hero-actions {
+  display: flex; gap: var(--space-3);
+  flex-wrap: wrap; justify-content: center;
+  opacity: 0;
+  animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.46s forwards;
+  margin-bottom: var(--space-8);
+}
+.hero-install {
+  width: 100%;
+  max-width: 620px;
+  opacity: 0;
+  animation: hero-fade-up-blur 1s var(--ease-out-quart) 0.62s forwards;
+}
+
+/* ================================================================
+   BUTTONS
+   - Primary: Resend's glass + noise (verbatim) with Linear hover speed
+   - Secondary: ghost text with subtle underline-on-hover
+   - Pill: small nav/inline use
+   ================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--body-size);
+  line-height: 1;
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+  white-space: nowrap;
+  transition: filter var(--speed-regular) var(--ease-out-quart),
+              transform var(--speed-fast) var(--ease-out-quad),
+              background var(--speed-regular) var(--ease-out-quart),
+              border-color var(--speed-regular) var(--ease-out-quart),
+              color var(--speed-regular) var(--ease-out-quart),
+              box-shadow var(--speed-regular) var(--ease-out-quart);
+}
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* Primary — Resend's glass CTA, verbatim, with brand-tinted hover (Linear) */
+.btn-primary {
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(104deg,
+    rgba(253, 253, 253, 0.05) 5%,
+    rgba(240, 240, 228, 0.10) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  color: var(--text-1);
+}
+.btn-primary::after {
+  /* Noise texture — Resend's signature */
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='2.4' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 80px 80px;
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: -1;
+}
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  box-shadow: 0 8px 30px var(--brand-glow);
+}
+
+/* Secondary — ghost text with subtle underline */
+.btn-secondary {
+  height: 48px;
+  padding: 0 18px;
+  background: transparent;
+  border: 0;
+  color: var(--text-3);
+  position: relative;
+}
+.btn-secondary::after {
+  content: "";
+  position: absolute;
+  left: 18px; right: 18px; bottom: 12px;
+  height: 1px;
+  background: var(--text-4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--speed-regular) var(--ease-out-quart);
+}
+.btn-secondary:hover { color: var(--text-1); }
+.btn-secondary:hover::after { transform: scaleX(1); background: var(--text-1); }
+
+/* Pill — small (32px), used in nav/inline */
+.btn-pill {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-default);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+}
+.btn-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-strong);
+  color: var(--text-1);
+}
+.btn-pill.is-active {
+  background: var(--brand-tint);
+  border-color: var(--border-glow);
+  color: var(--brand-hover);
+}
+
+/* ================================================================
+   CODE BLOCKS — the centerpiece of nv:context's identity
+   Resend's terminal aesthetic, verbatim
+   ================================================================ */
+.code-block {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-code);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.code-chrome {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+}
+.code-chrome .dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.code-chrome .dot.r { background: #ff5f57; }
+.code-chrome .dot.y { background: #febc2e; }
+.code-chrome .dot.g { background: #28c840; }
+.code-chrome .file {
+  margin-left: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.code-chrome .copy {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  transition: all var(--speed-fast) var(--ease-out-quad);
+}
+.code-chrome .copy:hover {
+  color: var(--text-1);
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+.code-body {
+  padding: 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-1);
+  overflow-x: auto;
+}
+.code-body pre { margin: 0; font: inherit; white-space: pre; }
+.code-body .ln {
+  display: inline-block;
+  width: 2ch;
+  color: var(--text-4);
+  user-select: none;
+  margin-right: 18px;
+  text-align: right;
+}
+
+/* Syntax tokens — Resend's exact set */
+.tk-kw   { color: var(--syntax-keyword); }
+.tk-fn   { color: var(--syntax-function); }
+.tk-str  { color: var(--syntax-string); }
+.tk-num  { color: var(--syntax-number); }
+.tk-com  { color: var(--syntax-comment); font-style: italic; }
+.tk-pn   { color: var(--syntax-punct); }
+.tk-var  { color: var(--syntax-variable); }
+.tk-prop { color: var(--syntax-property); }
+
+/* ----- Terminal variant ----- */
+.terminal {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-terminal);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.terminal .code-chrome { background: #0e0f10; }
+.terminal .code-body {
+  padding: 24px 24px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.terminal .prompt  { color: var(--terminal-prompt); user-select: none; margin-right: 8px; font-weight: 500; }
+.terminal .cmd     { color: var(--text-1); }
+.terminal .out     { color: var(--terminal-output); }
+.terminal .ok      { color: var(--terminal-success); }
+.terminal .caret {
+  display: inline-block;
+  width: 8px; height: 1.05em;
+  vertical-align: -2px;
+  background: var(--terminal-caret);
+  margin-left: 4px;
+  animation: caret-blink 1.2s var(--ease-out-quart) infinite;
+}
+/* Brand-tint glow on hover for the hero terminal */
+.terminal.is-glowing {
+  transition: border-color var(--speed-slow) var(--ease-out-quart),
+              box-shadow var(--speed-slow) var(--ease-out-quart);
+}
+.terminal.is-glowing:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--brand-glow-soft), 0 0 60px -20px var(--brand-glow);
+}
+
+/* ================================================================
+   CARDS / STAT BLOCKS
+   Linear's hover-lift + brand glow border, Resend's surface
+   ================================================================ */
+.card {
+  position: relative;
+  padding: 28px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  transition: transform var(--speed-slow) var(--ease-out-quart),
+              border-color var(--speed-slow) var(--ease-out-quart),
+              background var(--speed-slow) var(--ease-out-quart),
+              box-shadow var(--speed-slow) var(--ease-out-quart);
+  overflow: hidden;
+}
+.card::before {
+  /* Subtle top-edge highlight (Resend) */
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.card:hover {
+  /* Linear's hover lift + brand-tinted border glow */
+  transform: translateY(-3px);
+  border-color: var(--border-glow);
+  background: var(--bg-elevated-2);
+  box-shadow: 0 16px 40px -16px var(--brand-glow);
+}
+
+/* ----- Stat card: big number + label ----- */
+.stat-card {
+  display: flex; flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+}
+.stat-card .number {
+  font-family: var(--font-mono);
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  /* subtle brand-tint glow on the number itself */
+  text-shadow: 0 0 32px var(--brand-glow-soft);
+}
+.stat-card .number .accent { color: var(--brand-hover); }
+.stat-card .label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+}
+
+/* ----- Case study card: project + metrics + link ----- */
+.case-card .project {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+.case-card h3 {
+  font-family: var(--font-sans);
+  font-size: var(--h4-size);
+  line-height: var(--h4-lh);
+  letter-spacing: var(--h4-tracking);
+  font-weight: var(--weight-semibold);
+  color: var(--text-1);
+  margin: 0 0 var(--space-4);
+}
+.case-card .metrics {
+  display: flex; gap: var(--space-5);
+  padding: var(--space-4) 0;
+  border-block: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-4);
+}
+.case-card .metric { flex: 1; }
+.case-card .metric .v {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+  display: block;
+  letter-spacing: -0.01em;
+}
+.case-card .metric .v .accent { color: var(--brand-hover); }
+.case-card .metric .k {
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  display: block;
+}
+.case-card .read-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px;
+  color: var(--brand-hover);
+  font-weight: var(--weight-medium);
+  transition: gap var(--speed-fast) var(--ease-out-quad), color var(--speed-fast) var(--ease-out-quad);
+}
+.case-card .read-more:hover { gap: 10px; color: var(--text-1); }
+
+/* ----- Feature card: icon + title + description ----- */
+.feature-card .icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-default);
+  display: grid; place-items: center;
+  color: var(--text-2);
+  margin-bottom: var(--space-4);
+}
+.feature-card h3 {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: var(--weight-semibold);
+  color: var(--text-1);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.012em;
+}
+.feature-card p {
+  color: var(--text-3);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ================================================================
+   EYEBROW PILLS / BADGES
+   ================================================================ */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-default);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: var(--weight-medium);
+}
+.eyebrow-pill .pulse-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(113, 112, 255, 0.18);
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(113, 112, 255, 0.10);
+  animation: Hero_pulse 1.75s cubic-bezier(0.66, 0, 0, 1) infinite;
+}
+.eyebrow-pill .pulse-dot::after {
+  content: "";
+  position: absolute;
+  width: 6px; height: 6px;
+  background: var(--brand);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+}
+.badge--brand   { background: var(--brand-tint);             color: var(--brand-hover); border: 1px solid rgba(113, 112, 255, 0.25); }
+.badge--success { background: rgba(123, 241, 168, 0.10);     color: var(--success);     border: 1px solid rgba(123, 241, 168, 0.25); }
+.badge--warning { background: rgba(249, 156, 0, 0.10);       color: var(--warning);     border: 1px solid rgba(249, 156, 0, 0.25); }
+.badge--neutral { background: rgba(255, 255, 255, 0.04);     color: var(--text-3);      border: 1px solid var(--border-default); }
+
+/* ================================================================
+   INLINE METRIC — for in-prose numbers like 440→67
+   ================================================================ */
+.metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--brand-tint);
+  border: 1px solid rgba(113, 112, 255, 0.20);
+  color: var(--brand-hover);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.metric .arrow { color: var(--text-4); margin: 0 2px; }
+.metric .delta { color: var(--success); font-size: 0.85em; margin-left: 4px; }
+
+/* ================================================================
+   TYPOGRAPHY SPEC TABLE (Section 1)
+   ================================================================ */
+.type-table {
+  margin-top: var(--space-7);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.type-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-5);
+  align-items: baseline;
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--speed-fast) var(--ease-out-quad);
+}
+.type-row:last-child { border-bottom: none; }
+.type-row:hover { background: rgba(255, 255, 255, 0.015); }
+.type-sample {
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.type-spec {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-4);
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 24px;
+}
+.type-row .note {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+  white-space: normal;
+}
+
+/* Type variants */
+.t-display { font-family: var(--font-serif); font-size: 80px; line-height: 1.0;  letter-spacing: -0.01em; font-weight: 400; }
+.t-h1      { font-family: var(--font-sans);  font-size: 56px; line-height: 1.08; letter-spacing: -0.022em; font-weight: var(--weight-semibold); }
+.t-h2      { font-family: var(--font-sans);  font-size: 40px; line-height: 1.1;  letter-spacing: -0.022em; font-weight: var(--weight-semibold); }
+.t-h3      { font-family: var(--font-sans);  font-size: 28px; line-height: 1.25; letter-spacing: -0.018em; font-weight: var(--weight-semibold); }
+.t-h4      { font-family: var(--font-sans);  font-size: 22px; line-height: 1.3;  letter-spacing: -0.012em; font-weight: var(--weight-semibold); }
+.t-body-lg { font-family: var(--font-sans);  font-size: 18px; line-height: 1.6;  color: var(--text-2); }
+.t-body    { font-family: var(--font-sans);  font-size: 16px; line-height: 1.55; color: var(--text-2); }
+.t-body-sm { font-family: var(--font-sans);  font-size: 14px; line-height: 1.5;  color: var(--text-2); letter-spacing: -0.011em; }
+.t-caption { font-family: var(--font-sans);  font-size: 12px; line-height: 1.4;  color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: var(--weight-medium); }
+.t-mono    { font-family: var(--font-mono);  font-size: 14px; line-height: 1.6;  color: var(--text-1); }
+
+/* ================================================================
+   COLOR SWATCHES (Section 2)
+   ================================================================ */
+.swatch-group {
+  margin-top: var(--space-7);
+}
+.swatch-group + .swatch-group { margin-top: var(--space-6); }
+.swatch-group-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-4);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-4);
+}
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.swatch {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-elevated);
+  transition: transform var(--speed-regular) var(--ease-out-quart),
+              border-color var(--speed-regular) var(--ease-out-quart);
+}
+.swatch:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+.swatch-chip {
+  height: 84px;
+  display: block;
+}
+.swatch-meta {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+.swatch-name {
+  font-size: 13px;
+  color: var(--text-1);
+  font-weight: var(--weight-medium);
+  display: block;
+}
+.swatch-hex {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  display: block;
+}
+.swatch-var {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-4);
+  display: block;
+}
+/* Checker pattern for transparent swatches */
+.swatch.is-checker .swatch-chip {
+  background-image:
+    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  position: relative;
+}
+.swatch.is-checker .swatch-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--swatch-color);
+}
+
+/* ================================================================
+   COMPONENTS GRID (Section 3)
+   ================================================================ */
+.component-stack { display: grid; gap: var(--space-7); margin-top: var(--space-7); }
+.component-block {
+  padding: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  position: relative;
+}
+.component-block::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 40%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.component-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-4);
+  margin-bottom: var(--space-5);
+}
+.component-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
+.component-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ================================================================
+   LAYOUT DEMO (Section 4)
+   ================================================================ */
+.layout-stack { display: grid; gap: var(--space-5); margin-top: var(--space-7); }
+.layout-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-5);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  align-items: center;
+}
+.layout-row:last-child { border-bottom: none; }
+.layout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-4);
+  letter-spacing: 0.08em;
+}
+.layout-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-2);
+}
+.grid-demo {
+  margin-top: var(--space-5);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  background: var(--bg-elevated);
+}
+.grid-demo .columns {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 8px;
+  height: 80px;
+}
+.grid-demo .columns > div {
+  background: linear-gradient(180deg, var(--brand-glow), transparent);
+  border: 1px solid rgba(113, 112, 255, 0.25);
+  border-radius: 4px;
+}
+.grid-demo .caption {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-4);
+}
+.container-demo {
+  display: grid; gap: 8px; margin-top: var(--space-5);
+}
+.container-bar {
+  height: 14px;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.04) 0 8px,
+      rgba(255, 255, 255, 0.02) 8px 16px);
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  margin-inline: auto;
+  position: relative;
+}
+.container-bar::after {
+  content: attr(data-label);
+  position: absolute; right: 8px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+.spacing-scale { display: flex; gap: var(--space-3); align-items: flex-end; flex-wrap: wrap; margin-top: var(--space-4); }
+.spacing-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-3);
+}
+.spacing-cell .block {
+  background: var(--brand-glow);
+  border: 1px solid rgba(113, 112, 255, 0.3);
+  border-radius: 3px;
+}
+
+/* ================================================================
+   MOTION GALLERY (Section 5)
+   ================================================================ */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+}
+.motion-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  min-height: 220px;
+  display: flex; flex-direction: column; gap: var(--space-3);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.motion-card .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-4);
+}
+.motion-card .title {
+  font-size: 15px;
+  color: var(--text-1);
+  font-weight: var(--weight-medium);
+}
+.motion-card .demo {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-base);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+  border: 1px dashed var(--border-subtle);
+}
+.motion-card .replay {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  align-self: flex-start;
+  transition: all var(--speed-fast) var(--ease-out-quad);
+}
+.motion-card .replay:hover { color: var(--text-1); border-color: var(--border-strong); }
+
+.demo-fade-up .word {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--text-1);
+}
+.demo-shine {
+  background: linear-gradient(110deg,
+    var(--text-3) 0%,
+    var(--text-3) 40%,
+    #fff 50%,
+    var(--text-3) 60%,
+    var(--text-3) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: 24px;
+  animation: shine 4s linear infinite;
+}
+.demo-drift-blob {
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 30% 30%, var(--brand-glow), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(94, 106, 210, 0.5), transparent 55%);
+  animation: drift 8s var(--ease-in-out-cubic) infinite;
+  border-radius: var(--radius-sm);
+}
+.demo-pulse-large {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: rgba(113, 112, 255, 0.18);
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(113, 112, 255, 0.10);
+  animation: Hero_pulse 1.75s cubic-bezier(0.66, 0, 0, 1) infinite;
+}
+.demo-pulse-large::after {
+  content: "";
+  position: absolute;
+  width: 6px; height: 6px;
+  background: var(--brand);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.demo-lift {
+  width: 160px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated-2);
+  border: 1px solid var(--border-default);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-3);
+  transition: transform var(--speed-slow) var(--ease-out-quart),
+              border-color var(--speed-slow) var(--ease-out-quart),
+              box-shadow var(--speed-slow) var(--ease-out-quart);
+}
+.motion-card:hover .demo-lift {
+  transform: translateY(-6px);
+  border-color: var(--border-glow);
+  box-shadow: 0 16px 40px -16px var(--brand-glow);
+}
+.demo-caret {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-1);
+}
+.demo-caret-block {
+  display: inline-block;
+  width: 8px; height: 1.05em;
+  vertical-align: -2px;
+  background: var(--text-1);
+  margin-left: 4px;
+  animation: caret-blink 1.2s var(--ease-out-quart) infinite;
+}
+.demo-scroll-reveal {
+  width: 80%;
+  padding: 16px;
+  text-align: center;
+  background: var(--bg-elevated-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.motion-card:hover .demo-scroll-reveal {
+  animation: scroll-reveal 0.6s var(--ease-out-quart);
+}
+
+/* ================================================================
+   ICONS (Section 6)
+   ================================================================ */
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: var(--space-7);
+}
+.icon-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 24px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  color: var(--text-3);
+  transition: all var(--speed-fast) var(--ease-out-quad);
+}
+.icon-cell:hover {
+  color: var(--text-1);
+  border-color: var(--border-strong);
+  background: var(--bg-elevated-2);
+}
+.icon-cell svg {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-cell .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+.icon-sizes {
+  display: flex; align-items: center; gap: 32px;
+  margin-top: var(--space-5);
+  padding: 24px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  flex-wrap: wrap;
+}
+.icon-sizes .row {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.icon-sizes svg {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.footer {
+  padding: 48px var(--page-padding-inline);
+  text-align: center;
+  color: var(--text-4);
+  font-size: 13px;
+  border-top: 1px solid var(--border-subtle);
+}
+.footer code {
+  background: var(--bg-elevated);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP NAV
+     ============================================================ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">nv<span class="colon">:</span>context</div>
+    <ul class="nav-list">
+      <li><a href="#hero">Hero</a></li>
+      <li><a href="#typography">Type</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#layout">Layout</a></li>
+      <li><a href="#motion">Motion</a></li>
+      <li><a href="#icons">Icons</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================================
+     SECTION 0 — HERO (showcases the unified identity)
+     ============================================================ -->
+<section id="hero" class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">
+      <span class="pulse-dot"></span>
+      Launching this week
+    </span>
+    <h1>Stop guessing.<br/>Engineer your <em>context</em>.</h1>
+    <p class="subhead">A context-engineering skill for AI coding agents. Generates CLAUDE.md hierarchies, hooks, and session budgets from your repo &mdash; in one command.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary">Install nv:context</button>
+      <a class="btn btn-secondary" href="#components">Read the docs &rarr;</a>
+    </div>
+
+    <!-- THE install command — most important visual element on the page -->
+    <div class="hero-install">
+      <div class="terminal is-glowing">
+        <div class="code-chrome">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="file">~ &mdash; zsh</span>
+          <button class="copy">Copy</button>
+        </div>
+        <div class="code-body">
+<pre><span class="prompt">$</span> <span class="cmd">npx skills add johnnichev/nv-context -g -y</span><span class="caret"></span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 1 — TYPOGRAPHY
+     ============================================================ -->
+<section id="typography">
+  <div class="container">
+    <span class="section-eyebrow">01 — Typography</span>
+    <h2 class="section-title">Type system</h2>
+    <p class="section-lede">Three families. <strong>Instrument Serif</strong> for the hero display only. <strong>Inter</strong> for everything else: section titles, body, UI. <strong>JetBrains Mono</strong> for code blocks, install commands, and the numbers that ARE the proof.</p>
+
+    <div class="type-table">
+      <div class="type-row">
+        <div class="type-sample t-display">Engineer your context</div>
+        <div class="type-spec">serif &middot; 80px / 100% / 400</div>
+        <p class="note">Display &rarr; <strong>Hero only.</strong> Instrument Serif at the largest size. Use sparingly &mdash; this is the brand moment, not a recurring pattern.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-h1">Section heading goes here</div>
+        <div class="type-spec">sans &middot; 56px / 108% / 590</div>
+        <p class="note">H1 &rarr; <strong>Top-of-section headings on landing pages.</strong> Reserved for the hero of secondary pages or major section breaks. Pair with section-eyebrow above.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-h2">The 8 laws of context</div>
+        <div class="type-spec">sans &middot; 40px / 110% / 590</div>
+        <p class="note">H2 &rarr; <strong>Default section title.</strong> Used by <code>.section-title</code>. Pair with section-eyebrow + section-lede.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-h3">Hierarchy of leverage</div>
+        <div class="type-spec">sans &middot; 28px / 125% / 590</div>
+        <p class="note">H3 &rarr; <strong>Card titles, subsection breaks.</strong> Used inside cards or to break up long-form content within a section.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-h4">What gets generated</div>
+        <div class="type-spec">sans &middot; 22px / 130% / 590</div>
+        <p class="note">H4 &rarr; <strong>Case study titles, feature card headings.</strong> Used inside <code>.case-card h3</code> and feature cards.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-body-lg">Bad context hurts you. Most CLAUDE.md files are 400+ lines of stale, contradictory advice that crowds out the work the agent actually needs to do.</div>
+        <div class="type-spec">sans &middot; 18px / 160% / 400</div>
+        <p class="note">Body large &rarr; <strong>Hero subheads, section ledes.</strong> Used by <code>.section-lede</code>.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-body">Default body text. Used for prose paragraphs in long-form sections like the research write-up or the manifesto.</div>
+        <div class="type-spec">sans &middot; 16px / 155% / 400</div>
+        <p class="note">Body &rarr; <strong>Default paragraph text.</strong> Inherits from body element.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-body-sm">Smaller body for card descriptions, helper text under inputs, and meta information attached to numbers.</div>
+        <div class="type-spec">sans &middot; 14px / 150% / 400</div>
+        <p class="note">Body small &rarr; <strong>Card body, captions inside dense components.</strong></p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-caption">SECTION EYEBROW LABEL</div>
+        <div class="type-spec">sans &middot; 12px / 140% / 510 / .08em</div>
+        <p class="note">Caption &rarr; <strong>Section eyebrows ("01 &mdash; Typography"), metric labels, navigation chrome.</strong> Always uppercase, always tracked. Used by <code>.section-eyebrow</code>.</p>
+      </div>
+      <div class="type-row">
+        <div class="type-sample t-mono">$ npx skills add johnnichev/nv-context -g -y</div>
+        <div class="type-spec">mono &middot; 14px / 160% / 400</div>
+        <p class="note">Mono &rarr; <strong>Install commands, code blocks, big numbers.</strong> JetBrains Mono. The metric "58/60" and inline pills like <span class="metric">440<span class="arrow">&rarr;</span>67<span class="delta">&minus;85%</span></span> use this family at larger sizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — COLOR TOKENS
+     ============================================================ -->
+<section id="colors">
+  <div class="container">
+    <span class="section-eyebrow">02 — Color</span>
+    <h2 class="section-title">Color tokens</h2>
+    <p class="section-lede">True-black base with a tight 4-step text ramp. <strong>One brand accent</strong> &mdash; Linear's indigo &mdash; used for the pulse dot, hover halos, links, and the metric pills. Status colors exist but are reserved for shipping pills and error states.</p>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Background &amp; surface</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-meta"><span class="swatch-name">--bg-base</span><span class="swatch-hex">#000000</span><span class="swatch-var">page background</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#0c0d0f"></div><div class="swatch-meta"><span class="swatch-name">--bg-elevated</span><span class="swatch-hex">#0c0d0f</span><span class="swatch-var">cards, panels</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#141517"></div><div class="swatch-meta"><span class="swatch-name">--bg-elevated-2</span><span class="swatch-hex">#141517</span><span class="swatch-var">nested / hover</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#08090a"></div><div class="swatch-meta"><span class="swatch-name">--bg-code</span><span class="swatch-hex">#08090a</span><span class="swatch-var">code blocks</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#050506"></div><div class="swatch-meta"><span class="swatch-name">--bg-terminal</span><span class="swatch-hex">#050506</span><span class="swatch-var">terminal variant</span></div></div>
+        <div class="swatch is-checker" style="--swatch-color: rgba(255, 255, 255, 0.03)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--bg-glass</span><span class="swatch-hex">rgba(255 255 255 / .03)</span><span class="swatch-var">glass over hero</span></div></div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Borders</div>
+      <div class="swatch-grid">
+        <div class="swatch is-checker" style="--swatch-color: rgba(255, 255, 255, 0.06)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--border-subtle</span><span class="swatch-hex">rgba(255 255 255 / .06)</span><span class="swatch-var">hairline default</span></div></div>
+        <div class="swatch is-checker" style="--swatch-color: rgba(255, 255, 255, 0.10)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--border-default</span><span class="swatch-hex">rgba(255 255 255 / .10)</span><span class="swatch-var">card borders</span></div></div>
+        <div class="swatch is-checker" style="--swatch-color: rgba(255, 255, 255, 0.16)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--border-strong</span><span class="swatch-hex">rgba(255 255 255 / .16)</span><span class="swatch-var">hover state</span></div></div>
+        <div class="swatch is-checker" style="--swatch-color: rgba(113, 112, 255, 0.45)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--border-glow</span><span class="swatch-hex">rgba(113 112 255 / .45)</span><span class="swatch-var">brand-tinted hover</span></div></div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Text (4 levels)</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#f7f8f8"></div><div class="swatch-meta"><span class="swatch-name">--text-1</span><span class="swatch-hex">#f7f8f8</span><span class="swatch-var">primary &mdash; headings</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#d0d6e0"></div><div class="swatch-meta"><span class="swatch-name">--text-2</span><span class="swatch-hex">#d0d6e0</span><span class="swatch-var">body text</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#8a8f98"></div><div class="swatch-meta"><span class="swatch-name">--text-3</span><span class="swatch-hex">#8a8f98</span><span class="swatch-var">muted, captions</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#52595b"></div><div class="swatch-meta"><span class="swatch-name">--text-4</span><span class="swatch-hex">#52595b</span><span class="swatch-var">disabled, ln numbers</span></div></div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Brand accent (USE SPARINGLY)</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#7170ff"></div><div class="swatch-meta"><span class="swatch-name">--brand</span><span class="swatch-hex">#7170ff</span><span class="swatch-var">primary accent</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#828fff"></div><div class="swatch-meta"><span class="swatch-name">--brand-hover</span><span class="swatch-hex">#828fff</span><span class="swatch-var">hover, links</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#5e6ad2"></div><div class="swatch-meta"><span class="swatch-name">--brand-deep</span><span class="swatch-hex">#5e6ad2</span><span class="swatch-var">button bg</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#18182f"></div><div class="swatch-meta"><span class="swatch-name">--brand-tint</span><span class="swatch-hex">#18182f</span><span class="swatch-var">badge bg</span></div></div>
+        <div class="swatch is-checker" style="--swatch-color: rgba(113, 112, 255, 0.22)"><div class="swatch-chip"></div><div class="swatch-meta"><span class="swatch-name">--brand-glow</span><span class="swatch-hex">rgba(113 112 255 / .22)</span><span class="swatch-var">hover halo</span></div></div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Status (rare)</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#7bf1a8"></div><div class="swatch-meta"><span class="swatch-name">--success</span><span class="swatch-hex">#7bf1a8</span><span class="swatch-var">shipping, stable</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#f99c00"></div><div class="swatch-meta"><span class="swatch-name">--warning</span><span class="swatch-hex">#f99c00</span><span class="swatch-var">beta</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#fb2c36"></div><div class="swatch-meta"><span class="swatch-name">--danger</span><span class="swatch-hex">#fb2c36</span><span class="swatch-var">errors only</span></div></div>
+      </div>
+    </div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">Code syntax tokens</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#c084fc"></div><div class="swatch-meta"><span class="swatch-name">--syntax-keyword</span><span class="swatch-hex">#c084fc</span><span class="swatch-var">import, const, fn</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#7bf1a8"></div><div class="swatch-meta"><span class="swatch-name">--syntax-string</span><span class="swatch-hex">#7bf1a8</span><span class="swatch-var">'string literals'</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#60a5fa"></div><div class="swatch-meta"><span class="swatch-name">--syntax-function</span><span class="swatch-hex">#60a5fa</span><span class="swatch-var">function calls</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#fb7185"></div><div class="swatch-meta"><span class="swatch-name">--syntax-number</span><span class="swatch-hex">#fb7185</span><span class="swatch-var">numeric literals</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#52595b"></div><div class="swatch-meta"><span class="swatch-name">--syntax-comment</span><span class="swatch-hex">#52595b</span><span class="swatch-var">// comments</span></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#f99c00"></div><div class="swatch-meta"><span class="swatch-name">--syntax-property</span><span class="swatch-hex">#f99c00</span><span class="swatch-var">obj.props</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — UI COMPONENTS
+     ============================================================ -->
+<section id="components">
+  <div class="container">
+    <span class="section-eyebrow">03 — Components</span>
+    <h2 class="section-title">UI components</h2>
+    <p class="section-lede">Everything you need to build sections. Code blocks are the centerpiece &mdash; the install command MUST feel inevitable, not loud.</p>
+
+    <div class="component-stack">
+
+      <!-- ===== Code blocks (3 variants) ===== -->
+      <div class="component-block">
+        <div class="component-label">A &mdash; Terminal command (single line, blinking caret)</div>
+        <div class="terminal is-glowing">
+          <div class="code-chrome">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="file">~ &mdash; zsh</span>
+            <button class="copy">Copy</button>
+          </div>
+          <div class="code-body">
+<pre><span class="prompt">$</span> <span class="cmd">npx skills add johnnichev/nv-context -g -y</span><span class="caret"></span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-block">
+        <div class="component-label">B &mdash; Multi-line bash (4 install commands)</div>
+        <div class="terminal">
+          <div class="code-chrome">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="file">install.sh</span>
+            <button class="copy">Copy</button>
+          </div>
+          <div class="code-body">
+<pre><span class="prompt">$</span> <span class="cmd">npx skills add johnnichev/nv-context -g -y</span>
+<span class="out">  &rarr; installed nv-context@0.4.1 globally</span>
+<span class="prompt">$</span> <span class="cmd">cd ~/projects/your-repo</span>
+<span class="prompt">$</span> <span class="cmd">claude /nv-context</span>
+<span class="out">  &rarr; analyzing repo structure&hellip;</span>
+<span class="ok">  &rarr; generated 7 CLAUDE.md files (440 &rarr; 67 lines)</span>
+<span class="prompt">$</span> <span class="cmd">git add CLAUDE.md AGENTS.md .claude/</span><span class="caret"></span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-block">
+        <div class="component-label">C &mdash; File tree (8 lines)</div>
+        <div class="code-block">
+          <div class="code-chrome">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="file">your-repo/</span>
+            <button class="copy">Copy</button>
+          </div>
+          <div class="code-body">
+<pre><span class="tk-com">your-repo/</span>
+<span class="tk-pn">├──</span> <span class="tk-var">CLAUDE.md</span>              <span class="tk-com"># root context (67 lines, was 440)</span>
+<span class="tk-pn">├──</span> <span class="tk-var">AGENTS.md</span>              <span class="tk-com"># cross-agent persona</span>
+<span class="tk-pn">├──</span> <span class="tk-var">.claude/</span>
+<span class="tk-pn">│   ├──</span> <span class="tk-var">hooks/</span>             <span class="tk-com"># 4 lifecycle hooks</span>
+<span class="tk-pn">│   └──</span> <span class="tk-var">budgets.json</span>       <span class="tk-com"># token budgets per phase</span>
+<span class="tk-pn">├──</span> <span class="tk-var">src/</span>
+<span class="tk-pn">│   └──</span> <span class="tk-var">CLAUDE.md</span>          <span class="tk-com"># src-level context (28 lines)</span>
+<span class="tk-pn">└──</span> <span class="tk-var">tests/</span>
+    <span class="tk-pn">└──</span> <span class="tk-var">CLAUDE.md</span>          <span class="tk-com"># test context (19 lines)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Buttons ===== -->
+      <div class="component-block">
+        <div class="component-label">Buttons &mdash; primary glass / secondary ghost / pill</div>
+        <div class="component-row">
+          <button class="btn btn-primary">Install nv:context</button>
+          <button class="btn btn-secondary">Read the docs &rarr;</button>
+          <button class="btn-pill">Hooks</button>
+          <button class="btn-pill is-active">Active</button>
+        </div>
+      </div>
+
+      <!-- ===== Cards ===== -->
+      <div class="component-block">
+        <div class="component-label">Stat cards &mdash; numbers ARE the proof</div>
+        <div class="component-grid-3">
+          <div class="card stat-card">
+            <div class="number"><span class="accent">58</span>/60</div>
+            <div class="label">Leverage score</div>
+          </div>
+          <div class="card stat-card">
+            <div class="number">15.8<span class="accent">K</span></div>
+            <div class="label">Tokens saved / session</div>
+          </div>
+          <div class="card stat-card">
+            <div class="number"><span class="accent">&minus;85</span>%</div>
+            <div class="label">CLAUDE.md size (440 &rarr; 67 lines)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-block">
+        <div class="component-label">Case study cards</div>
+        <div class="component-grid-3">
+          <div class="card case-card">
+            <div class="project">Sheriff &middot; WhatsApp bot</div>
+            <h3>From 440 lines to 67</h3>
+            <div class="metrics">
+              <div class="metric"><span class="v">440<span class="accent">&rarr;67</span></span><span class="k">lines</span></div>
+              <div class="metric"><span class="v">15.8<span class="accent">k</span></span><span class="k">tokens / session</span></div>
+            </div>
+            <a class="read-more" href="#">Read case study &rarr;</a>
+          </div>
+          <div class="card case-card">
+            <div class="project">selectools &middot; Agent framework</div>
+            <h3>58/60 leverage score</h3>
+            <div class="metrics">
+              <div class="metric"><span class="v">58<span class="accent">/60</span></span><span class="k">leverage</span></div>
+              <div class="metric"><span class="v">7</span><span class="k">CLAUDE.md files</span></div>
+            </div>
+            <a class="read-more" href="#">Read case study &rarr;</a>
+          </div>
+          <div class="card case-card">
+            <div class="project">nv-context-landing</div>
+            <h3>Bootstrapped with itself</h3>
+            <div class="metrics">
+              <div class="metric"><span class="v">3</span><span class="k">CLAUDE.md files</span></div>
+              <div class="metric"><span class="v">4</span><span class="k">hooks</span></div>
+            </div>
+            <a class="read-more" href="#">Read case study &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-block">
+        <div class="component-label">Feature cards</div>
+        <div class="component-grid-3">
+          <div class="card feature-card">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3>Multi-level CLAUDE.md</h3>
+            <p>Hierarchical context. Root has the manifesto, src/ has the code conventions, tests/ has the test culture.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <h3>Lifecycle hooks</h3>
+            <p>SubagentStart, PreToolUse, PostToolUse, SessionEnd. Pre-wired for token budgets, audit logs, and safety gates.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>Token budgets</h3>
+            <p>Per-phase budgets for plan / implement / verify. The agent stops eating context when the budget is hit.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Eyebrow pills + badges + inline metric ===== -->
+      <div class="component-block">
+        <div class="component-label">Eyebrow pills, badges, inline metrics</div>
+        <div class="component-row">
+          <span class="eyebrow-pill"><span class="pulse-dot"></span>Launching this week</span>
+          <span class="eyebrow-pill"><span class="pulse-dot"></span>Shipping today</span>
+        </div>
+        <div class="component-row" style="margin-top: 16px;">
+          <span class="badge badge--brand">v0.4.1</span>
+          <span class="badge badge--success">stable</span>
+          <span class="badge badge--warning">beta</span>
+          <span class="badge badge--neutral">SDK</span>
+        </div>
+        <div class="component-row" style="margin-top: 16px; font-size: 15px; color: var(--text-2);">
+          We took it from <span class="metric">440<span class="arrow">&rarr;</span>67<span class="delta">&minus;85%</span></span> lines, saved <span class="metric">15.8K<span class="delta">tokens/session</span></span>, and scored <span class="metric">58<span class="arrow">/</span>60</span> on the leverage rubric.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — LAYOUT & SPACING
+     ============================================================ -->
+<section id="layout">
+  <div class="container">
+    <span class="section-eyebrow">04 — Layout</span>
+    <h2 class="section-title">Layout &amp; spacing</h2>
+    <p class="section-lede">Three container widths. A 12-column grid with 24px gap. Generous vertical rhythm: 120px section padding on desktop, scaling down on mobile.</p>
+
+    <div class="layout-stack">
+      <div class="layout-row"><div class="layout-label">Container narrow</div><div class="layout-value">--container-narrow: 720px &middot; for prose, text content</div></div>
+      <div class="layout-row"><div class="layout-label">Container wide</div><div class="layout-value">--container-wide: 1100px &middot; for cards, full sections</div></div>
+      <div class="layout-row"><div class="layout-label">Container bleed</div><div class="layout-value">--container-bleed: 100% &middot; for full-bleed backgrounds</div></div>
+      <div class="layout-row"><div class="layout-label">Page padding</div><div class="layout-value">--page-padding-inline: 24px</div></div>
+      <div class="layout-row"><div class="layout-label">Section padding (desktop)</div><div class="layout-value">--section-y: 120px</div></div>
+      <div class="layout-row"><div class="layout-label">Section padding (tablet)</div><div class="layout-value">--section-y-tablet: 80px</div></div>
+      <div class="layout-row"><div class="layout-label">Section padding (mobile)</div><div class="layout-value">--section-y-mobile: 64px</div></div>
+      <div class="layout-row"><div class="layout-label">Grid gap</div><div class="layout-value">--grid-gap: 24px</div></div>
+      <div class="layout-row"><div class="layout-label">Border radius</div><div class="layout-value">sm: 6px &middot; md: 12px &middot; lg: 20px &middot; pill: 999px</div></div>
+    </div>
+
+    <div class="container-demo">
+      <div class="container-bar" style="width: 100%;" data-label="bleed (100%)"></div>
+      <div class="container-bar" style="width: 1100px; max-width: 100%;" data-label="wide (1100px)"></div>
+      <div class="container-bar" style="width: 720px; max-width: 100%;" data-label="narrow (720px)"></div>
+    </div>
+
+    <div class="grid-demo">
+      <div class="columns">
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <div class="caption">12-column grid &middot; gap: 8px (visual), 24px (live use)</div>
+    </div>
+
+    <div class="grid-demo" style="margin-top: 16px;">
+      <div class="layout-label" style="margin-bottom: 12px;">Spacing scale (px)</div>
+      <div class="spacing-scale">
+        <div class="spacing-cell"><div class="block" style="width:4px;height:4px;"></div>4</div>
+        <div class="spacing-cell"><div class="block" style="width:8px;height:8px;"></div>8</div>
+        <div class="spacing-cell"><div class="block" style="width:12px;height:12px;"></div>12</div>
+        <div class="spacing-cell"><div class="block" style="width:16px;height:16px;"></div>16</div>
+        <div class="spacing-cell"><div class="block" style="width:24px;height:24px;"></div>24</div>
+        <div class="spacing-cell"><div class="block" style="width:32px;height:32px;"></div>32</div>
+        <div class="spacing-cell"><div class="block" style="width:48px;height:48px;"></div>48</div>
+        <div class="spacing-cell"><div class="block" style="width:64px;height:64px;"></div>64</div>
+        <div class="spacing-cell"><div class="block" style="width:96px;height:96px;"></div>96</div>
+        <div class="spacing-cell"><div class="block" style="width:128px;height:128px;"></div>128</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5 — MOTION
+     ============================================================ -->
+<section id="motion">
+  <div class="container">
+    <span class="section-eyebrow">05 — Motion</span>
+    <h2 class="section-title">Motion vocabulary</h2>
+    <p class="section-lede">8 named easing curves from Linear, plus Resend's hero entrance + caret + drift. <strong>Default ease: <code>--ease-out-quart</code></strong>. Restraint matters &mdash; one animation per element, never compete.</p>
+
+    <div class="grid-demo">
+      <div class="layout-label" style="margin-bottom: 12px;">Easing curves (Linear vocabulary)</div>
+      <div class="layout-stack">
+        <div class="layout-row"><div class="layout-label">--ease-out-quart</div><div class="layout-value">cubic-bezier(0.165, 0.84, 0.44, 1) &middot; <strong>DEFAULT</strong> &middot; entrances, hovers</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-out-quad</div><div class="layout-value">cubic-bezier(0.25, 0.46, 0.45, 0.94) &middot; quick UI feedback</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-out-cubic</div><div class="layout-value">cubic-bezier(0.215, 0.61, 0.355, 1)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-out-quint</div><div class="layout-value">cubic-bezier(0.23, 1, 0.32, 1)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-out-expo</div><div class="layout-value">cubic-bezier(0.19, 1, 0.22, 1) &middot; dramatic exits</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-quad</div><div class="layout-value">cubic-bezier(0.55, 0.085, 0.68, 0.53)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-cubic</div><div class="layout-value">cubic-bezier(0.55, 0.055, 0.675, 0.19)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-quart</div><div class="layout-value">cubic-bezier(0.895, 0.03, 0.685, 0.22)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-out-cubic</div><div class="layout-value">cubic-bezier(0.645, 0.045, 0.355, 1) &middot; for hero drift</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-out-quart</div><div class="layout-value">cubic-bezier(0.77, 0, 0.175, 1)</div></div>
+        <div class="layout-row"><div class="layout-label">--ease-in-out-expo</div><div class="layout-value">cubic-bezier(1, 0, 0, 1)</div></div>
+      </div>
+    </div>
+
+    <div class="motion-grid">
+      <div class="motion-card" onclick="this.querySelector('.word').style.animation='none';void this.offsetWidth;this.querySelector('.word').style.animation='hero-fade-up-blur 1s var(--ease-out-quart)';">
+        <div class="label">@keyframes</div>
+        <div class="title">hero-fade-up-blur</div>
+        <div class="demo demo-fade-up"><span class="word" style="animation: hero-fade-up-blur 1s var(--ease-out-quart);">Engineer context</span></div>
+        <button class="replay">Click card to replay</button>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">@keyframes</div>
+        <div class="title">shine</div>
+        <div class="demo"><span class="demo-shine">Bad context hurts you</span></div>
+        <span class="replay">runs 4s linear infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">@keyframes</div>
+        <div class="title">drift (hero glow)</div>
+        <div class="demo"><div class="demo-drift-blob"></div></div>
+        <span class="replay">runs 8s ease-in-out infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">@keyframes</div>
+        <div class="title">Hero_pulse (eyebrow dot)</div>
+        <div class="demo"><div class="demo-pulse-large"></div></div>
+        <span class="replay">runs 1.75s infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">interaction</div>
+        <div class="title">card hover-lift</div>
+        <div class="demo"><div class="demo-lift">Hover the card</div></div>
+        <span class="replay">350ms ease-out-quart</span>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">@keyframes</div>
+        <div class="title">caret-blink</div>
+        <div class="demo"><span class="demo-caret">$ install<span class="demo-caret-block"></span></span></div>
+        <span class="replay">runs 1.2s infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <div class="label">@keyframes</div>
+        <div class="title">scroll-reveal</div>
+        <div class="demo"><div class="demo-scroll-reveal">Hover to replay</div></div>
+        <span class="replay">600ms ease-out-quart, 80ms stagger</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6 — ICONOGRAPHY
+     ============================================================ -->
+<section id="icons">
+  <div class="container">
+    <span class="section-eyebrow">06 — Iconography</span>
+    <h2 class="section-title">Iconography</h2>
+    <p class="section-lede">Lucide-style line icons. <strong>1.75 stroke width</strong>, round caps, round joins, 24&times;24 viewBox. They sit on a hairline-bordered tile inside feature cards.</p>
+
+    <div class="icons-grid">
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <span class="label">mail</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span class="label">code</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span class="label">check</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="label">clock</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="label">message</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="label">settings</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span class="label">zap</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="label">globe</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span class="label">menu</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="label">verified</span>
+      </div>
+    </div>
+
+    <div class="icon-sizes">
+      <div class="row"><svg width="14" height="14" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 14 / xs</div>
+      <div class="row"><svg width="16" height="16" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 16 / sm</div>
+      <div class="row"><svg width="20" height="20" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 20 / md</div>
+      <div class="row"><svg width="24" height="24" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 24 / lg</div>
+      <div class="row"><svg width="32" height="32" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 32 / xl</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  nv:context Hybrid Design System &mdash; Resend &times; Linear &mdash; built 2026-04-06.<br/>
+  Base identity from <code>resend-ds.html</code>; motion vocabulary, brand accent, and pulse-dot from <code>linear-ds.html</code>.<br/>
+  This file is the source of truth for building the landing page. All section CSS variables are defined at the top of <code>&lt;style&gt;</code>.
+</footer>
+
+</body>
+</html>
