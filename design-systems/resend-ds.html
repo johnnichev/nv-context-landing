@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Resend Design System — extracted for nv:context landing page</title>
+
+<!-- Free fallbacks for Resend's proprietary fonts:
+     - Inter (sans, free, exact match)
+     - DM Serif Display (display serif, stand-in for Klim's Domaine)
+     - JetBrains Mono (mono, stand-in for Commit Mono) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   RESEND DESIGN TOKENS — extracted verbatim from
+   resend.com_home/assets/17t11628_89bb2c825760.css and friends
+   ============================================================ */
+:root, .dark {
+  /* ---- Fonts (substitutes for Resend's proprietary Domaine + Commit Mono) */
+  --font-sans:    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif; /* Resend uses ABC Favorit */
+  --font-serif:   "Instrument Serif", "DM Serif Display", "Times New Roman", Georgia, serif; /* stand-in for Domaine */
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  /* ---- Dark surface scale (Resend dark theme — copied from .dark{} block) */
+  --background: #000;          /* the page is true black */
+  --gray-1:  #141517;          /* deepest panel */
+  --gray-2:  #191b1e;          /* card */
+  --gray-3:  #212629;          /* card hover / inner panel */
+  --gray-4:  #293034;          /* border strong */
+  --gray-5:  #333b3e;
+  --gray-6:  #3b4345;
+  --gray-7:  #434a4d;
+  --gray-8:  #52595b;          /* muted text */
+  --gray-9:  #a1a4a5;          /* body / subtitle text */
+  --gray-10: #f0f0f0;          /* primary foreground text */
+
+  /* alpha grays from .dark block — perfect for hairline borders on glass surfaces */
+  --gray-a1: #16171aeb;
+  --gray-a2: #18191ce0;
+  --gray-a3: #b0c7d925;
+  --gray-a4: #caecff33;
+  --gray-a5: #d2f3ff3d;
+  --gray-a6: #d7eff847;
+  --gray-a7: #e2f5fe4d;
+  --gray-a8: #d8eaf161;
+  --gray-a9: #fdfeffa6;
+  --gray-a10: #fdfdfded;
+
+  /* ---- Brand accents (from :root) — Resend's saturated palette */
+  --color-red-500:     #fb2c36;
+  --color-orange-500:  #fe6e00;
+  --color-amber-500:   #f99c00;
+  --color-yellow-400:  #fac800;
+  --color-green-300:   #7bf1a8;
+  --color-green-500:   #00c758;
+  --color-emerald-500: #00bb7f;
+  --color-cyan-500:    #00b7d7;
+  --color-blue-500:    #3080ff;
+  --color-blue-600:    #155dfc;
+  --color-violet-500:  #8d54ff;
+  --color-fuchsia-500: #e12afb;
+  --color-pink-500:    #f6339a;
+
+  /* ---- Special tokens */
+  --edge-fade-start: #ffffff3d;
+  --edge-fade-end:   #ffffff00;
+  --rainbow-cyan:    #02fcef70;
+  --rainbow-amber:   #ffb52b70;
+  --rainbow-purple:  #a02bfe70;
+  --highlight-shine: #ffffff99;
+
+  /* ---- Type scale (verbatim from :root) */
+  --text-xs:   .75rem;     --text-xs-lh:   1rem;       /* 12 / 16 */
+  --text-sm:   .875rem;    --text-sm-lh:   1.25rem;    /* 14 / 20 */
+  --text-base: 1rem;       --text-base-lh: 1.5rem;     /* 16 / 24 */
+  --text-lg:   1.125rem;   --text-lg-lh:   1.75rem;    /* 18 / 28 */
+  --text-xl:   1.25rem;    --text-xl-lh:   1.75rem;    /* 20 / 28 */
+  --text-2xl:  1.5rem;     --text-2xl-lh:  2rem;       /* 24 / 32 */
+  --text-3xl:  1.875rem;   --text-3xl-lh:  2.25rem;    /* 30 / 36 */
+  --text-4xl:  2.25rem;    --text-4xl-lh:  2.5rem;     /* 36 / 40 */
+  --text-5xl:  3rem;       --text-5xl-lh:  1;          /* 48 */
+  --text-6xl:  3.75rem;    --text-6xl-lh:  1;          /* 60 */
+  --text-7xl:  4.5rem;     --text-7xl-lh:  1;          /* 72 */
+  --text-9xl:  8rem;       --text-9xl-lh:  1;          /* 128 */
+
+  /* ---- Tracking */
+  --tracking-tighter: -.05em;
+  --tracking-tight:   -.025em;
+  --tracking-normal:   0;
+  --tracking-wide:    .025em;
+
+  /* ---- Radii */
+  --radius-xs:  .125rem;
+  --radius-sm:  .25rem;
+  --radius-md:  .375rem;
+  --radius-lg:  .5rem;
+  --radius-xl:  .75rem;
+  --radius-2xl: 1rem;        /* hero CTA */
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+
+  /* ---- Containers */
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+
+  /* ---- Eases */
+  --ease-in:     cubic-bezier(.4, 0, 1, 1);
+  --ease-out:    cubic-bezier(0, 0, .2, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+  --default-transition-duration: .15s;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--background);
+  color: var(--gray-10);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--text-base-lh);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  font-feature-settings: "ss01", "ss04", "ss11"; /* .effect-font-styling — Resend's stylistic sets */
+}
+::selection { background: rgba(255, 255, 255, .2); color: #fff; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* ============================================================
+   KEYFRAMES — verbatim from Resend
+   ============================================================ */
+@keyframes hero-text-slide-up-fade {
+  0%  { opacity: 0; transform: translateY(16px); }
+  100%{ opacity: 1; transform: translateY(0); }
+}
+@keyframes header-slide-down-fade {
+  0%  { opacity: 0; transform: translateY(-16px); }
+  100%{ opacity: 1; transform: translateY(0); }
+}
+@keyframes webgl-scale-in-fade {
+  0%  { opacity: 0; transform: scale(.7); }
+  100%{ opacity: 1; transform: scale(1); }
+}
+@keyframes fade-in   { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes fade-out  { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes spin      { to { transform: rotate(360deg); } }
+@keyframes pulse     { 50% { opacity: .5; } }
+@keyframes plop      { 0%, 100% { opacity: .2; } 20% { opacity: 1; } }
+@keyframes shine     { 0% { background-position: 0%; } 100% { background-position: 100%; } }
+@keyframes disco     { 0% { transform: translateY(-50%) rotate(0); } 100% { transform: translateY(-50%) rotate(360deg); } }
+@keyframes scaleIn   { 0% { transform: rotateX(-10deg) scale(.9); } 100% { transform: rotateX(0) scale(1); } }
+@keyframes caret-blink { 0%, 100% { opacity: 1; } 20%, 50% { opacity: 0; } 70% { opacity: 1; } }
+@keyframes scroll-x  { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% - 32px)); } }
+@keyframes drift {
+  /* slow background mesh drift used on hero */
+  0%   { transform: translate3d(0,0,0)   scale(1); }
+  50%  { transform: translate3d(2%,1%,0) scale(1.04); }
+  100% { transform: translate3d(0,0,0)   scale(1); }
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container-6xl); /* 72rem ≈ 1152px — Resend's typical width */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.container-narrow { max-width: var(--container-4xl); }
+.section { padding: 8rem 0; position: relative; }
+
+/* ============================================================
+   TOP NAV
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(0, 0, 0, .55);
+  border-bottom: 1px solid var(--gray-a3);
+  animation: header-slide-down-fade 1s var(--ease-in-out);
+}
+.nav-inner {
+  max-width: var(--container-7xl);
+  margin: 0 auto;
+  padding: .875rem 1.5rem;
+  display: flex; align-items: center; gap: 2rem;
+}
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  letter-spacing: -.02em;
+  color: #fff;
+}
+.nav-logo .dot { color: var(--color-violet-500); }
+.nav-list {
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+  list-style: none; padding: 0; margin: 0 0 0 auto;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.nav-list a {
+  color: var(--gray-9);
+  padding: .375rem .625rem;
+  border-radius: var(--radius-md);
+  transition: color .15s var(--ease-in-out), background .15s var(--ease-in-out);
+}
+.nav-list a:hover { color: var(--gray-10); background: var(--gray-a3); }
+
+/* ============================================================
+   SECTION 0 — HERO (clone of Resend's hero structure)
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  padding: 8rem 1.5rem 6rem;
+  overflow: hidden;
+  display: flex; align-items: center;
+}
+/* The light-ray / spotlight background — replicating Resend's
+   "image_924ac7ff15c4.png" which is masked to fade from top.
+   We re-create it as a CSS conic + radial gradient. */
+.hero::before {
+  content: "";
+  position: absolute; inset: -20% -10% auto -10%;
+  height: 110vh;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%,
+      rgba(160, 43, 254, .35) 0%,
+      rgba(48, 128, 255, .18) 25%,
+      rgba(2, 252, 239, .10) 45%,
+      rgba(0, 0, 0, 0)        70%),
+    conic-gradient(from 200deg at 50% 0%,
+      rgba(255, 255, 255, .04) 0deg,
+      rgba(255, 255, 255, .12) 25deg,
+      rgba(255, 255, 255, .03) 60deg,
+      rgba(255, 255, 255, 0)   180deg,
+      rgba(255, 255, 255, .03) 300deg,
+      rgba(255, 255, 255, .12) 335deg,
+      rgba(255, 255, 255, .04) 360deg);
+  -webkit-mask-image: linear-gradient(to top, transparent 15%, #000 30%);
+          mask-image: linear-gradient(to top, transparent 15%, #000 30%);
+  animation: drift 24s ease-in-out infinite;
+}
+/* faint grid overlay — Resend uses an SVG dot grid */
+.hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000, transparent 75%);
+          mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000, transparent 75%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: var(--container-6xl);
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 4rem;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; gap: 2rem; }
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .375rem .75rem;
+  border: 1px solid var(--gray-a4);
+  border-radius: 999px;
+  background: var(--gray-a2);
+  font-size: var(--text-xs);
+  color: var(--gray-9);
+  font-weight: 500;
+  letter-spacing: .02em;
+  margin-bottom: 1.5rem;
+  animation: hero-text-slide-up-fade 1s var(--ease-in-out);
+}
+.hero-eyebrow .pulse-dot {
+  width: 6px; height: 6px; border-radius: 999px;
+  background: var(--color-green-500);
+  box-shadow: 0 0 0 4px rgba(0, 199, 88, .15);
+  animation: pulse 2s var(--ease-in-out) infinite;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 100%;
+  letter-spacing: -.01em;
+  margin: 0 0 1rem;
+  font-weight: 400;
+  /* Resend's exact effect-font-gradient */
+  background: linear-gradient(to bottom right, #fff 30%, rgba(255, 255, 255, .5));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-text-slide-up-fade 1s var(--ease-in-out);
+}
+.hero p.lede {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--gray-9);
+  max-width: 30rem;
+  margin: 0 0 2rem;
+  animation: hero-text-slide-up-fade 1.1s var(--ease-in-out);
+}
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: hero-text-slide-up-fade 1.2s var(--ease-in-out);
+}
+
+/* The signature Resend "glass" CTA button.
+   Faithful copy of: bg-[linear-gradient(104deg,rgba(253,253,253,0.05)_5%,
+   rgba(240,240,228,0.1)_100%)] border-[2px] border-white/5 backdrop-blur-[25px] */
+.btn-primary {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-2xl);
+  border: 2px solid rgba(255, 255, 255, .05);
+  background: linear-gradient(104deg, rgba(253, 253, 253, .05) 5%, rgba(240, 240, 228, .1) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--text-base);
+  transition: all .2s var(--ease-in-out);
+  isolation: isolate;
+}
+.btn-primary::after {
+  /* the noise texture overlay (Resend ships /static/texture-btn.png) */
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 1rem;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='2.4' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 80px 80px;
+  opacity: .55;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: -1;
+}
+.btn-primary:hover {
+  background: rgba(255, 255, 255, .92);
+  color: #000;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, .12);
+}
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, .3);
+}
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-2xl);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--gray-9);
+  font-weight: 600;
+  font-size: var(--text-base);
+  transition: color .2s var(--ease-in-out);
+}
+.btn-secondary:hover { color: var(--gray-10); }
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--gray-a2);
+}
+
+/* The hero "cube" placeholder (Resend uses a webgl/video) */
+.hero-art {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+  border: 1px solid var(--gray-a4);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(141, 84, 255, .35), transparent 55%),
+    radial-gradient(circle at 70% 80%, rgba(48, 128, 255, .35), transparent 55%),
+    linear-gradient(135deg, var(--gray-2), var(--gray-1));
+  animation: webgl-scale-in-fade 1.1s var(--ease-in-out);
+}
+.hero-art::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: conic-gradient(from 0deg, transparent, rgba(255,255,255,.08), transparent 30%);
+  animation: spin 8s linear infinite;
+  -webkit-mask-image: radial-gradient(circle, transparent 40%, #000 70%);
+          mask-image: radial-gradient(circle, transparent 40%, #000 70%);
+}
+
+/* ============================================================
+   GENERIC SECTION HEADER (Resend's text-[3.5rem] + gradient)
+   ============================================================ */
+.section-eyebrow {
+  display: inline-block;
+  font-size: var(--text-xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray-9);
+  font-weight: 500;
+  margin-bottom: .75rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -.025em;
+  font-weight: 500;
+  margin: 0 0 .75rem;
+  background: linear-gradient(to bottom right, #fff 30%, rgba(255, 255, 255, .5));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.section-sub {
+  color: var(--gray-9);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  max-width: 42rem;
+  margin: 0;
+}
+
+/* ============================================================
+   SECTION 1 — TYPOGRAPHY
+   ============================================================ */
+.type-table {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1px;
+  background: var(--gray-a3);
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+}
+.type-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: baseline;
+  padding: 1.5rem 1.75rem;
+  background: var(--gray-1);
+}
+.type-row:hover { background: var(--gray-2); }
+.type-spec {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--gray-9);
+  text-align: right;
+  white-space: nowrap;
+}
+.t-display-1 { font-family: var(--font-serif); font-size: 6rem;    line-height: 1;     letter-spacing: -.01em; font-weight: 400; }
+.t-display-2 { font-family: var(--font-serif); font-size: 4.5rem;  line-height: 1;     letter-spacing: -.01em; font-weight: 400; }
+.t-h1        { font-family: var(--font-display); font-size: 3.5rem; line-height: 1.1;  letter-spacing: -.025em; font-weight: 500; }
+.t-h2        { font-family: var(--font-display); font-size: 3rem;   line-height: 1.2;  letter-spacing: -.025em; font-weight: 500; }
+.t-h3        { font-family: var(--font-display); font-size: 1.875rem; line-height: 1.25; letter-spacing: -.02em; font-weight: 500; }
+.t-h4        { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.3;  letter-spacing: -.015em; font-weight: 500; }
+.t-h5        { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.3; letter-spacing: -.01em; font-weight: 500; }
+.t-h6        { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.4; letter-spacing: 0; font-weight: 600; }
+.t-body-lg   { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.6;  color: var(--gray-9); }
+.t-body      { font-family: var(--font-sans); font-size: 1rem;     line-height: 1.5;  color: var(--gray-9); }
+.t-body-sm   { font-family: var(--font-sans); font-size: .875rem;  line-height: 1.45; color: var(--gray-9); }
+.t-caption   { font-family: var(--font-sans); font-size: .75rem;   line-height: 1;    color: var(--gray-8); letter-spacing: .02em; }
+.t-label     { font-family: var(--font-sans); font-size: .75rem;   line-height: 1;    color: var(--gray-9); text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+.t-mono      { font-family: var(--font-mono); font-size: .875rem;  line-height: 1.5;  color: var(--gray-10); }
+
+/* ============================================================
+   SECTION 2 — COLORS & SURFACES
+   ============================================================ */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.swatch {
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--gray-1);
+}
+.swatch-chip {
+  height: 110px;
+  border-bottom: 1px solid var(--gray-a3);
+}
+.swatch-meta {
+  padding: .875rem 1rem;
+  display: flex; flex-direction: column; gap: .25rem;
+}
+.swatch-name {
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  color: var(--gray-10);
+  font-weight: 500;
+}
+.swatch-hex {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--gray-9);
+}
+.swatch-group-label {
+  margin-top: 3rem; margin-bottom: .5rem;
+  font-family: var(--font-sans); font-size: .75rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gray-8);
+}
+/* the signature Resend mesh background sample */
+.surface-sample {
+  margin-top: 2rem;
+  padding: 3rem;
+  border-radius: var(--radius-3xl);
+  border: 1px solid var(--gray-a3);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(141, 84, 255, .25), transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(48, 128, 255, .18), transparent 55%),
+    linear-gradient(180deg, var(--gray-1), #000);
+}
+.surface-sample h4 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0 0 .5rem;
+  color: var(--gray-10);
+}
+.surface-sample p { color: var(--gray-9); margin: 0; }
+
+/* ============================================================
+   SECTION 3 — UI COMPONENTS
+   ============================================================ */
+.component-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* ---- Code block (the most important component) */
+.code-block {
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--gray-a4);
+  background: var(--gray-1);
+  overflow: hidden;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, .6);
+  position: relative;
+}
+.code-chrome {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--gray-a3);
+  background: var(--gray-2);
+}
+.code-chrome .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, .3);
+}
+.code-chrome .dot.r { background: #ff5f57; }
+.code-chrome .dot.y { background: #febc2e; }
+.code-chrome .dot.g { background: #28c840; }
+.code-chrome .file {
+  margin-left: .75rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--gray-9);
+}
+.code-chrome .copy {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--gray-9);
+  background: transparent;
+  border: 1px solid var(--gray-a4);
+  border-radius: var(--radius-md);
+  padding: .25rem .5rem;
+  transition: all .15s var(--ease-in-out);
+}
+.code-chrome .copy:hover { color: var(--gray-10); border-color: var(--gray-a6); background: var(--gray-a3); }
+.code-body {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: .8125rem;
+  line-height: 1.7;
+  color: var(--gray-10);
+  overflow-x: auto;
+}
+.code-body pre { margin: 0; }
+.code-body .ln  { display: inline-block; width: 2ch; color: var(--gray-7); user-select: none; margin-right: 1.25rem; text-align: right; }
+.tk-kw  { color: #c084fc; }   /* keyword — violet */
+.tk-fn  { color: #60a5fa; }   /* function — blue */
+.tk-str { color: #7bf1a8; }   /* string — green-300 */
+.tk-num { color: #fb7185; }
+.tk-com { color: var(--gray-7); font-style: italic; }
+.tk-pn  { color: var(--gray-9); }
+.tk-var { color: #f0f0f0; }
+.tk-prop{ color: #f99c00; }   /* amber */
+
+/* terminal variant */
+.terminal {
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--gray-a4);
+  background: #0a0a0a;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, .6);
+}
+.terminal .code-body { padding: 1.5rem; font-size: .875rem; }
+.terminal .prompt { color: var(--color-violet-500); user-select: none; }
+.terminal .out    { color: var(--gray-9); }
+.terminal .ok     { color: var(--color-green-500); }
+.terminal .caret  { display: inline-block; width: 8px; height: 1.05em; vertical-align: -2px; background: var(--gray-10); margin-left: 4px; animation: caret-blink 1.2s var(--ease-out) infinite; }
+
+/* ---- Buttons row */
+.buttons-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  padding: 2rem;
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-2xl);
+  background: var(--gray-1);
+}
+
+/* ---- Email-style input */
+.email-form {
+  display: flex; gap: .5rem;
+  padding: .375rem .375rem .375rem 1rem;
+  border: 1px solid var(--gray-a4);
+  border-radius: var(--radius-2xl);
+  background: var(--gray-1);
+  max-width: 28rem;
+}
+.email-form input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--gray-10);
+  font-family: var(--font-sans);
+  font-size: .95rem;
+}
+.email-form input::placeholder { color: var(--gray-8); }
+.email-form button {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: var(--radius-xl);
+  background: #fff;
+  color: #000;
+  border: 0;
+  font-weight: 600;
+  font-size: .875rem;
+  transition: background .15s var(--ease-in-out);
+}
+.email-form button:hover { background: #e8e8e8; }
+
+/* ---- Feature card */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.feature-card {
+  position: relative;
+  padding: 1.75rem;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--gray-a3);
+  background: var(--gray-1);
+  transition: border-color .35s var(--ease-in-out), background .35s var(--ease-in-out), transform .35s var(--ease-in-out);
+  overflow: hidden;
+}
+.feature-card::before {
+  /* glow border on hover (Resend's signature) */
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: var(--radius-2xl);
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, .25), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s var(--ease-in-out);
+  pointer-events: none;
+}
+.feature-card:hover { border-color: var(--gray-a5); background: var(--gray-2); transform: translateY(-2px); }
+.feature-card:hover::before { opacity: 1; }
+.feature-card .icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-lg);
+  background: var(--gray-a3);
+  border: 1px solid var(--gray-a4);
+  display: grid; place-items: center;
+  color: var(--gray-10);
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--gray-10);
+  margin: 0 0 .5rem;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+.feature-card p { color: var(--gray-9); font-size: .9375rem; line-height: 1.55; margin: 0; }
+
+/* ---- Badges / pills */
+.badge-row { display: flex; gap: .5rem; flex-wrap: wrap; padding: 1rem 0 0; }
+.badge {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .25rem .625rem;
+  border: 1px solid var(--gray-a4);
+  border-radius: 999px;
+  background: var(--gray-a2);
+  font-size: var(--text-xs);
+  color: var(--gray-9);
+  font-weight: 500;
+}
+.badge.green { color: var(--color-green-300); border-color: rgba(123, 241, 168, .25); background: rgba(123, 241, 168, .08); }
+.badge.violet { color: #c4b5fd; border-color: rgba(141, 84, 255, .3); background: rgba(141, 84, 255, .1); }
+.badge.amber { color: #ffd380; border-color: rgba(249, 156, 0, .3); background: rgba(249, 156, 0, .08); }
+.badge.blue { color: #93c5fd; border-color: rgba(48, 128, 255, .3); background: rgba(48, 128, 255, .08); }
+
+/* ============================================================
+   SECTION 4 — LAYOUT & SPACING
+   ============================================================ */
+.layout-demo {
+  margin-top: 3rem;
+  display: grid;
+  gap: 2rem;
+}
+.layout-card {
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-2xl);
+  background: var(--gray-1);
+  padding: 2rem;
+}
+.layout-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  margin: 0 0 .25rem;
+  color: var(--gray-10);
+  font-weight: 500;
+}
+.layout-card .spec { font-family: var(--font-mono); font-size: .75rem; color: var(--gray-9); margin: 0 0 1.25rem; }
+.layout-bar {
+  height: 14px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--gray-3) 0 8px,
+      var(--gray-2) 8px 16px);
+  border-radius: 4px;
+  border: 1px solid var(--gray-a3);
+}
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: .5rem;
+}
+.layout-grid .col {
+  height: 60px;
+  background: var(--gray-3);
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   SECTION 5 — MOTION & INTERACTION
+   ============================================================ */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.motion-card {
+  border: 1px solid var(--gray-a3);
+  background: var(--gray-1);
+  border-radius: var(--radius-2xl);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  min-height: 200px;
+}
+.motion-card h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin: 0;
+  color: var(--gray-10);
+  font-weight: 600;
+}
+.motion-card .demo {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--gray-a4);
+  border-radius: var(--radius-xl);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.motion-card .replay {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--gray-a3);
+  border: 1px solid var(--gray-a4);
+  color: var(--gray-9);
+  border-radius: var(--radius-md);
+  padding: .25rem .5rem;
+}
+.motion-card .replay:hover { color: var(--gray-10); }
+.demo-fade .word {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--gray-10);
+  animation: hero-text-slide-up-fade 1s var(--ease-in-out);
+}
+.demo-shine {
+  background: linear-gradient(110deg,
+    var(--gray-9) 0%,
+    var(--gray-9) 40%,
+    #fff 50%,
+    var(--gray-9) 60%,
+    var(--gray-9) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  animation: shine 3s var(--ease-in-out) infinite;
+}
+.demo-drift {
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(141, 84, 255, .5), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(48, 128, 255, .5), transparent 50%);
+  animation: drift 6s var(--ease-in-out) infinite;
+  border-radius: var(--radius-md);
+}
+.demo-pulse-dot {
+  width: 10px; height: 10px; border-radius: 999px;
+  background: var(--color-green-500);
+  box-shadow: 0 0 0 6px rgba(0, 199, 88, .12);
+  animation: pulse 2s var(--ease-in-out) infinite;
+}
+.demo-card-hover {
+  width: 80%;
+  padding: 1rem;
+  border: 1px solid var(--gray-a4);
+  border-radius: var(--radius-lg);
+  background: var(--gray-2);
+  text-align: center;
+  font-size: .875rem;
+  color: var(--gray-9);
+  transition: transform .35s var(--ease-in-out), border-color .35s var(--ease-in-out), background .35s var(--ease-in-out);
+}
+.demo-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, .25);
+  background: var(--gray-3);
+  color: var(--gray-10);
+}
+.demo-spin {
+  width: 60px; height: 60px;
+  border: 2px solid var(--gray-3);
+  border-top-color: var(--color-violet-500);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+/* ============================================================
+   SECTION 6 — ICONOGRAPHY
+   ============================================================ */
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.icon-cell {
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-xl);
+  background: var(--gray-1);
+  color: var(--gray-9);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.icon-cell:hover { color: var(--gray-10); border-color: var(--gray-a5); background: var(--gray-2); }
+.icon-cell svg { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.icon-cell .label { font-family: var(--font-mono); font-size: .6875rem; color: var(--gray-9); }
+
+.icon-sizes {
+  display: flex; align-items: center; gap: 2rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--gray-a3);
+  border-radius: var(--radius-2xl);
+  background: var(--gray-1);
+}
+.icon-sizes .row {
+  display: flex; align-items: center; gap: .75rem;
+  color: var(--gray-9);
+  font-family: var(--font-mono); font-size: var(--text-xs);
+}
+.icon-sizes svg { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--gray-a3);
+  padding: 4rem 1.5rem;
+  text-align: center;
+  color: var(--gray-8);
+  font-size: var(--text-sm);
+}
+
+/* ============================================================
+   UTILITY: section divider w/ gradient line
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gray-a5), transparent);
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     TOP NAV
+     ================================================================ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">resend<span class="dot">.</span>ds</div>
+    <ul class="nav-list">
+      <li><a href="#hero">Hero</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#layout">Layout</a></li>
+      <li><a href="#motion">Motion</a></li>
+      <li><a href="#icons">Icons</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================================================================
+     SECTION 0 — HERO (clone of Resend's hero)
+     ================================================================ -->
+<section id="hero" class="hero">
+  <div class="hero-content">
+    <div>
+      <span class="hero-eyebrow">
+        <span class="pulse-dot"></span>
+        Design system extracted from resend.com
+      </span>
+      <h1>Resend Design<br/>System</h1>
+      <p class="lede">A faithful, self-contained capture of Resend's visual DNA — fonts, colors, gradients, code blocks, motion — for the nv:context landing page.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#typography">Explore tokens</a>
+        <a class="btn-secondary" href="#components">View components &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 1 — TYPOGRAPHY
+     ================================================================ -->
+<section id="typography" class="section">
+  <div class="container">
+    <span class="section-eyebrow">01 — Typography</span>
+    <h2 class="section-title">Type system</h2>
+    <p class="section-sub">Resend pairs a serif display family (Klim's <em>Domaine</em> — substituted here with Instrument Serif) with <em>ABC Favorit</em> for headings, <em>Inter</em> for body, and <em>Commit Mono</em> for code. Stylistic sets <code>ss01 ss04 ss11</code> are enabled site-wide.</p>
+
+    <div class="type-table">
+      <div class="type-row"><div class="t-display-1">Email for developers</div><div class="type-spec">serif &middot; 96px / 100% / -.01em</div></div>
+      <div class="type-row"><div class="t-display-2">Reach humans, not spam</div><div class="type-spec">serif &middot; 72px / 100% / -.01em</div></div>
+      <div class="type-row"><div class="t-h1">Develop emails using React</div><div class="type-spec">display &middot; 56px / 110% / -.025em</div></div>
+      <div class="type-row"><div class="t-h2">Beyond expectations</div><div class="type-spec">display &middot; 48px / 120% / -.025em</div></div>
+      <div class="type-row"><div class="t-h3">Modular Webhooks</div><div class="type-spec">display &middot; 30px / 125% / -.02em</div></div>
+      <div class="type-row"><div class="t-h4">Contact Management</div><div class="type-spec">display &middot; 24px / 130% / -.015em</div></div>
+      <div class="type-row"><div class="t-h5">Test Mode</div><div class="type-spec">display &middot; 20px / 130% / -.01em</div></div>
+      <div class="type-row"><div class="t-h6">Section eyebrow</div><div class="type-spec">display &middot; 18px / 140% / 0</div></div>
+      <div class="type-row"><div class="t-body-lg">The best way to reach humans instead of spam folders. Deliver transactional and marketing emails at scale.</div><div class="type-spec">body lg &middot; 18px / 160%</div></div>
+      <div class="type-row"><div class="t-body">Send your first email in minutes with the most reliable, modern, developer-first API for emails.</div><div class="type-spec">body &middot; 16px / 150%</div></div>
+      <div class="type-row"><div class="t-body-sm">Built for the modern stack — works with Next.js, Remix, SvelteKit, Astro and more.</div><div class="type-spec">body sm &middot; 14px / 145%</div></div>
+      <div class="type-row"><div class="t-caption">Caption / helper text</div><div class="type-spec">caption &middot; 12px / 100%</div></div>
+      <div class="type-row"><div class="t-label">Section label</div><div class="type-spec">label &middot; 12px / 100% / .12em</div></div>
+      <div class="type-row"><div class="t-mono">$ npm install resend</div><div class="type-spec">mono &middot; 14px / 150%</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================================
+     SECTION 2 — COLORS & SURFACES
+     ================================================================ -->
+<section id="colors" class="section">
+  <div class="container">
+    <span class="section-eyebrow">02 — Colors</span>
+    <h2 class="section-title">Surfaces &amp; palette</h2>
+    <p class="section-sub">Dark mode is default. The page is true black with a 10-step gray scale tuned for layered glass surfaces. Brand accents are saturated and used sparingly for badges and highlights.</p>
+
+    <div class="swatch-group-label">Surface scale (dark)</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-chip" style="background:#000"></div><div class="swatch-meta"><span class="swatch-name">--background</span><span class="swatch-hex">#000000</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#141517"></div><div class="swatch-meta"><span class="swatch-name">--gray-1</span><span class="swatch-hex">#141517</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#191b1e"></div><div class="swatch-meta"><span class="swatch-name">--gray-2</span><span class="swatch-hex">#191b1e</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#212629"></div><div class="swatch-meta"><span class="swatch-name">--gray-3</span><span class="swatch-hex">#212629</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#293034"></div><div class="swatch-meta"><span class="swatch-name">--gray-4</span><span class="swatch-hex">#293034</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#333b3e"></div><div class="swatch-meta"><span class="swatch-name">--gray-5</span><span class="swatch-hex">#333b3e</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#3b4345"></div><div class="swatch-meta"><span class="swatch-name">--gray-6</span><span class="swatch-hex">#3b4345</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#434a4d"></div><div class="swatch-meta"><span class="swatch-name">--gray-7</span><span class="swatch-hex">#434a4d</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#52595b"></div><div class="swatch-meta"><span class="swatch-name">--gray-8</span><span class="swatch-hex">#52595b</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#a1a4a5"></div><div class="swatch-meta"><span class="swatch-name">--gray-9</span><span class="swatch-hex">#a1a4a5</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#f0f0f0"></div><div class="swatch-meta"><span class="swatch-name">--gray-10</span><span class="swatch-hex">#f0f0f0</span></div></div>
+    </div>
+
+    <div class="swatch-group-label">Alpha grays (hairline borders &amp; glass)</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-chip" style="background:repeating-conic-gradient(#222 0 25%, #111 0 50%) 50% 50% / 16px 16px"><div style="height:100%;background:#caecff33"></div></div><div class="swatch-meta"><span class="swatch-name">--gray-a4</span><span class="swatch-hex">#caecff33</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:repeating-conic-gradient(#222 0 25%, #111 0 50%) 50% 50% / 16px 16px"><div style="height:100%;background:#d2f3ff3d"></div></div><div class="swatch-meta"><span class="swatch-name">--gray-a5</span><span class="swatch-hex">#d2f3ff3d</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:repeating-conic-gradient(#222 0 25%, #111 0 50%) 50% 50% / 16px 16px"><div style="height:100%;background:#d8eaf161"></div></div><div class="swatch-meta"><span class="swatch-name">--gray-a8</span><span class="swatch-hex">#d8eaf161</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:repeating-conic-gradient(#222 0 25%, #111 0 50%) 50% 50% / 16px 16px"><div style="height:100%;background:#fdfeffa6"></div></div><div class="swatch-meta"><span class="swatch-name">--gray-a9</span><span class="swatch-hex">#fdfeffa6</span></div></div>
+    </div>
+
+    <div class="swatch-group-label">Brand accents</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-chip" style="background:#fb2c36"></div><div class="swatch-meta"><span class="swatch-name">red-500</span><span class="swatch-hex">#fb2c36</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#fe6e00"></div><div class="swatch-meta"><span class="swatch-name">orange-500</span><span class="swatch-hex">#fe6e00</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#f99c00"></div><div class="swatch-meta"><span class="swatch-name">amber-500</span><span class="swatch-hex">#f99c00</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#fac800"></div><div class="swatch-meta"><span class="swatch-name">yellow-400</span><span class="swatch-hex">#fac800</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#7bf1a8"></div><div class="swatch-meta"><span class="swatch-name">green-300</span><span class="swatch-hex">#7bf1a8</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#00c758"></div><div class="swatch-meta"><span class="swatch-name">green-500</span><span class="swatch-hex">#00c758</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#00b7d7"></div><div class="swatch-meta"><span class="swatch-name">cyan-500</span><span class="swatch-hex">#00b7d7</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#3080ff"></div><div class="swatch-meta"><span class="swatch-name">blue-500</span><span class="swatch-hex">#3080ff</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#8d54ff"></div><div class="swatch-meta"><span class="swatch-name">violet-500</span><span class="swatch-hex">#8d54ff</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#e12afb"></div><div class="swatch-meta"><span class="swatch-name">fuchsia-500</span><span class="swatch-hex">#e12afb</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#f6339a"></div><div class="swatch-meta"><span class="swatch-name">pink-500</span><span class="swatch-hex">#f6339a</span></div></div>
+    </div>
+
+    <div class="swatch-group-label">Rainbow accents (used in shine + halo gradients)</div>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-chip" style="background:#02fcef"></div><div class="swatch-meta"><span class="swatch-name">--rainbow-cyan</span><span class="swatch-hex">#02fcef &middot; 70%</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#ffb52b"></div><div class="swatch-meta"><span class="swatch-name">--rainbow-amber</span><span class="swatch-hex">#ffb52b &middot; 70%</span></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#a02bfe"></div><div class="swatch-meta"><span class="swatch-name">--rainbow-purple</span><span class="swatch-hex">#a02bfe &middot; 70%</span></div></div>
+    </div>
+
+    <div class="swatch-group-label">Surface example — the signature mesh background</div>
+    <div class="surface-sample">
+      <h4>Reach humans, not spam folders</h4>
+      <p>Resend layers 2-3 large, soft radial gradients (violet + blue) over a near-black base, with a 1px <code>--gray-a3</code> border. Cards live on top of <code>--gray-1</code>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================================
+     SECTION 3 — UI COMPONENTS
+     ================================================================ -->
+<section id="components" class="section">
+  <div class="container">
+    <span class="section-eyebrow">03 — Components</span>
+    <h2 class="section-title">UI components</h2>
+    <p class="section-sub">Code blocks are the centerpiece of Resend's identity. They sit on dark <code>--gray-1</code>, framed by a hairline border and a subtle drop shadow, with macOS-style window chrome.</p>
+
+    <div class="component-grid">
+
+      <!-- terminal command -->
+      <div class="terminal">
+        <div class="code-chrome">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="file">~ &mdash; zsh</span>
+          <button class="copy">Copy</button>
+        </div>
+        <div class="code-body">
+<pre><span class="prompt">$</span> npm install resend
+<span class="out">added 1 package, and audited 142 packages in 1s</span>
+<span class="ok">✓</span> <span class="out">resend@4.1.2 installed</span>
+<span class="prompt">$</span> resend init<span class="caret"></span></pre>
+        </div>
+      </div>
+
+      <!-- code snippet -->
+      <div class="code-block">
+        <div class="code-chrome">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="file">app/api/send/route.ts</span>
+          <button class="copy">Copy</button>
+        </div>
+        <div class="code-body">
+<pre><span class="ln"> 1</span><span class="tk-kw">import</span> { Resend } <span class="tk-kw">from</span> <span class="tk-str">'resend'</span>;
+<span class="ln"> 2</span>
+<span class="ln"> 3</span><span class="tk-kw">const</span> <span class="tk-var">resend</span> = <span class="tk-kw">new</span> <span class="tk-fn">Resend</span>(<span class="tk-var">process</span>.<span class="tk-prop">env</span>.<span class="tk-prop">RESEND_API_KEY</span>);
+<span class="ln"> 4</span>
+<span class="ln"> 5</span><span class="tk-kw">export async function</span> <span class="tk-fn">POST</span>() {
+<span class="ln"> 6</span>  <span class="tk-kw">const</span> { <span class="tk-var">data</span>, <span class="tk-var">error</span> } = <span class="tk-kw">await</span> <span class="tk-var">resend</span>.<span class="tk-prop">emails</span>.<span class="tk-fn">send</span>({
+<span class="ln"> 7</span>    <span class="tk-prop">from</span>: <span class="tk-str">'Acme &lt;onboarding@resend.dev&gt;'</span>,
+<span class="ln"> 8</span>    <span class="tk-prop">to</span>: [<span class="tk-str">'delivered@resend.dev'</span>],
+<span class="ln"> 9</span>    <span class="tk-prop">subject</span>: <span class="tk-str">'Hello from Resend'</span>,
+<span class="ln">10</span>    <span class="tk-prop">html</span>: <span class="tk-str">'&lt;strong&gt;It works!&lt;/strong&gt;'</span>,
+<span class="ln">11</span>  });
+<span class="ln">12</span>
+<span class="ln">13</span>  <span class="tk-kw">if</span> (<span class="tk-var">error</span>) <span class="tk-kw">return</span> <span class="tk-fn">Response</span>.<span class="tk-fn">json</span>({ <span class="tk-var">error</span> }, { <span class="tk-prop">status</span>: <span class="tk-num">500</span> });
+<span class="ln">14</span>  <span class="tk-kw">return</span> <span class="tk-fn">Response</span>.<span class="tk-fn">json</span>({ <span class="tk-var">data</span> });
+<span class="ln">15</span>}
+</pre>
+        </div>
+      </div>
+
+      <!-- buttons -->
+      <div class="buttons-row">
+        <button class="btn-primary">Get Started</button>
+        <button class="btn-secondary">Documentation &rarr;</button>
+        <button class="btn-primary" disabled style="opacity:.4;cursor:not-allowed">Disabled</button>
+      </div>
+
+      <!-- email form -->
+      <form class="email-form" onsubmit="event.preventDefault()">
+        <input type="email" placeholder="you@company.com" />
+        <button type="submit">Subscribe</button>
+      </form>
+
+      <!-- feature cards -->
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          </div>
+          <h3>Test Mode</h3>
+          <p>Send test emails to dedicated addresses without affecting deliverability or your reputation.</p>
+          <div class="badge-row">
+            <span class="badge green">Stable</span>
+            <span class="badge">v4.1</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          </div>
+          <h3>Modular Webhooks</h3>
+          <p>Subscribe to delivery, bounce, complaint and engagement events with retry semantics built in.</p>
+          <div class="badge-row">
+            <span class="badge violet">New</span>
+            <span class="badge blue">SDK</span>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+          </div>
+          <h3>Broadcast Analytics</h3>
+          <p>See opens, clicks, bounces and unsubscribes in a beautiful dashboard.</p>
+          <div class="badge-row">
+            <span class="badge amber">Beta</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================================
+     SECTION 4 — LAYOUT & SPACING
+     ================================================================ -->
+<section id="layout" class="section">
+  <div class="container">
+    <span class="section-eyebrow">04 — Layout</span>
+    <h2 class="section-title">Layout &amp; spacing</h2>
+    <p class="section-sub">Resend uses generous vertical rhythm (8rem section padding), narrow centered containers (typically <code>max-w-6xl</code> ≈ 1152px), and a 12-column grid for feature rows.</p>
+
+    <div class="layout-demo">
+      <div class="layout-card">
+        <h4>Container widths</h4>
+        <p class="spec">--container-3xl 768 &middot; --container-4xl 896 &middot; --container-5xl 1024 &middot; --container-6xl 1152 &middot; --container-7xl 1280</p>
+        <div style="display:grid;gap:.5rem">
+          <div class="layout-bar" style="width:60%"></div>
+          <div class="layout-bar" style="width:70%"></div>
+          <div class="layout-bar" style="width:80%"></div>
+          <div class="layout-bar" style="width:90%"></div>
+          <div class="layout-bar" style="width:100%"></div>
+        </div>
+      </div>
+
+      <div class="layout-card">
+        <h4>12-column grid</h4>
+        <p class="spec">grid-template-columns: repeat(12, 1fr) &middot; gap: .5rem</p>
+        <div class="layout-grid">
+          <div class="col" style="grid-column:span 6"></div>
+          <div class="col" style="grid-column:span 6"></div>
+          <div class="col" style="grid-column:span 4"></div>
+          <div class="col" style="grid-column:span 4"></div>
+          <div class="col" style="grid-column:span 4"></div>
+          <div class="col" style="grid-column:span 3"></div>
+          <div class="col" style="grid-column:span 3"></div>
+          <div class="col" style="grid-column:span 3"></div>
+          <div class="col" style="grid-column:span 3"></div>
+        </div>
+      </div>
+
+      <div class="layout-card">
+        <h4>Section vertical rhythm</h4>
+        <p class="spec">.section { padding: 8rem 0 } &middot; eyebrow → title → 3rem → content</p>
+        <div style="display:grid;gap:.75rem">
+          <div style="height:6px;background:var(--gray-3);border-radius:3px;width:30%"></div>
+          <div style="height:14px;background:var(--gray-4);border-radius:4px;width:60%"></div>
+          <div style="height:6px;background:var(--gray-3);border-radius:3px;width:45%"></div>
+          <div style="height:80px;background:var(--gray-2);border:1px solid var(--gray-a3);border-radius:var(--radius-lg)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================================
+     SECTION 5 — MOTION & INTERACTION
+     ================================================================ -->
+<section id="motion" class="section">
+  <div class="container">
+    <span class="section-eyebrow">05 — Motion</span>
+    <h2 class="section-title">Motion gallery</h2>
+    <p class="section-sub">Live demos of every Resend animation token. All durations and easings are taken verbatim from the original CSS — including <code>cubic-bezier(.4, 0, .2, 1)</code> as the default.</p>
+
+    <div class="motion-grid">
+      <div class="motion-card">
+        <h4>hero-text-slide-up-fade</h4>
+        <div class="demo demo-fade"><span class="word" id="fade-demo">Email for developers</span></div>
+        <button class="replay" onclick="(()=>{const e=document.getElementById('fade-demo');e.style.animation='none';void e.offsetWidth;e.style.animation='hero-text-slide-up-fade 1s var(--ease-in-out)'})()">Replay</button>
+      </div>
+
+      <div class="motion-card">
+        <h4>shine</h4>
+        <div class="demo"><span class="demo-shine">Reach humans</span></div>
+        <span class="replay">runs 3s infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <h4>drift (hero mesh)</h4>
+        <div class="demo"><div class="demo-drift"></div></div>
+        <span class="replay">runs 6s infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <h4>pulse (status dot)</h4>
+        <div class="demo"><div class="demo-pulse-dot"></div></div>
+        <span class="replay">runs 2s infinite</span>
+      </div>
+
+      <div class="motion-card">
+        <h4>card hover (glow border)</h4>
+        <div class="demo"><div class="demo-card-hover">Hover me</div></div>
+        <span class="replay">350ms ease-in-out</span>
+      </div>
+
+      <div class="motion-card">
+        <h4>spin (loader)</h4>
+        <div class="demo"><div class="demo-spin"></div></div>
+        <span class="replay">runs 1.2s linear infinite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================================================
+     SECTION 6 — ICONOGRAPHY
+     ================================================================ -->
+<section id="icons" class="section">
+  <div class="container">
+    <span class="section-eyebrow">06 — Iconography</span>
+    <h2 class="section-title">Iconography</h2>
+    <p class="section-sub">Resend uses Lucide-style line icons — 1.5px stroke, 24×24 viewBox, rounded caps. They sit on a small <code>--gray-a3</code> tile inside feature cards.</p>
+
+    <div class="icons-grid">
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <span class="label">mail</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span class="label">send</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span class="label">check</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="label">clock</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="label">message</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span class="label">code</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="label">settings</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span class="label">zap</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="label">globe</span>
+      </div>
+      <div class="icon-cell">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="label">verified</span>
+      </div>
+    </div>
+
+    <div class="icon-sizes">
+      <div class="row"><svg width="14" height="14" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 14 / sm</div>
+      <div class="row"><svg width="18" height="18" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 18 / md</div>
+      <div class="row"><svg width="22" height="22" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 22 / lg</div>
+      <div class="row"><svg width="28" height="28" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 28 / xl</div>
+      <div class="row"><svg width="36" height="36" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 36 / 2xl</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="footer">
+  Resend Design System — extracted on 2026-04-06 from <code>resend.com_home/index.html</code> &amp; assets.<br/>
+  Built for the nv:context landing page. Tokens, colors and keyframes are verbatim copies; proprietary fonts (Domaine, ABC Favorit, Commit Mono) are substituted with Inter / Instrument Serif / JetBrains Mono.
+</footer>
+
+</body>
+</html>

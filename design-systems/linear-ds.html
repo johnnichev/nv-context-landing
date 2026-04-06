@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" style="color-scheme: dark;">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Linear Design System — extracted for nv:context</title>
+<meta name="description" content="A standalone, self-contained extraction of Linear's visual identity — typography, colors, components, motion. Built for the nv:context landing page." />
+
+<!--
+  ============================================================
+  LINEAR DESIGN SYSTEM (extracted from linear.app, Apr 2026)
+  ============================================================
+  All tokens, fonts, and animations are taken verbatim from
+  Linear's compiled CSS. Nothing here was invented.
+  Source files: 0ce140c805753455*.css, b06fffb47b015a3a*.css,
+                9223b1180e334c19*.css, eca4f237b3c33041*.css,
+                4f7bf38f177fecac*.css
+-->
+
+<!-- CDN fonts (Inter Variable + JetBrains Mono as Berkeley Mono fallback) -->
+<link rel="preconnect" href="https://rsms.me/" crossorigin>
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================ */
+  /* RESET (verbatim subset of Linear's @layer web.reset)          */
+  /* ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+    margin: 0; padding: 0; border: 0; font-size: inherit;
+    font-family: inherit; font-weight: inherit; line-height: inherit;
+    vertical-align: baseline;
+  }
+  ul, ol { list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  img, svg, video { display: block; max-width: 100%; }
+  table { border-collapse: collapse; border-spacing: 0; }
+
+  /* ============================================================ */
+  /* DESIGN TOKENS — copied 1:1 from Linear's :root                */
+  /* ============================================================ */
+  :root {
+    /* Layout */
+    --header-height: 72px;
+    --header-blur: 20px;
+    --page-padding-inline: 24px;
+    --page-max-width: 1024px;
+    --homepage-outer-padding: 46px;
+    --homepage-max-width: calc(1344px + var(--homepage-outer-padding) * 2);
+    --grid-columns: 12;
+    --page-inset: 32px;
+
+    /* Z-layers */
+    --layer-header: 100;
+    --layer-tooltip: 1100;
+    --layer-3: 3;
+    --layer-2: 2;
+    --layer-1: 1;
+
+    /* Radius */
+    --radius-4: 4px;
+    --radius-6: 6px;
+    --radius-8: 8px;
+    --radius-12: 12px;
+    --radius-16: 16px;
+    --radius-24: 24px;
+    --radius-32: 32px;
+    --radius-rounded: 9999px;
+    --radius-circle: 50%;
+    --border-hairline: 1px;
+
+    /* Fonts (Linear stack) */
+    --font-regular: "Inter Variable", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-monospace: "Berkeley Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --font-serif-display: "Tiempos Headline", ui-serif, Georgia, "Times New Roman", serif;
+
+    /* Font weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 510;
+    --font-weight-semibold: 590;
+    --font-weight-bold: 680;
+
+    /* Speeds */
+    --speed-quickTransition: 0.1s;
+    --speed-regularTransition: 0.25s;
+
+    /* Easing curves (verbatim) */
+    --ease-in-quad:    cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    --ease-in-cubic:   cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-in-quart:   cubic-bezier(0.895, 0.03, 0.685, 0.22);
+    --ease-out-quad:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out-cubic:  cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-out-quart:  cubic-bezier(0.165, 0.84, 0.44, 1);
+    --ease-out-quint:  cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-expo:   cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-in-out-expo:  cubic-bezier(1, 0, 0, 1);
+
+    /* Brand colors */
+    --color-white: #fff;
+    --color-black: #000;
+    --color-blue: #4ea7fc;
+    --color-red: #eb5757;
+    --color-green: #27a644;
+    --color-orange: #fc7840;
+    --color-yellow: #f0bf00;
+    --color-indigo: #5e6ad2;
+    --color-teal: #00b8cc;
+    --color-linear-plan: #68cc58;
+    --color-linear-build: #d4b144;
+    --color-linear-security: #7a7fad;
+
+    /* Type scale — titles */
+    --title-1-size: 1.0625rem; --title-1-line-height: 1.4;   --title-1-letter-spacing: -0.012em;
+    --title-2-size: 1.25rem;   --title-2-line-height: 1.33;  --title-2-letter-spacing: -0.012em;
+    --title-3-size: 1.5rem;    --title-3-line-height: 1.33;  --title-3-letter-spacing: -0.012em;
+    --title-4-size: 2rem;      --title-4-line-height: 1.125; --title-4-letter-spacing: -0.022em;
+    --title-5-size: 2.5rem;    --title-5-line-height: 1.1;   --title-5-letter-spacing: -0.022em;
+    --title-6-size: 3rem;      --title-6-line-height: 1;     --title-6-letter-spacing: -0.022em;
+    --title-7-size: 3.5rem;    --title-7-line-height: 1.1;   --title-7-letter-spacing: -0.022em;
+    --title-8-size: 4rem;      --title-8-line-height: 1.06;  --title-8-letter-spacing: -0.022em;
+    --title-9-size: 4.5rem;    --title-9-line-height: 1;     --title-9-letter-spacing: -0.022em;
+
+    /* Type scale — body */
+    --text-large-size: 1.0625rem; --text-large-line-height: 1.6;
+    --text-regular-size: 0.9375rem; --text-regular-line-height: 1.6; --text-regular-letter-spacing: -0.011em;
+    --text-small-size: 0.875rem; --text-small-line-height: 1.5; --text-small-letter-spacing: -0.013em;
+    --text-mini-size: 0.8125rem; --text-mini-line-height: 1.5; --text-mini-letter-spacing: -0.01em;
+    --text-micro-size: 0.75rem; --text-micro-line-height: 1.4;
+    --text-tiny-size: 0.625rem; --text-tiny-line-height: 1.5; --text-tiny-letter-spacing: -0.015em;
+
+    /* Focus + interaction */
+    --focus-ring-color: var(--color-indigo);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    --min-tap-size: 44px;
+
+    /* DARK theme (default) — verbatim from [data-theme=dark] */
+    color-scheme: dark;
+    --header-bg: rgba(11,11,11,0.8);
+    --header-border: rgba(255,255,255,0.08);
+    --color-bg-primary: #08090a;
+    --color-bg-secondary: #1c1c1f;
+    --color-bg-tertiary: #232326;
+    --color-bg-quaternary: #28282c;
+    --color-bg-marketing: #010102;
+    --color-bg-translucent: rgba(255,255,255,0.05);
+    --color-bg-quinary: #282828;
+    --color-bg-panel: #0f1011;
+    --color-border-primary: #23252a;
+    --color-border-secondary: #34343a;
+    --color-border-tertiary: #3e3e44;
+    --color-border-translucent: rgba(255,255,255,0.05);
+    --color-border-translucent-strong: rgba(255,255,255,0.08);
+    --color-text-primary: #f7f8f8;
+    --color-text-secondary: #d0d6e0;
+    --color-text-tertiary: #8a8f98;
+    --color-text-quaternary: #62666d;
+    --color-link-primary: #828fff;
+    --color-link-hover: #fff;
+    --color-brand-bg: #5e6ad2;
+    --color-brand-text: #fff;
+    --color-accent: #7170ff;
+    --color-accent-hover: #828fff;
+    --color-accent-tint: #18182f;
+    --color-bg-level-0: #08090a;
+    --color-bg-level-1: #0f1011;
+    --color-bg-level-2: #141516;
+    --color-bg-level-3: #191a1b;
+    --color-bg-tint: #141516;
+    --color-line-primary: #37393a;
+    --color-line-secondary: #202122;
+    --color-line-tertiary: #18191a;
+    --shadow-low: 0px 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0px 4px 24px rgba(0,0,0,0.2);
+    --shadow-high: 0px 7px 32px rgba(0,0,0,0.35);
+  }
+
+  /* ============================================================ */
+  /* BASE                                                          */
+  /* ============================================================ */
+  html {
+    font-family: var(--font-regular);
+    font-feature-settings: "ss01", "ss02", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-size: var(--text-regular-size);
+    line-height: var(--text-regular-line-height);
+    letter-spacing: var(--text-regular-letter-spacing);
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(94,106,210,0.5); color: #fff; }
+  a { color: var(--color-link-primary); transition: color .16s var(--ease-out-quad); }
+  a:hover { color: var(--color-link-hover); }
+
+  /* ============================================================ */
+  /* HEADER NAV                                                    */
+  /* ============================================================ */
+  .Header_root {
+    position: sticky;
+    top: 0;
+    z-index: var(--layer-header);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--page-padding-inline);
+    background: var(--header-bg);
+    backdrop-filter: blur(var(--header-blur));
+    -webkit-backdrop-filter: blur(var(--header-blur));
+    border-bottom: var(--border-hairline) solid var(--header-border);
+  }
+  .Header_inner {
+    max-width: var(--homepage-max-width);
+    width: 100%;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .Header_logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: var(--font-weight-semibold);
+    font-size: 15px;
+    color: var(--color-text-primary);
+    margin-right: auto;
+  }
+  .Header_logo svg { color: var(--color-accent); }
+  .Header_navItems {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .Header_navLink {
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+    border-radius: var(--radius-6);
+    transition: color .16s var(--ease-out-quad), background .16s var(--ease-out-quad);
+  }
+  .Header_navLink:hover {
+    color: var(--color-text-primary);
+    background: rgba(255,255,255,0.04);
+  }
+  .Header_navDivider {
+    width: 1px;
+    height: 16px;
+    background: var(--color-border-primary);
+    margin-inline: 8px;
+  }
+  @media (max-width: 768px) {
+    .Header_navItems .Header_navLink:not(.is-essential) { display: none; }
+  }
+
+  /* ============================================================ */
+  /* HERO (clone of Linear's PillarHero structure)                 */
+  /* ============================================================ */
+  .PillarHero_root {
+    position: relative;
+    isolation: isolate;
+    padding-top: 200px;
+    padding-bottom: 128px;
+    overflow: hidden;
+    max-width: 100vw;
+    border-bottom: var(--border-hairline) solid var(--color-border-translucent-strong);
+  }
+  .PillarHero_root::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    top: calc(-1 * var(--header-height));
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom in oklab,
+      rgba(8,9,10,0) 0%,
+      rgba(8,9,10,0) 75%,
+      var(--color-bg-primary) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Glow blobs (Linear's signature soft accent radials) */
+  .PillarHero_glowBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(800px 600px at 70% 10%, rgba(113,112,255,0.22) 0%, rgba(113,112,255,0) 60%),
+      radial-gradient(900px 500px at 20% 30%, rgba(94,106,210,0.16) 0%, rgba(94,106,210,0) 60%),
+      radial-gradient(600px 400px at 50% 0%, rgba(130,143,255,0.14) 0%, rgba(130,143,255,0) 70%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    animation: heroGlowDrift 18s var(--ease-in-out-cubic) infinite alternate;
+  }
+  @keyframes heroGlowDrift {
+    0% { transform: translate3d(-2%, -1%, 0) scale(1); }
+    100% { transform: translate3d(2%, 1%, 0) scale(1.05); }
+  }
+  .PillarHero_inner {
+    position: relative;
+    z-index: var(--layer-3);
+    max-width: var(--homepage-max-width);
+    margin-inline: auto;
+    padding-inline: var(--homepage-outer-padding);
+  }
+  .PillarHero_eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px 6px 8px;
+    border-radius: var(--radius-rounded);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--color-border-translucent-strong);
+    backdrop-filter: blur(8px);
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: hero-fade-up 0.9s var(--ease-out-quart) 0.05s forwards;
+  }
+  .PillarHero_pulseDot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(94,106,210,0.15);
+    position: relative;
+    box-shadow: 0 0 0 0 rgba(94,106,210,0.10);
+    animation: Hero_pulse 1.75s cubic-bezier(.66,0,0,1) infinite;
+  }
+  .PillarHero_pulseDot::after {
+    content: "";
+    position: absolute;
+    width: 6px; height: 6px;
+    background: #5e6ad2;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  @keyframes Hero_pulse {
+    to { box-shadow: 0 0 0 10px rgba(94,106,210,0); }
+  }
+  .PillarHero_title {
+    position: relative;
+    z-index: var(--layer-3);
+    max-width: 880px;
+    width: fit-content;
+    font-size: clamp(40px, 6vw, var(--title-9-size));
+    line-height: var(--title-9-line-height);
+    letter-spacing: var(--title-9-letter-spacing);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: 28px;
+    background: linear-gradient(180deg, #ffffff 0%, #b4bcd0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    animation: hero-fade-up 1s var(--ease-out-quart) 0.18s forwards;
+  }
+  .PillarHero_title::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%; right: -50%; bottom: -50%;
+    background: radial-gradient(circle, var(--color-bg-primary) 0%, rgba(8,9,10,0) 100%);
+    filter: blur(10px) opacity(.5);
+    z-index: -1;
+    border-radius: 100%;
+    pointer-events: none;
+  }
+  .PillarHero_subtitle {
+    max-width: 560px;
+    font-size: var(--text-large-size);
+    line-height: var(--text-large-line-height);
+    color: var(--color-text-tertiary);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: hero-fade-up 1s var(--ease-out-quart) 0.32s forwards;
+  }
+  .PillarHero_actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: hero-fade-up 1s var(--ease-out-quart) 0.48s forwards;
+  }
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(14px); filter: blur(8px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+
+  /* ============================================================ */
+  /* SECTION CHROME                                                */
+  /* ============================================================ */
+  section[id] {
+    padding-block: 96px;
+    border-bottom: var(--border-hairline) solid var(--color-border-translucent);
+    position: relative;
+  }
+  .Section_inner {
+    max-width: var(--homepage-max-width);
+    margin-inline: auto;
+    padding-inline: var(--homepage-outer-padding);
+  }
+  .Section_label {
+    display: inline-block;
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    padding: 4px 8px;
+    background: var(--color-accent-tint);
+    border: 1px solid rgba(113,112,255,0.2);
+    border-radius: var(--radius-6);
+    margin-bottom: 16px;
+  }
+  .Section_h2 {
+    font-size: var(--title-7-size);
+    line-height: var(--title-7-line-height);
+    letter-spacing: var(--title-7-letter-spacing);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #d0d6e0 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .Section_lede {
+    max-width: 640px;
+    color: var(--color-text-tertiary);
+    font-size: var(--text-large-size);
+    line-height: var(--text-large-line-height);
+    margin-bottom: 56px;
+  }
+
+  /* ============================================================ */
+  /* SECTION 1 — TYPOGRAPHY SPEC                                   */
+  /* ============================================================ */
+  .Type_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    overflow: hidden;
+    background: var(--color-bg-panel);
+  }
+  .Type_row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--color-border-translucent);
+    transition: background .16s var(--ease-out-quad);
+  }
+  .Type_row:last-child { border-bottom: none; }
+  .Type_row:hover { background: rgba(255,255,255,0.015); }
+  .Type_sample {
+    color: var(--color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .Type_meta {
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    color: var(--color-text-quaternary);
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 24px;
+  }
+  /* Heading variants — use exact Linear titles */
+  .Type_h1 { font-size: var(--title-9-size); line-height: var(--title-9-line-height); letter-spacing: var(--title-9-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_h2 { font-size: var(--title-8-size); line-height: var(--title-8-line-height); letter-spacing: var(--title-8-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_h3 { font-size: var(--title-7-size); line-height: var(--title-7-line-height); letter-spacing: var(--title-7-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_h4 { font-size: var(--title-5-size); line-height: var(--title-5-line-height); letter-spacing: var(--title-5-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_h5 { font-size: var(--title-4-size); line-height: var(--title-4-line-height); letter-spacing: var(--title-4-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_h6 { font-size: var(--title-3-size); line-height: var(--title-3-line-height); letter-spacing: var(--title-3-letter-spacing); font-weight: var(--font-weight-semibold); }
+  .Type_large    { font-size: var(--text-large-size);    line-height: var(--text-large-line-height); color: var(--color-text-primary); }
+  .Type_regular  { font-size: var(--text-regular-size);  line-height: var(--text-regular-line-height); letter-spacing: var(--text-regular-letter-spacing); color: var(--color-text-secondary); }
+  .Type_small    { font-size: var(--text-small-size);    line-height: var(--text-small-line-height); letter-spacing: var(--text-small-letter-spacing); color: var(--color-text-tertiary); }
+  .Type_mini     { font-size: var(--text-mini-size);     line-height: var(--text-mini-line-height); letter-spacing: var(--text-mini-letter-spacing); color: var(--color-text-tertiary); }
+  .Type_micro    { font-size: var(--text-micro-size);    line-height: var(--text-micro-line-height); color: var(--color-text-quaternary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .Type_mono     { font-family: var(--font-monospace);   font-size: var(--text-small-size); color: var(--color-accent); }
+
+  /* ============================================================ */
+  /* SECTION 2 — COLORS                                            */
+  /* ============================================================ */
+  .ColorGroup {
+    margin-bottom: 48px;
+  }
+  .ColorGroup_title {
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--color-text-quaternary);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .Swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .Swatch {
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    overflow: hidden;
+    background: var(--color-bg-panel);
+    transition: transform .25s var(--ease-out-quart), border-color .25s var(--ease-out-quart);
+  }
+  .Swatch:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-tertiary);
+  }
+  .Swatch_chip {
+    height: 84px;
+    width: 100%;
+    display: block;
+  }
+  .Swatch_meta {
+    padding: 12px 14px 14px;
+    border-top: 1px solid var(--color-border-translucent);
+  }
+  .Swatch_name {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+  }
+  .Swatch_hex {
+    margin-top: 4px;
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    color: var(--color-text-quaternary);
+  }
+  .Swatch.is-checker .Swatch_chip {
+    background-image:
+      linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+      linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+      linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    position: relative;
+  }
+  .Swatch.is-checker .Swatch_chip::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--swatch-color);
+  }
+
+  /* ============================================================ */
+  /* SECTION 3 — COMPONENTS                                        */
+  /* ============================================================ */
+  .Components_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .Component_card {
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-16);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .Component_card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .Component_label {
+    font-family: var(--font-monospace);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-quaternary);
+    margin-bottom: 20px;
+  }
+  .Component_row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .Component_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .Component_stateLabel {
+    font-family: var(--font-monospace);
+    font-size: 10px;
+    color: var(--color-text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ----- Buttons ----- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: var(--radius-8);
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    cursor: pointer;
+    transition: filter .16s var(--ease-out-quad),
+                transform .16s var(--ease-out-quad),
+                background .16s var(--ease-out-quad),
+                border-color .16s var(--ease-out-quad),
+                color .16s var(--ease-out-quad);
+    position: relative;
+    isolation: isolate;
+  }
+  .btn:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-offset);
+  }
+  .btn:active { transform: scale(.97); }
+
+  .btn--primary {
+    background: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    border: 1px solid transparent;
+    box-shadow:
+      0 1px 0 0 rgba(255,255,255,0.16) inset,
+      0 0 0 1px rgba(0,0,0,0.4),
+      0 8px 24px -8px rgba(94,106,210,0.6);
+  }
+  .btn--primary:hover { filter: brightness(110%); }
+  .btn--primary[data-state="hover"] { filter: brightness(110%); }
+  .btn--primary[data-state="active"] { transform: scale(.97); filter: brightness(95%); }
+  .btn--primary[data-state="focus"] {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .btn--secondary {
+    background: var(--color-bg-translucent);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-translucent-strong);
+    backdrop-filter: blur(8px);
+  }
+  .btn--secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--color-border-secondary);
+  }
+  .btn--secondary[data-state="hover"] {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--color-border-secondary);
+  }
+  .btn--secondary[data-state="active"] { transform: scale(.97); background: rgba(255,255,255,0.04); }
+  .btn--secondary[data-state="focus"] {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text-tertiary);
+    border: 1px solid transparent;
+  }
+  .btn--ghost:hover {
+    background: rgba(255,255,255,0.04);
+    color: var(--color-text-primary);
+  }
+  .btn--ghost[data-state="hover"] {
+    background: rgba(255,255,255,0.04);
+    color: var(--color-text-primary);
+  }
+  .btn--ghost[data-state="active"] { transform: scale(.97); background: rgba(255,255,255,0.02); }
+
+  /* ----- Inputs ----- */
+  .Input {
+    height: 36px;
+    padding: 0 12px;
+    border-radius: var(--radius-6);
+    background: var(--color-bg-level-2);
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-text-primary);
+    font-size: 13px;
+    width: 280px;
+    transition: border-color .16s var(--ease-out-quad), background .16s var(--ease-out-quad);
+  }
+  .Input::placeholder { color: var(--color-text-quaternary); }
+  .Input:hover { border-color: var(--color-border-secondary); }
+  .Input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: var(--color-bg-level-1);
+    box-shadow: 0 0 0 3px rgba(113,112,255,0.15);
+  }
+
+  /* ----- Cards ----- */
+  .Card {
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    padding: 24px;
+    transition: transform .25s var(--ease-out-quart),
+                border-color .25s var(--ease-out-quart),
+                background .25s var(--ease-out-quart);
+  }
+  .Card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-tertiary);
+    background: var(--color-bg-level-2);
+  }
+  .Card_title {
+    font-size: var(--title-2-size);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--title-2-line-height);
+    letter-spacing: var(--title-2-letter-spacing);
+    margin-bottom: 8px;
+  }
+  .Card_body {
+    color: var(--color-text-tertiary);
+    font-size: var(--text-small-size);
+    line-height: var(--text-small-line-height);
+  }
+
+  /* ----- Pills / chips ----- */
+  .Pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding-inline: 10px;
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-rounded);
+    background: var(--color-bg-translucent);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    transition: filter .16s var(--ease-out-quad), background .16s var(--ease-out-quad);
+  }
+  .Pill:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--color-text-primary);
+  }
+  .Pill--active {
+    background: var(--color-accent-tint);
+    border-color: rgba(113,112,255,0.3);
+    color: var(--color-accent-hover);
+  }
+
+  /* ----- Badges ----- */
+  .Badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--radius-4);
+    font-size: 11px;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-monospace);
+  }
+  .Badge--brand   { background: var(--color-accent-tint); color: var(--color-accent-hover); border: 1px solid rgba(113,112,255,0.2); }
+  .Badge--success { background: rgba(39,166,68,0.12);     color: #6cdc8c;                    border: 1px solid rgba(39,166,68,0.25); }
+  .Badge--warning { background: rgba(240,191,0,0.12);     color: var(--color-yellow);        border: 1px solid rgba(240,191,0,0.25); }
+  .Badge--danger  { background: rgba(235,87,87,0.12);     color: #ff7c7c;                    border: 1px solid rgba(235,87,87,0.25); }
+
+  /* ============================================================ */
+  /* SECTION 4 — LAYOUT & SPACING                                  */
+  /* ============================================================ */
+  .Layout_row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--color-border-translucent);
+  }
+  .Layout_label {
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--color-text-quaternary);
+    letter-spacing: 0.08em;
+  }
+  .Layout_value {
+    font-family: var(--font-monospace);
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+  .GridDemo {
+    margin-top: 24px;
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    padding: 24px;
+    background: var(--color-bg-panel);
+  }
+  .GridDemo_columns {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 8px;
+    height: 80px;
+  }
+  .GridDemo_columns > div {
+    background: linear-gradient(180deg, rgba(113,112,255,0.18), rgba(113,112,255,0.04));
+    border: 1px solid rgba(113,112,255,0.25);
+    border-radius: var(--radius-4);
+  }
+  .GridDemo_caption {
+    margin-top: 12px;
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    color: var(--color-text-quaternary);
+  }
+
+  /* ============================================================ */
+  /* SECTION 5 — MOTION GALLERY                                    */
+  /* ============================================================ */
+  .Motion_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .Motion_card {
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    padding: 24px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .Motion_card_label {
+    font-family: var(--font-monospace);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-quaternary);
+  }
+  .Motion_card_title {
+    font-size: 15px;
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+  }
+  .Motion_card_demo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-level-1);
+    border-radius: var(--radius-8);
+    padding: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Demo: Fade-up entrance — re-trigger on hover */
+  .Demo_box {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-8);
+    background: linear-gradient(180deg, var(--color-accent), var(--color-brand-bg));
+    box-shadow: 0 8px 24px -8px rgba(94,106,210,0.6);
+  }
+  .Motion_card:hover .Demo_box.is-fade {
+    animation: hero-fade-up 1s var(--ease-out-quart);
+  }
+
+  /* Demo: Hover lift card */
+  .Demo_lift {
+    width: 140px;
+    padding: 16px;
+    border-radius: var(--radius-12);
+    background: var(--color-bg-level-2);
+    border: 1px solid var(--color-border-primary);
+    transition: transform .35s var(--ease-out-quart),
+                border-color .35s var(--ease-out-quart),
+                box-shadow .35s var(--ease-out-quart);
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+  }
+  .Motion_card:hover .Demo_lift {
+    transform: translateY(-6px);
+    border-color: var(--color-accent);
+    box-shadow: 0 16px 40px -16px rgba(113,112,255,0.6);
+  }
+
+  /* Demo: Glow pulse (Hero_pulse) */
+  .Demo_pulse {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(94,106,210,0.15);
+    position: relative;
+    box-shadow: 0 0 0 0 rgba(94,106,210,0.10);
+    animation: Hero_pulse 1.75s cubic-bezier(.66,0,0,1) infinite;
+  }
+  .Demo_pulse::after {
+    content: "";
+    position: absolute;
+    width: 8px; height: 8px;
+    background: #5e6ad2;
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  /* Demo: Shimmer (background gradient sweep) */
+  .Demo_shimmer {
+    width: 200px; height: 36px;
+    border-radius: var(--radius-6);
+    background: linear-gradient(90deg,
+      var(--color-bg-level-2) 0%,
+      var(--color-bg-level-2) 30%,
+      rgba(113,112,255,0.18) 50%,
+      var(--color-bg-level-2) 70%,
+      var(--color-bg-level-2) 100%);
+    background-size: 300% 100%;
+    animation: shimmer-sweep 2.4s linear infinite;
+    border: 1px solid var(--color-border-primary);
+  }
+  @keyframes shimmer-sweep {
+    0%   { background-position: 150% 0; }
+    100% { background-position: -150% 0; }
+  }
+
+  /* Demo: Button glow on hover */
+  .Demo_glowBtn {
+    padding: 12px 22px;
+    border-radius: var(--radius-rounded);
+    background: var(--color-brand-bg);
+    color: #fff;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    position: relative;
+    transition: filter .25s var(--ease-out-quad), transform .25s var(--ease-out-quad);
+  }
+  .Demo_glowBtn::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: var(--color-brand-bg);
+    filter: blur(20px);
+    opacity: 0.3;
+    z-index: -1;
+    transition: opacity .35s var(--ease-out-quad);
+  }
+  .Motion_card:hover .Demo_glowBtn { filter: brightness(115%); transform: translateY(-1px); }
+  .Motion_card:hover .Demo_glowBtn::after { opacity: 0.7; }
+
+  /* Demo: Scale-in (ContextMenu_contextMenuIn) */
+  .Demo_scaleIn {
+    width: 160px; height: 80px;
+    border-radius: var(--radius-8);
+    background: var(--color-bg-level-2);
+    border: 1px solid var(--color-border-primary);
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+  }
+  .Motion_card:hover .Demo_scaleIn {
+    animation: ContextMenu_contextMenuIn 0.18s var(--ease-out-quad);
+  }
+  @keyframes ContextMenu_contextMenuIn {
+    0% { opacity: 0; transform: scale(.9); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Demo: Scroll-blur entrance (mimic Linear's scroll reveal) */
+  .Demo_blurIn {
+    width: 200px;
+    height: 80px;
+    border-radius: var(--radius-8);
+    background: var(--color-bg-level-2);
+    border: 1px solid var(--color-border-primary);
+  }
+  .Motion_card:hover .Demo_blurIn {
+    animation: blur-up 1s var(--ease-out-quart);
+  }
+  @keyframes blur-up {
+    0%   { opacity: 0; filter: blur(12px); transform: translateY(20px); }
+    100% { opacity: 1; filter: blur(0);    transform: translateY(0); }
+  }
+
+  /* Demo: Gradient drift (the hero glow blob) */
+  .Demo_drift {
+    width: 240px;
+    height: 120px;
+    border-radius: var(--radius-12);
+    background:
+      radial-gradient(400px 200px at 30% 50%, rgba(113,112,255,0.5), transparent 60%),
+      radial-gradient(300px 150px at 70% 50%, rgba(94,106,210,0.4), transparent 60%),
+      var(--color-bg-level-1);
+    position: relative;
+    overflow: hidden;
+  }
+  .Demo_drift::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 60%);
+    animation: heroGlowDrift 6s var(--ease-in-out-cubic) infinite alternate;
+  }
+
+  /* ============================================================ */
+  /* SECTION 6 — ICONS                                             */
+  /* ============================================================ */
+  .Icons_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+  .Icon_card {
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: border-color .16s var(--ease-out-quad), background .16s var(--ease-out-quad);
+  }
+  .Icon_card:hover {
+    border-color: var(--color-border-tertiary);
+    background: var(--color-bg-level-2);
+  }
+  .Icon_card svg {
+    width: 22px; height: 22px;
+    stroke: var(--color-text-secondary);
+    stroke-width: 1.75;
+    fill: none;
+  }
+  .Icon_card_name {
+    font-family: var(--font-monospace);
+    font-size: 10px;
+    color: var(--color-text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .Icons_sizes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-12);
+    margin-top: 24px;
+  }
+  .Icons_sizes svg {
+    stroke: var(--color-text-primary);
+    stroke-width: 1.75;
+    fill: none;
+  }
+
+  /* ============================================================ */
+  /* FOOTER                                                        */
+  /* ============================================================ */
+  footer {
+    padding: 48px 0;
+    text-align: center;
+    color: var(--color-text-quaternary);
+    font-size: 12px;
+    border-top: 1px solid var(--color-border-translucent);
+  }
+  footer code {
+    font-family: var(--font-monospace);
+    color: var(--color-accent);
+  }
+
+  /* ============================================================ */
+  /* SCROLLBAR                                                     */
+  /* ============================================================ */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+  /* ============================================================ */
+  /* RESPONSIVE                                                    */
+  /* ============================================================ */
+  @media (max-width: 768px) {
+    .PillarHero_root { padding-top: 140px; padding-bottom: 80px; }
+    section[id] { padding-block: 64px; }
+    .Section_h2 { font-size: var(--title-5-size); }
+    .Type_meta { display: none; }
+    .Layout_row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER                                                         -->
+<!-- ============================================================ -->
+<header class="Header_root">
+  <div class="Header_inner">
+    <div class="Header_logo">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="22" y2="22">
+            <stop offset="0" stop-color="#828fff"/>
+            <stop offset="1" stop-color="#5e6ad2"/>
+          </linearGradient>
+        </defs>
+        <rect width="22" height="22" rx="6" fill="url(#logoGrad)"/>
+        <path d="M5 13 L9 9 L13 13 L17 9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      Linear DS — extracted
+    </div>
+    <nav class="Header_navItems">
+      <a class="Header_navLink" href="#hero">Hero</a>
+      <a class="Header_navLink" href="#typography">Typography</a>
+      <a class="Header_navLink" href="#colors">Colors</a>
+      <a class="Header_navLink" href="#components">Components</a>
+      <a class="Header_navLink" href="#layout">Layout</a>
+      <a class="Header_navLink" href="#motion">Motion</a>
+      <a class="Header_navLink" href="#icons">Icons</a>
+      <span class="Header_navDivider"></span>
+      <a class="Header_navLink is-essential" href="https://linear.app" target="_blank" rel="noopener">Source</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- SECTION 0 — HERO (clone)                                       -->
+<!-- ============================================================ -->
+<section class="PillarHero_root" id="hero">
+  <div class="PillarHero_glowBg" aria-hidden="true"></div>
+  <div class="PillarHero_inner">
+    <div class="PillarHero_eyebrow">
+      <span class="PillarHero_pulseDot" aria-hidden="true"></span>
+      <span>Linear Design System &nbsp;·&nbsp; extracted Apr 2026</span>
+    </div>
+    <h1 class="PillarHero_title">
+      The visual DNA<br>of the system for<br>product development.
+    </h1>
+    <p class="PillarHero_subtitle">
+      A standalone capture of Linear's typography, colors, components, and motion —
+      copied verbatim from <code>linear.app</code> so you can build the
+      <code>nv:context</code> landing page without ever touching the original files.
+    </p>
+    <div class="PillarHero_actions">
+      <a class="btn btn--primary" href="#typography">
+        Browse the system
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a class="btn btn--secondary" href="#hero">Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 1 — TYPOGRAPHY                                         -->
+<!-- ============================================================ -->
+<section id="typography">
+  <div class="Section_inner">
+    <span class="Section_label">01 / Typography</span>
+    <h2 class="Section_h2">Inter Variable, dialed in.</h2>
+    <p class="Section_lede">
+      Linear uses Inter Variable for everything except code, where Berkeley Mono is the
+      house monospace. Weights are non-standard (510 medium, 590 semibold, 680 bold).
+      Tracking is negative on every size above 12px to keep the surface tight.
+    </p>
+
+    <div class="Type_table">
+      <div class="Type_row"><div class="Type_sample Type_h1">The system for product development.</div><div class="Type_meta">title-9 · 72px / 72px · -0.022em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_h2">Plan, build, and ship faster.</div><div class="Type_meta">title-8 · 64px / 68px · -0.022em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_h3">Built for AI-native teams.</div><div class="Type_meta">title-7 · 56px / 62px · -0.022em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_h4">A single source of truth.</div><div class="Type_meta">title-5 · 40px / 44px · -0.022em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_h5">Issue tracking that flows.</div><div class="Type_meta">title-4 · 32px / 36px · -0.022em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_h6">Section heading</div><div class="Type_meta">title-3 · 24px / 32px · -0.012em · 590</div></div>
+      <div class="Type_row"><div class="Type_sample Type_large">Body large — used for hero subtitles and lede paragraphs that need to breathe across a wide measure.</div><div class="Type_meta">text-large · 17px / 27px · 510</div></div>
+      <div class="Type_row"><div class="Type_sample Type_regular">Body regular — the workhorse paragraph style. Slightly negative tracking, 1.6 line-height, soft secondary color.</div><div class="Type_meta">text-regular · 15px / 24px · -0.011em</div></div>
+      <div class="Type_row"><div class="Type_sample Type_small">Body small — used in cards, captions, and dense UI surfaces where 15px is too loud.</div><div class="Type_meta">text-small · 14px / 21px · -0.013em</div></div>
+      <div class="Type_row"><div class="Type_sample Type_mini">Mini text — chips, table labels, footnotes, metadata.</div><div class="Type_meta">text-mini · 13px / 20px · -0.01em</div></div>
+      <div class="Type_row"><div class="Type_sample Type_micro">Micro label — taxonomy</div><div class="Type_meta">text-micro · 12px / 17px · uppercase · 510</div></div>
+      <div class="Type_row"><div class="Type_sample Type_mono">const linear = await design.system.extract()</div><div class="Type_meta">Berkeley Mono · 14px / 21px</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 — COLORS                                             -->
+<!-- ============================================================ -->
+<section id="colors">
+  <div class="Section_inner">
+    <span class="Section_label">02 / Colors &amp; Surfaces</span>
+    <h2 class="Section_h2">Near-black, never black.</h2>
+    <p class="Section_lede">
+      Linear's dark theme is built on a tight stack of cool greys
+      (<code>#08090a</code> → <code>#191a1b</code>) with translucent overlays
+      for elevated surfaces. The brand accent is indigo
+      (<code>#5e6ad2</code>), with a brighter <code>#7170ff</code> for hovers
+      and links.
+    </p>
+
+    <div class="ColorGroup">
+      <div class="ColorGroup_title">Backgrounds (level 0 → 3)</div>
+      <div class="Swatches">
+        <div class="Swatch"><span class="Swatch_chip" style="background:#08090a"></span><div class="Swatch_meta"><div class="Swatch_name">bg-primary</div><div class="Swatch_hex">#08090a</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#0f1011"></span><div class="Swatch_meta"><div class="Swatch_name">bg-panel · level-1</div><div class="Swatch_hex">#0f1011</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#141516"></span><div class="Swatch_meta"><div class="Swatch_name">bg-level-2 · tint</div><div class="Swatch_hex">#141516</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#191a1b"></span><div class="Swatch_meta"><div class="Swatch_name">bg-level-3</div><div class="Swatch_hex">#191a1b</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#1c1c1f"></span><div class="Swatch_meta"><div class="Swatch_name">bg-secondary</div><div class="Swatch_hex">#1c1c1f</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#232326"></span><div class="Swatch_meta"><div class="Swatch_name">bg-tertiary</div><div class="Swatch_hex">#232326</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#28282c"></span><div class="Swatch_meta"><div class="Swatch_name">bg-quaternary</div><div class="Swatch_hex">#28282c</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#010102"></span><div class="Swatch_meta"><div class="Swatch_name">bg-marketing</div><div class="Swatch_hex">#010102</div></div></div>
+      </div>
+    </div>
+
+    <div class="ColorGroup">
+      <div class="ColorGroup_title">Borders &amp; lines</div>
+      <div class="Swatches">
+        <div class="Swatch"><span class="Swatch_chip" style="background:#23252a"></span><div class="Swatch_meta"><div class="Swatch_name">border-primary</div><div class="Swatch_hex">#23252a</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#34343a"></span><div class="Swatch_meta"><div class="Swatch_name">border-secondary</div><div class="Swatch_hex">#34343a</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#3e3e44"></span><div class="Swatch_meta"><div class="Swatch_name">border-tertiary</div><div class="Swatch_hex">#3e3e44</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#37393a"></span><div class="Swatch_meta"><div class="Swatch_name">line-primary</div><div class="Swatch_hex">#37393a</div></div></div>
+        <div class="Swatch is-checker" style="--swatch-color:rgba(255,255,255,0.05)"><span class="Swatch_chip"></span><div class="Swatch_meta"><div class="Swatch_name">border-translucent</div><div class="Swatch_hex">rgba(255,255,255,.05)</div></div></div>
+        <div class="Swatch is-checker" style="--swatch-color:rgba(255,255,255,0.08)"><span class="Swatch_chip"></span><div class="Swatch_meta"><div class="Swatch_name">border-translucent-strong</div><div class="Swatch_hex">rgba(255,255,255,.08)</div></div></div>
+      </div>
+    </div>
+
+    <div class="ColorGroup">
+      <div class="ColorGroup_title">Text (primary → quaternary)</div>
+      <div class="Swatches">
+        <div class="Swatch"><span class="Swatch_chip" style="background:#f7f8f8"></span><div class="Swatch_meta"><div class="Swatch_name">text-primary</div><div class="Swatch_hex">#f7f8f8</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#d0d6e0"></span><div class="Swatch_meta"><div class="Swatch_name">text-secondary</div><div class="Swatch_hex">#d0d6e0</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#8a8f98"></span><div class="Swatch_meta"><div class="Swatch_name">text-tertiary</div><div class="Swatch_hex">#8a8f98</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#62666d"></span><div class="Swatch_meta"><div class="Swatch_name">text-quaternary</div><div class="Swatch_hex">#62666d</div></div></div>
+      </div>
+    </div>
+
+    <div class="ColorGroup">
+      <div class="ColorGroup_title">Brand &amp; accent</div>
+      <div class="Swatches">
+        <div class="Swatch"><span class="Swatch_chip" style="background:#5e6ad2"></span><div class="Swatch_meta"><div class="Swatch_name">brand-bg · indigo</div><div class="Swatch_hex">#5e6ad2</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#7170ff"></span><div class="Swatch_meta"><div class="Swatch_name">accent</div><div class="Swatch_hex">#7170ff</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#828fff"></span><div class="Swatch_meta"><div class="Swatch_name">accent-hover · link</div><div class="Swatch_hex">#828fff</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#18182f"></span><div class="Swatch_meta"><div class="Swatch_name">accent-tint</div><div class="Swatch_hex">#18182f</div></div></div>
+      </div>
+    </div>
+
+    <div class="ColorGroup">
+      <div class="ColorGroup_title">System palette</div>
+      <div class="Swatches">
+        <div class="Swatch"><span class="Swatch_chip" style="background:#4ea7fc"></span><div class="Swatch_meta"><div class="Swatch_name">blue</div><div class="Swatch_hex">#4ea7fc</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#27a644"></span><div class="Swatch_meta"><div class="Swatch_name">green</div><div class="Swatch_hex">#27a644</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#eb5757"></span><div class="Swatch_meta"><div class="Swatch_name">red</div><div class="Swatch_hex">#eb5757</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#fc7840"></span><div class="Swatch_meta"><div class="Swatch_name">orange</div><div class="Swatch_hex">#fc7840</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#f0bf00"></span><div class="Swatch_meta"><div class="Swatch_name">yellow</div><div class="Swatch_hex">#f0bf00</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#00b8cc"></span><div class="Swatch_meta"><div class="Swatch_name">teal</div><div class="Swatch_hex">#00b8cc</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#68cc58"></span><div class="Swatch_meta"><div class="Swatch_name">linear-plan</div><div class="Swatch_hex">#68cc58</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#d4b144"></span><div class="Swatch_meta"><div class="Swatch_name">linear-build</div><div class="Swatch_hex">#d4b144</div></div></div>
+        <div class="Swatch"><span class="Swatch_chip" style="background:#7a7fad"></span><div class="Swatch_meta"><div class="Swatch_name">linear-security</div><div class="Swatch_hex">#7a7fad</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 — COMPONENTS                                         -->
+<!-- ============================================================ -->
+<section id="components">
+  <div class="Section_inner">
+    <span class="Section_label">03 / Components</span>
+    <h2 class="Section_h2">Buttons, inputs, cards, chips.</h2>
+    <p class="Section_lede">
+      Linear keeps its component vocabulary small. Every interaction follows the same
+      formula: a 0.16s ease-out-quad transition, a brief 0.97 active scale, and a
+      glow on hover for accent surfaces.
+    </p>
+
+    <div class="Components_grid">
+
+      <!-- Buttons -->
+      <div class="Component_card">
+        <div class="Component_label">Buttons — Primary</div>
+        <div class="Component_row">
+          <div class="Component_state"><button class="btn btn--primary">Get started</button><div class="Component_stateLabel">default</div></div>
+          <div class="Component_state"><button class="btn btn--primary" data-state="hover">Get started</button><div class="Component_stateLabel">hover</div></div>
+          <div class="Component_state"><button class="btn btn--primary" data-state="active">Get started</button><div class="Component_stateLabel">active</div></div>
+          <div class="Component_state"><button class="btn btn--primary" data-state="focus">Get started</button><div class="Component_stateLabel">focus</div></div>
+        </div>
+      </div>
+
+      <div class="Component_card">
+        <div class="Component_label">Buttons — Secondary (glass)</div>
+        <div class="Component_row">
+          <div class="Component_state"><button class="btn btn--secondary">Read docs</button><div class="Component_stateLabel">default</div></div>
+          <div class="Component_state"><button class="btn btn--secondary" data-state="hover">Read docs</button><div class="Component_stateLabel">hover</div></div>
+          <div class="Component_state"><button class="btn btn--secondary" data-state="active">Read docs</button><div class="Component_stateLabel">active</div></div>
+          <div class="Component_state"><button class="btn btn--secondary" data-state="focus">Read docs</button><div class="Component_stateLabel">focus</div></div>
+        </div>
+      </div>
+
+      <div class="Component_card">
+        <div class="Component_label">Buttons — Ghost</div>
+        <div class="Component_row">
+          <div class="Component_state"><button class="btn btn--ghost">Cancel</button><div class="Component_stateLabel">default</div></div>
+          <div class="Component_state"><button class="btn btn--ghost" data-state="hover">Cancel</button><div class="Component_stateLabel">hover</div></div>
+          <div class="Component_state"><button class="btn btn--ghost" data-state="active">Cancel</button><div class="Component_stateLabel">active</div></div>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="Component_card">
+        <div class="Component_label">Inputs</div>
+        <div class="Component_row">
+          <input class="Input" placeholder="Search issues...">
+          <input class="Input" value="ENG-1284">
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="Component_card">
+        <div class="Component_label">Cards / Panels</div>
+        <div class="Component_row" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:16px;">
+          <div class="Card">
+            <div class="Card_title">Cycles</div>
+            <div class="Card_body">Plan in fixed time intervals. Carry incomplete work into the next cycle automatically.</div>
+          </div>
+          <div class="Card">
+            <div class="Card_title">Projects</div>
+            <div class="Card_body">Group long-running work and track progress against milestones with built-in updates.</div>
+          </div>
+          <div class="Card">
+            <div class="Card_title">Initiatives</div>
+            <div class="Card_body">Roll up multiple projects into strategic outcomes the whole company can rally around.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pills + badges -->
+      <div class="Component_card">
+        <div class="Component_label">Navigation pills &amp; badges</div>
+        <div class="Component_row">
+          <span class="Pill">All</span>
+          <span class="Pill Pill--active">Active</span>
+          <span class="Pill">Backlog</span>
+          <span class="Pill">Done</span>
+          <span class="Pill">Cancelled</span>
+        </div>
+        <div class="Component_row" style="margin-top: 16px;">
+          <span class="Badge Badge--brand">v1.60920</span>
+          <span class="Badge Badge--success">DEPLOYED</span>
+          <span class="Badge Badge--warning">REVIEW</span>
+          <span class="Badge Badge--danger">BLOCKED</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 — LAYOUT                                             -->
+<!-- ============================================================ -->
+<section id="layout">
+  <div class="Section_inner">
+    <span class="Section_label">04 / Layout &amp; Spacing</span>
+    <h2 class="Section_h2">12-column grid, generous gutters.</h2>
+    <p class="Section_lede">
+      The homepage container caps at 1344px with 46px outer padding. Sections sit on
+      a strict 12-column grid that drops to 8 columns at 768px and 4 at 640px.
+    </p>
+
+    <div>
+      <div class="Layout_row"><div class="Layout_label">homepage-max-width</div><div class="Layout_value">calc(1344px + 46 * 2)</div></div>
+      <div class="Layout_row"><div class="Layout_label">page-max-width</div><div class="Layout_value">1024px</div></div>
+      <div class="Layout_row"><div class="Layout_label">prose-max-width</div><div class="Layout_value">624px</div></div>
+      <div class="Layout_row"><div class="Layout_label">homepage-outer-padding</div><div class="Layout_value">46px (10/28/16 at breakpoints)</div></div>
+      <div class="Layout_row"><div class="Layout_label">page-padding-inline</div><div class="Layout_value">24px</div></div>
+      <div class="Layout_row"><div class="Layout_label">grid-columns</div><div class="Layout_value">12 → 8 (≤768) → 4 (≤640)</div></div>
+      <div class="Layout_row"><div class="Layout_label">header-height</div><div class="Layout_value">72px</div></div>
+      <div class="Layout_row"><div class="Layout_label">section padding-block</div><div class="Layout_value">96–128px (hero) · 64px mobile</div></div>
+      <div class="Layout_row"><div class="Layout_label">radius scale</div><div class="Layout_value">4 · 6 · 8 · 12 · 16 · 24 · 32 · 9999</div></div>
+      <div class="Layout_row"><div class="Layout_label">border-hairline</div><div class="Layout_value">1px (0.5px on retina)</div></div>
+    </div>
+
+    <div class="GridDemo">
+      <div class="GridDemo_columns">
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+      <div class="GridDemo_caption">12-column layout grid · gutters via gap: 8px</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5 — MOTION                                             -->
+<!-- ============================================================ -->
+<section id="motion">
+  <div class="Section_inner">
+    <span class="Section_label">05 / Motion &amp; Interaction</span>
+    <h2 class="Section_h2">Soft, fast, deliberate.</h2>
+    <p class="Section_lede">
+      Motion is the soul of Linear's marketing surface. Hover any tile below to
+      replay the demo. Every animation here is taken from Linear's compiled CSS or
+      built from the easing curves they ship.
+    </p>
+
+    <div class="Motion_grid">
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">hero · entrance</div>
+        <div class="Motion_card_title">Fade-up + blur</div>
+        <div class="Motion_card_demo"><div class="Demo_box is-fade"></div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">card · hover</div>
+        <div class="Motion_card_title">Lift + glow</div>
+        <div class="Motion_card_demo"><div class="Demo_lift">Hover me</div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">indicator · loop</div>
+        <div class="Motion_card_title">Pulse dot</div>
+        <div class="Motion_card_demo"><div class="Demo_pulse"></div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">surface · loop</div>
+        <div class="Motion_card_title">Shimmer sweep</div>
+        <div class="Motion_card_demo"><div class="Demo_shimmer"></div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">cta · hover</div>
+        <div class="Motion_card_title">Brand glow</div>
+        <div class="Motion_card_demo"><div class="Demo_glowBtn">Get started</div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">menu · enter</div>
+        <div class="Motion_card_title">Scale-in 0.18s</div>
+        <div class="Motion_card_demo"><div class="Demo_scaleIn">Context menu</div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">scroll · reveal</div>
+        <div class="Motion_card_title">Blur up</div>
+        <div class="Motion_card_demo"><div class="Demo_blurIn"></div></div>
+      </div>
+
+      <div class="Motion_card">
+        <div class="Motion_card_label">background · ambient</div>
+        <div class="Motion_card_title">Gradient drift</div>
+        <div class="Motion_card_demo"><div class="Demo_drift"></div></div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 32px; padding: 24px; background: var(--color-bg-panel); border: 1px solid var(--color-border-primary); border-radius: var(--radius-12);">
+      <div class="ColorGroup_title" style="margin-bottom: 12px;">Easing curves (verbatim)</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; font-family: var(--font-monospace); font-size: 11px; color: var(--color-text-tertiary);">
+        <div><span style="color: var(--color-accent);">--ease-out-quad</span> &nbsp; (.25, .46, .45, .94)</div>
+        <div><span style="color: var(--color-accent);">--ease-out-cubic</span> &nbsp; (.215, .61, .355, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-out-quart</span> &nbsp; (.165, .84, .44, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-out-quint</span> &nbsp; (.23, 1, .32, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-out-expo</span> &nbsp; (.19, 1, .22, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-in-out-cubic</span> &nbsp; (.645, .045, .355, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-in-out-quart</span> &nbsp; (.77, 0, .175, 1)</div>
+        <div><span style="color: var(--color-accent);">--ease-in-out-expo</span> &nbsp; (1, 0, 0, 1)</div>
+      </div>
+      <div class="ColorGroup_title" style="margin-top: 24px; margin-bottom: 12px;">Speeds</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; font-family: var(--font-monospace); font-size: 11px; color: var(--color-text-tertiary);">
+        <div><span style="color: var(--color-accent);">--speed-quickTransition</span> &nbsp; 100ms</div>
+        <div><span style="color: var(--color-accent);">--speed-regularTransition</span> &nbsp; 250ms</div>
+        <div>Hover transition default &nbsp; <span style="color: var(--color-text-secondary);">.16s ease-out-quad</span></div>
+        <div>Active scale &nbsp; <span style="color: var(--color-text-secondary);">scale(.97)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6 — ICONS                                              -->
+<!-- ============================================================ -->
+<section id="icons">
+  <div class="Section_inner">
+    <span class="Section_label">06 / Iconography</span>
+    <h2 class="Section_h2">1.75 stroke. Always.</h2>
+    <p class="Section_lede">
+      Linear ships custom icons in the same family as Lucide — 24×24 viewbox,
+      1.75 stroke, round caps and joins. Below is a representative subset
+      rendered inline with the same conventions.
+    </p>
+
+    <div class="Icons_grid">
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><div class="Icon_card_name">clock</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg><div class="Icon_card_name">check</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg><div class="Icon_card_name">arrow-right</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><div class="Icon_card_name">search</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4.5v11L12 22 3 17.5v-11z"/><path d="M3 7.5L12 12l9-4.5"/><path d="M12 22V12"/></svg><div class="Icon_card_name">box</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><div class="Icon_card_name">settings</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg><div class="Icon_card_name">layout</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-9-9-9 9z"/></svg><div class="Icon_card_name">issue</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg><div class="Icon_card_name">comment</div></div>
+      <div class="Icon_card"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg><div class="Icon_card_name">cross</div></div>
+    </div>
+
+    <div class="Icons_sizes">
+      <svg width="14" height="14" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg>
+      <svg width="32" height="32" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4 4L21 6"/></svg>
+      <span class="Type_mono" style="margin-left: auto;">14 · 16 · 20 · 24 · 32</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    Linear Design System extracted from <code>linear.app</code> · April 2026<br>
+    Source of truth for the <code>nv:context</code> landing page · zero dependencies, single file
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for the in-page anchors (Linear keeps scroll-behavior: auto and animates with JS)
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 80,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+</body>
+</html>
