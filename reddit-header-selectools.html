@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>selectools Reddit profile header</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #000;
+      --bg-elevated: #0c0d0f;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --text-1: #f0f0f0;
+      --text-2: #a8a8a8;
+      --text-3: #6b6b6b;
+      --brand: #7170ff;
+      --brand-glow: rgba(113, 112, 255, 0.18);
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1920px;
+      height: 384px;
+      background: var(--bg-base);
+      color: var(--text-1);
+      font-family: var(--font-sans);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 48px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 64px;
+    }
+    /* spotlight + dot grid background */
+    .wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 1200px 600px at 25% 50%, var(--brand-glow), transparent 60%),
+        radial-gradient(ellipse 1400px 500px at 75% 100%, rgba(113, 112, 255, 0.06), transparent 70%);
+      pointer-events: none;
+    }
+    .wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at center, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse 80% 70% at 35% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 35% 50%, black 30%, transparent 80%);
+      pointer-events: none;
+    }
+    .left, .right {
+      position: relative;
+      z-index: 1;
+    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 1100px;
+    }
+    .top-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--brand);
+      box-shadow: 0 0 14px var(--brand);
+    }
+    .top-text {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 64px;
+      line-height: 1.04;
+      padding-bottom: 0.06em;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.6));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    h1 em {
+      font-style: italic;
+      background: linear-gradient(180deg, #b4bcd0, #9c9bff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .sub {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-3);
+      letter-spacing: 0.01em;
+    }
+    .sub .accent {
+      color: var(--brand);
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-end;
+    }
+    .stats {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .stat {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      color: var(--text-2);
+      letter-spacing: 0.01em;
+    }
+    .stat .num {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .install {
+      margin-top: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-1);
+      position: relative;
+    }
+    .install::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 14px;
+      right: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    }
+    .install .prompt {
+      color: var(--brand);
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="left">
+      <div class="top-row">
+        <span class="pulse"></span>
+        <span class="top-text">Selectools · Open source · Apache-2.0</span>
+      </div>
+      <h1>Multi-agent Python<br/>that doesn't get in your <em>way</em>.</h1>
+      <div class="sub">HITL via generators <span class="accent">·</span> 4,612 tests <span class="accent">·</span> 50 evaluators built in <span class="accent">·</span> works with OpenAI, Anthropic, Gemini, Ollama</div>
+    </div>
+    <div class="right">
+      <div class="stats">
+        <div class="stat"><span class="num">v0.20.1</span> shipped</div>
+        <div class="stat"><span class="num">~90</span> bugs killed in pre-launch hunts</div>
+        <div class="stat"><span class="num">github.com/johnnichev/selectools</span></div>
+      </div>
+      <div class="install"><span class="prompt">$</span>pip install selectools</div>
+    </div>
+  </div>
+</body>
+</html>
