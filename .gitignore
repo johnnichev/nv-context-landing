@@ -1,5 +1,9 @@
 .DS_Store
 .vercel/
+.vercel
 node_modules/
 *.log
-.vercel
+
+# Third-party reference sites used for DS extraction only.
+# Do not commit: copyright + repo bloat.
+references/
